@@ -1,4 +1,5 @@
 import Detail from 'pages/Detail';
+import DetailPage from 'pages/DetailPage';
 import Home from 'pages/Home';
 import Mypage from 'pages/Mypage';
 import React from 'react';
@@ -12,6 +13,7 @@ const Router = () => {
         <Route path="/" element={<Home />} />
         <Route path="detail" element={<Detail />} />
         <Route path="mypage" element={<Mypage />} />
+        <Route path="detailpage" element={<DetailPage />} />
       </Routes>
     </BrowserRouter>
   );
