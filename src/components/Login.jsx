@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { auth } from '../firebase';
 import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
@@ -55,40 +55,28 @@ const LoginBtn = styled.button`
   cursor: pointer;
 `;
 
-// const BtnDiv = styled.div`
-//   position: relative;
-//   display: flex;
-//   justify-content: center;
-// `;
-
-// const SignUpBtn = styled.button`
-//   margin-top: 10px;
-//   margin-right: 10px;
-//   width: 150px;
-//   height: 40px;
-//   background-color: black;
-//   color: white;
-//   cursor: pointer;
-// `;
-
-function Login({ email, setEmail, password, setPassword, setIsDoneLogin }) {
+function Login({ setDoneLogin }) {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       console.log('user', user);
     });
   });
 
-  const signIn = async (event) => {
+  const logIn = async (event) => {
     event.preventDefault();
     try {
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      console.log('user with signIn', userCredential.user);
-      setIsDoneLogin(true);
+      console.log('user with LogIn', userCredential.user);
+      setEmail('');
+      setPassword('');
+      setDoneLogin(true);
     } catch (error) {
       const errorCode = error.code;
       const errorMessage = error.message;
-      console.log('error with signIn', errorCode, errorMessage);
-      alert('등록되지 않은 회원입니다.');
+      console.log('error with LogIn', errorCode, errorMessage);
+      alert('등록되지 않은 회원이거나 유효하지 않은 이메일입니다.');
     }
   };
 
@@ -119,7 +107,7 @@ function Login({ email, setEmail, password, setPassword, setIsDoneLogin }) {
               }}
             ></LoginInput>
           </PasswordDiv>
-          <LoginBtn onClick={signIn} setIs>
+          <LoginBtn onClick={logIn} setIs>
             로그인하기
           </LoginBtn>
         </LoginDiv>
