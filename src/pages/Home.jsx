@@ -1,5 +1,6 @@
 import React from 'react';
 import SignUpLogIn from 'components/SignUpLogIn';
+import ItemLists from 'components/ItemLists';
 
 function Home() {
   return (
@@ -7,7 +8,9 @@ function Home() {
       <header>
         <SignUpLogIn />
       </header>
-      <main></main>
+      <main>
+        <ItemLists />
+      </main>
       <footer></footer>
     </>
   );
