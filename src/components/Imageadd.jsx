@@ -115,7 +115,7 @@ const ImageAdd = () => {
         onClick={(e) => (e.target.value = null)}
         ref={inputRef}
         className="hiddenInput"
-        multiple
+        multiple = "multiple"
       />
     
       <UploadButton>

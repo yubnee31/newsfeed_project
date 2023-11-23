@@ -9,7 +9,6 @@ import AddForm from 'components/AddForm';
 function Addpage() {
     return (
         <Layout>
-        <Imageadd/>
         <AddForm/>
         </Layout>
     ) 
