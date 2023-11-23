@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { auth, db } from 'firebase';
+import { auth, db } from '../firebase';
 
 // import styled from 'styled-components';
 
@@ -9,7 +9,7 @@ function Comment() {
   const [newComment, setNewComment] = useState('');
 
   useEffect(() => {
-    const userIn = auth.onAuthStateChanged((currentUser) => {
+    const unsubscribe = auth.onAuthStateChanged((currentUser) => {
       if (currentUser) {
         setUser(currentUser);
       } else {
@@ -17,14 +17,16 @@ function Comment() {
       }
     });
 
-    return () => userIn();
+    return () => unsubscribe();
   }, []);
 
   useEffect(() => {
     if (user) {
       const fetchComments = async () => {
         try {
-          const snapshot = await db.collection('comments').where('userId', '==', user.uid).get();
+          const firestoreInstanec = db;
+
+          const snapshot = await firestoreInstanec.collection('comments').where('userId', '==', user.uid).get();
           const commentsDate = snapshot.docs.map((doc) => ({
             id: doc.id,
             ...doc.data()
