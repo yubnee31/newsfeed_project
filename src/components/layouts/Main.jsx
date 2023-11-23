@@ -1,12 +1,12 @@
-import { collection, getDocs, query } from 'firebase/firestore';
+import React from 'react';
 import styled from 'styled-components';
-import List from './List';
+import List from '../List';
 
-export default function ItemLists() {
+function Main() {
   return (
     <Container>
-      <List title={true}/>
-      <List title={false}/>
+      <List title={true} />
+      <List title={false} />
     </Container>
   );
 }
@@ -19,3 +19,5 @@ const Container = styled.div`
   flex-direction: column;
   align-items: flex-start;
 `;
+
+export default Main;

@@ -2,7 +2,9 @@ import { db } from '../firebase';
 import { collection, getDocs, query } from 'firebase/firestore'; // 수정: getDocs 사용
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Bear from './bear.jpeg';
+import Bear from '../assets/bear.jpeg'
+// 관심 버튼 이미지로 변경하기
+import FavoriteImg from '../assets/Favorite.png'
 import { useNavigate } from 'react-router-dom';
 // import FavoriteImg from './Favorite.png';
 
