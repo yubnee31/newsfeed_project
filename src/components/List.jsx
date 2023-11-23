@@ -10,14 +10,27 @@ export default function List({ title }) {
   const navigate = useNavigate();
   const [items, setItems] = useState([]);
 
+  //최신등록상품 더보기 상태
+  const [showLatestMore, setShowLatestMore] = useState(false);
+
+  //인기 상품 더보기 상태
+  const [showPopularMore, setShowPopularMore] = useState(false);
+
   //하트가 클릭된 상품 관리
   const [countFavorites, setCountFavorites] = useState(0);
 
-  //최신 등록 순으로 불러오기
-  const latestItems = items.slice(0, 10);
+  //props로 받아오는 title 값에 따라 변경하기.
+  // const visibleItems = title ? visibleLatestItems : visiblePopularItems;
 
-  //관심 수 많은 순으로 불러오기
-  const mostPopular = items;
+  //더보기 상태에 따라 렌더링 개수 조절
+  // const visibleLatestItems = showLatestMore ? items : items.slice(0, 10);
+  // const visiblePopularItems = showLatestMore ? items : items.slice(0, 10);
+
+  //최신 등록 순으로 정렬
+  const latestItems = () => {};
+
+  //관심 수 많은 순으로 정렬
+  const mostPopular = () => {};
 
   // 전체 상품 데이터 불러오기
   useEffect(() => {
@@ -50,10 +63,27 @@ export default function List({ title }) {
     <ListWrapper>
       <TitleWrapper>
         <SectionTitle>{title ? '최신 등록 상품' : '인기 상품'}</SectionTitle>
-        <ShowALl>더보기</ShowALl>
+        {title && (
+          <ShowMoreBtn
+            onClick={() => {
+              setShowLatestMore(!showLatestMore);
+            }}
+          >
+            {showLatestMore ? '접기' : '더보기'}
+          </ShowMoreBtn>
+        )}
+        {!title && (
+          <ShowMoreBtn
+            onClick={() => {
+              setShowPopularMore(!showPopularMore);
+            }}
+          >
+            {showPopularMore ? '접기' : '더보기'}
+          </ShowMoreBtn>
+        )}
       </TitleWrapper>
       <Items>
-        {latestItems.map((item) => {
+        {items.map((item) => {
           return (
             <Item key={item.id} onClick={() => navigate(`/detail/${item.id}`)}>
               <Favorite onClick={(event) => favoriteSwitch(event, item)}>{item.isFavorite ? '♥' : '♡'}</Favorite>
@@ -96,7 +126,7 @@ const SectionTitle = styled.h1`
   /* margin-right: auto; */
 `;
 
-const ShowALl = styled.p`
+const ShowMoreBtn = styled.p`
   color: #b7b3b3;
   font-size: 18px;
   font-weight: 600;
