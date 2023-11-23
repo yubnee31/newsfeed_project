@@ -64,7 +64,7 @@ function SignUpLogIn() {
     onAuthStateChanged(auth, (user) => {
       console.log('user', user);
     });
-  });
+  }, []);
 
   const logOut = async (event) => {
     event.preventDefault();

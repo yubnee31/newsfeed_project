@@ -138,9 +138,7 @@ function Login({ setDoneLogin }) {
           </EmailPwDiv>
 
           <LoginBtnDiv>
-            <LoginBtn onClick={logIn} setIs>
-              로그인하기
-            </LoginBtn>
+            <LoginBtn onClick={logIn}>로그인하기</LoginBtn>
             <LoginBtn onClick={googleLogIn}>구글로 로그인하기</LoginBtn>
           </LoginBtnDiv>
         </LoginDiv>

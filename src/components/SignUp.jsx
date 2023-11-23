@@ -112,9 +112,7 @@ function SignUp({ setSignUpModal }) {
             </PasswordDiv>
           </EmailPwDiv>
 
-          <SignUpBtn onClick={signUp} setIs>
-            회원가입하기
-          </SignUpBtn>
+          <SignUpBtn onClick={signUp}>회원가입하기</SignUpBtn>
         </SignUpDiv>
       </SignUpForm>
     </div>
