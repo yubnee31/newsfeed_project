@@ -12,7 +12,7 @@ export default function AddForm({items, setItems}) {
     const [selectedFile, setSelectedFile] = useState();
     const [itemImg, setitemImg] = useState(defaultItem);
 
-    const user = auth.currentUser;
+    const user = JSON.parse(localStorage.getItem('login user'));
     const [itemInfo, setItemInfo] = useState("");
     const [itemPrice, setItemPrice] = useState("");
     const [itemTitle, setItemTitle] = useState("");
@@ -24,7 +24,7 @@ export default function AddForm({items, setItems}) {
     const handleUpload = async() =>{
         const imageRef = ref(
             storage,
-            `${auth.currentUser.uid}/item/${selectedFile.name}`
+            `${user.uid}/item/${selectedFile.name}`
         );
         await uploadBytes(imageRef, selectedFile);
         const downloadURL = await getDownloadURL(imageRef);
