@@ -24,7 +24,7 @@ export default function MypagePost({items, setItems}) {
         };
     
         fetchData();
-      }, []);
+      });
 
     let userItem = [];
     user.uid===null? userItem = [] : userItem=items.filter((item)=>item.userId===user.uid);

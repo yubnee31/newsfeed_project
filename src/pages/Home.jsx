@@ -1,15 +1,11 @@
+import Layout from 'components/layouts/Layout';
 import React from 'react';
-import SignUpLogIn from 'components/SignUpLogIn';
 
 function Home() {
   return (
-    <>
-      <header>
-        <SignUpLogIn />
-      </header>
+    <Layout>
       <main></main>
-      <footer></footer>
-    </>
+    </Layout>
   );
 }
 

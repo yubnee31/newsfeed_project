@@ -45,6 +45,7 @@ export default function AddForm({items, setItems}) {
         setItemPrice("");
         setItemTitle("");
         setUserId("");
+        navigate('/mypage')
     }
 
 
@@ -52,7 +53,8 @@ export default function AddForm({items, setItems}) {
 
   return (
     <AddSection>
-        <form onSubmit={addItem}>
+        <form onSubmit={addItem} key = {user.uid}>
+            <div>
             <img src = {itemImg}/>
             <br />
             <input type = "file"  onClick={handleFileSelect}/>
@@ -68,9 +70,8 @@ export default function AddForm({items, setItems}) {
             <br />
             <br />
 
-            <button onClick = {()=>{
-                navigate('/mypage')
-            }}>완료</button>
+            <button onClick = {addItem}>완료</button>
+            </div>
         </form>
     </AddSection>
   )

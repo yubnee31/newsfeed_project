@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import defaultUser from"assets/defaultUser.png"
-import { db } from '../firebase';
-import { collection, getDocs, query } from "firebase/firestore";
 import { storage, auth } from "../firebase";
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
