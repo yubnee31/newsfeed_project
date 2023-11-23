@@ -31,7 +31,7 @@ export default function AddForm({items, setItems}) {
         setitemImg(downloadURL);
 
     };
-
+   // 이걸 이미지랑 엮어서 등록하기에 같이 메인페이지에 보내져야함 
     const addItem = async (event)=>{
         event.preventDefault();
         const newItem = {itemInfo, itemPrice, itemTitle, sold:false, userId:user.uid};
