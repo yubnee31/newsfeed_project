@@ -1,16 +1,16 @@
 import React from 'react';
 import Imageadd from 'components/Imageadd';
-import Commentadd from 'components/Commentadd';
 import Layout from 'components/layouts/Layout';
-import Header from 'components/layouts/Header';
+import AddForm from 'components/AddForm';
+
 
 
 
 function Addpage() {
     return (
         <Layout>
-        <Imageadd/>;
-        <Commentadd/>;
+        <Imageadd/>
+        <AddForm/>
         </Layout>
     ) 
     
