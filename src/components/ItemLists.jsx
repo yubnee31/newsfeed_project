@@ -14,7 +14,7 @@ export default function ItemsList() {
 const Container = styled.div`
   /* background-color: powderblue; */
   width: 100%;
-  height: 1000px;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
