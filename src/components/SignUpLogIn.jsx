@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import Login from './Login';
-import { signOut } from 'firebase/auth';
-import { auth } from '../firebase';
 import SignUp from './SignUp';
-import { useNavigate } from 'react-router-dom';
+import { auth } from '../firebase';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
 
 const BtnWrap = styled.div`
   text-align: right;
+  margin-right: 50px;
 `;
 
 const LoginSignUpBtn = styled.button`
@@ -52,15 +53,23 @@ const ModalBody = styled.div`
   border-radius: 20px;
   background-color: #fff;
 `;
+
 function SignUpLogIn() {
   const [logInModal, setLogInModal] = useState(false);
   const [signUpmodal, setSignUpModal] = useState(false);
   const [doneLogin, setDoneLogin] = useState(false);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      console.log('user', user);
+    });
+  });
+
   const logOut = async (event) => {
     event.preventDefault();
     await signOut(auth);
+    alert('로그아웃 되었습니다.');
     setDoneLogin(false);
     setLogInModal(false);
   };

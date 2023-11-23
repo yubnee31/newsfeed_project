@@ -26,18 +26,19 @@ const SignUpForm = styled.form`
 
 const SignUpDiv = styled.div`
   position: absolute;
+  margin-top: 30px;
 `;
 const EmailPwDiv = styled.div`
   width: 200px;
-  margin-left: 60px;
 `;
+
 const EmailDiv = styled.div`
-  margin-top: 40px;
-  margin-bottom: 15px;
+  margin-top: 10px;
+  margin-bottom: 10px;
 `;
 
 const SignUpP = styled.p`
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   font-weight: bold;
   font-size: 20px;
   text-align: left;
@@ -53,14 +54,7 @@ const PasswordDiv = styled.div`
   margin-bottom: 30px;
 `;
 
-const SignUpBtnDiv = styled.div`
-  position: relative;
-  display: flex;
-  justify-content: center;
-`;
-
 const SignUpBtn = styled.button`
-  margin-top: 10px;
   margin-right: 10px;
   width: 150px;
   height: 40px;
@@ -72,6 +66,7 @@ const SignUpBtn = styled.button`
 function SignUp({ setSignUpModal }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
   const signUp = async (event) => {
     event.preventDefault();
     try {
@@ -117,12 +112,9 @@ function SignUp({ setSignUpModal }) {
             </PasswordDiv>
           </EmailPwDiv>
 
-          <SignUpBtnDiv>
-            <SignUpBtn onClick={signUp} setIs>
-              회원가입하기
-            </SignUpBtn>
-            <SignUpBtn>구글로 회원가입하기</SignUpBtn>
-          </SignUpBtnDiv>
+          <SignUpBtn onClick={signUp} setIs>
+            회원가입하기
+          </SignUpBtn>
         </SignUpDiv>
       </SignUpForm>
     </div>
