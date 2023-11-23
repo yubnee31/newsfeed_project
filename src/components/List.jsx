@@ -11,10 +11,10 @@ export default function List({ title }) {
   const [items, setItems] = useState([]);
 
   //하트가 클릭된 상품 관리
-  const [itemFavorites, setItemFavorites] = useState([]);
+  const [countFavorites, setCountFavorites] = useState(0);
 
   //최신 등록 순으로 불러오기
-  const latestItems = items.slice(0, 5);
+  const latestItems = items.slice(0, 10);
 
   //관심 수 많은 순으로 불러오기
   const mostPopular = items;
