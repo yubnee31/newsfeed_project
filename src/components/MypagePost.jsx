@@ -47,13 +47,13 @@ export default function MypagePost({items, setItems}) {
               .map((item) => {
                 return (
                   <Item key={item.id}>
-                    <div>
-                      <img src={null ?? defaultItem} alt="아바타이미지" />
+                    <div onClick={()=>navigate(`/edit/${item.id}`)}>
 
+                      <img src={null ?? defaultItem} alt="아바타이미지" />
                       <h1>{item.itemTitle}</h1>
                       <p>{item.itemInfo}</p>
                       <p>{item.itemPrice}</p>
-                      <button onClick={()=>navigate(`/test/${item.id}`)}>클릭</button>
+                      {/* <button onClick={()=>navigate(`/edit/${item.id}`)}>클릭</button> */}
                     </div>
                   </Item>
                 );})}
