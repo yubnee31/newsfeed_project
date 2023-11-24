@@ -2,29 +2,27 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import defaultItem from 'assets/defaultItem.png';
 import { db } from '../firebase';
-import { collection, getDocs, query } from "firebase/firestore";
+import { collection, getDocs, query } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 
-export default function MypagePost({items, setItems}) {
-    const navigate = useNavigate();
-    const user = JSON.parse(localStorage.getItem('login user'));
-    useEffect(() => {
-        const fetchData = async () => {
-          const q = query(collection(db, "items"));
-          const querySnapshot = await getDocs(q);
-          const initialItems = [];
-    
-          querySnapshot.forEach((doc) => {
-            initialItems.push({ id: doc.id, ...doc.data() });
-          });
-          setItems(initialItems);
-        };
-        fetchData();
-      },[]);
+export default function MypagePost({ items, setItems }) {
+  const navigate = useNavigate();
+  const user = JSON.parse(localStorage.getItem('login user'));
+  useEffect(() => {
+    const fetchData = async () => {
+      const q = query(collection(db, 'items'));
+      const querySnapshot = await getDocs(q);
+      const initialItems = [];
 
-      console.log(db);
+      querySnapshot.forEach((doc) => {
+        initialItems.push({ id: doc.id, ...doc.data() });
+      });
+      setItems(initialItems);
+    };
+    fetchData();
+  }, []);
 
-
+  console.log(db);
 
   let userItem = [];
   user.uid === null ? (userItem = []) : (userItem = items.filter((item) => item.userId === user.uid));
@@ -53,11 +51,11 @@ export default function MypagePost({items, setItems}) {
                       <h1>{item.itemTitle}</h1>
                       <p>{item.itemInfo}</p>
                       <p>{item.itemPrice}</p>
-                      <button onClick={()=>navigate(`/test/${item.id}`)}>클릭</button>
+                      <button onClick={() => navigate(`/test/${item.id}`)}>클릭</button>
                     </div>
                   </Item>
-                );})}
-              
+                );
+              })}
           </ItemWrapper>
         </OnSale>
 
@@ -83,13 +81,14 @@ export default function MypagePost({items, setItems}) {
         </SoldOut>
       </PostSection>
     </>
-  );}
-
+  );
+}
 
 const PostSection = styled.section`
   width: 1000px;
   min-height: 1000px;
-  border: 1px solid black;
+  border: 3px solid #ab7323;
+  border-radius: 20px;
   padding: 20px;
   margin-bottom: 50px;
   display: flex;
@@ -102,6 +101,11 @@ const RegistItemBtn = styled.button`
   position: absolute;
   top: 20px;
   right: 20px;
+  width: 120px;
+  height: 40px;
+  border: 3px solid #ab722374;
+  border-radius: 10px;
+  background-color: transparent;
 `;
 const OnSale = styled.div`
   width: 900px;

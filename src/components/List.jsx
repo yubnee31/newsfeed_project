@@ -30,8 +30,8 @@ export default function List({ title }) {
   // const visiblePopularItems = showLatestMore ? items : items.slice(0, 10);
 
   //최신 등록 순으로 정렬
-  const latestSortedDates = items.sort((a, b) =>b - a);
-  console.log(latestSortedDates)
+  const latestSortedDates = items.sort((a, b) => b - a);
+  console.log(latestSortedDates);
   //관심 수 많은 순으로 정렬
   const mostPopular = () => {};
 
@@ -102,7 +102,7 @@ const ListWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 10px auto;
+  margin: 30px auto;
   gap: 10px;
 `;
 
@@ -117,6 +117,7 @@ const SectionTitle = styled.h1`
   font-size: 35px;
   font-weight: 800;
   font-style: italic;
+  color: #ab7323;
   /* margin-right: auto; */
 `;
 
