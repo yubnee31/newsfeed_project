@@ -2,7 +2,8 @@ import { db } from '../firebase';
 import { collection, getDocs, query } from 'firebase/firestore'; // 수정: getDocs 사용
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Bear from '../assets/bear.jpeg'
+import Bear from '../assets/bear.jpeg';
+import DateAndTime from 'shared/DateAndTime';
 // 관심 버튼 이미지로 변경하기
 // import FavoriteImg from '../assets/Favorite.png'
 import { useNavigate } from 'react-router-dom';
@@ -29,8 +30,8 @@ export default function List({ title }) {
   // const visiblePopularItems = showLatestMore ? items : items.slice(0, 10);
 
   //최신 등록 순으로 정렬
-  const latestItems = () => {};
-
+  const latestSortedDates = items.sort((a, b) =>b - a);
+  console.log(latestSortedDates)
   //관심 수 많은 순으로 정렬
   const mostPopular = () => {};
 
@@ -65,7 +66,7 @@ export default function List({ title }) {
     <ListWrapper>
       <TitleWrapper>
         <SectionTitle>{title ? '최신 등록 상품' : '인기 상품'}</SectionTitle>
-        {title && (
+        {/* {title && (
           <ShowMoreBtn
             onClick={() => {
               setShowLatestMore(!showLatestMore);
@@ -73,19 +74,10 @@ export default function List({ title }) {
           >
             {showLatestMore ? '접기' : '더보기'}
           </ShowMoreBtn>
-        )}
-        {!title && (
-          <ShowMoreBtn
-            onClick={() => {
-              setShowPopularMore(!showPopularMore);
-            }}
-          >
-            {showPopularMore ? '접기' : '더보기'}
-          </ShowMoreBtn>
-        )}
+        )} */}
       </TitleWrapper>
       <Items>
-        {items.map((item) => {
+        {latestSortedDates.map((item) => {
           return (
             <Item key={item.id} onClick={() => navigate(`/detail/${item.id}`)}>
               <Favorite onClick={(event) => favoriteSwitch(event, item)}>{item.isFavorite ? '♥' : '♡'}</Favorite>
