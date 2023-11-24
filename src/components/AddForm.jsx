@@ -116,7 +116,6 @@ const AddForm = ({ items,setItems, user }) => {
   return (
     <AddSection>
       <FileUploadSection>
-        {/* 왼쪽 부분 (파일 사진 올리는 위치) */}
         <UploaderWrapper>
           <input
             type="file"
@@ -134,7 +133,7 @@ const AddForm = ({ items,setItems, user }) => {
             >
               미리보기
             </CustomButton>
-            <CustomButton  src={(setImages)}color="error" variant="contained" onClick={deleteImages}>
+            <CustomButton  color="error" variant="contained" onClick={deleteImages}>
               삭제
             </CustomButton>
             <CustomButton
