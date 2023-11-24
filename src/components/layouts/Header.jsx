@@ -2,6 +2,7 @@ import SignUpLogIn from 'components/SignUpLogIn';
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router';
+import Category from 'components/Category';
 
 const SearchDiv = styled.div`
   display: flex;
@@ -56,20 +57,6 @@ const SearchBtn = styled.button`
   color: #ab7323;
 `;
 
-const CategoryBtn = styled.button`
-  border: 3px solid #ab722374;
-  border-radius: 20px;
-  font-size: 18px;
-  width: 100px;
-  height: 60px;
-  background-color: transparent;
-  margin-top: 20px;
-  margin-left: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #ab7323;
-`;
 
 const Title = styled.h1`
   font-size: 50px;
@@ -89,7 +76,7 @@ function Header() {
       <Title>GAMZA</Title>
       <SignUpLogIn />
       <SearchDiv>
-        <CategoryBtn>카테고리</CategoryBtn>
+        <Category />
         <HomeBtn type="button" onClick={() => navigate('/')}>
           <Img src="https://img.freepik.com/premium-vector/potato-root-vegetables-carbohydrate-agriculture-farm-product_22052-4629.jpg"></Img>
         </HomeBtn>
