@@ -1,29 +1,49 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import MenuImg from '../assets/menu.png';
 
 export default function Category() {
+  //중복코드 삭제하는 법,,,?
+  const [items, setItems] = useState([]);
+
+  //카테고리별 분류된 아이템 관리
+  const [filteredItems, setFilteredItems] = useState([]);
 
   //카테고리 메뉴 버튼 상태
   const [showDropDownBtn, setShowDropDownBtn] = useState(false);
   const [activateDropDown, setActivateDropDown] = useState(false);
+  const [activeCategory, setActiveCategory] = useState('');
+
+  //show DROP DOWN  MENU
   const dropDownCategory = () => {
-    alert('드롭다운 연결');
+    setShowDropDownBtn(!showDropDownBtn);
   };
+
+  //카테고리 클릭시 해당 상품들 필터링
+
+  const handleCategories = (categoryName) => {
+    const filteredItems = items.filter((item) => item.itemCategory === categoryName);
+    setFilteredItems(filteredItems);
+  };
+  useEffect(() => {
+    console.log(filteredItems);
+  }, [filteredItems]);
 
   return (
     <ConTainer>
       <CategoryBtn onClick={dropDownCategory} src={MenuImg} />
-      <DropDown>
-        <Content>All</Content>
-        <Content>의류</Content>
-        <Content>악세사리</Content>
-        <Content>전자제품</Content>
-        <Content>도서</Content>
-        <Content>생활용품</Content>
-        <Content>반려용품</Content>
-        <Content>기타</Content>
-      </DropDown>
+      {showDropDownBtn && (
+        <DropDown>
+          <Content onClick={() => handleCategories('')}>All</Content>
+          <Content onClick={() => handleCategories('의류')}>의류</Content>
+          <Content onClick={() => handleCategories('악세사리')}>악세사리</Content>
+          <Content onClick={() => handleCategories('전자제품')}>전자제품</Content>
+          <Content onClick={() => handleCategories('도서')}>도서</Content>
+          <Content onClick={() => handleCategories('생활용품')}>생활용품</Content>
+          <Content onClick={() => handleCategories('반려용품')}>반려용품</Content>
+          <Content onClick={() => handleCategories('기타')}>기타</Content>
+        </DropDown>
+      )}
     </ConTainer>
   );
 }
@@ -59,8 +79,12 @@ const CategoryBtn = styled.img`
 
 const DropDown = styled.ul`
   position: absolute;
-  /* background-color: #fbd6d6; */
-  width: 200px;
+  background-color: #f1e0e0;
+  margin-left: 40px;
+  width: 210px;
+  padding: 20px 0;
+  z-index: 999;
+  /* animation: 0.3s ease-in-out; */
 `;
 
 const Content = styled.li`
@@ -68,11 +92,11 @@ const Content = styled.li`
   align-items: center;
   justify-content: center;
   /* background-color: aqua; */
-  width: 200px;
-  height: 30px;
+  width: 210px;
+  height: 50px;
   font-size: 18px;
   &:hover {
     text-decoration: underline;
+    cursor: default;
   }
-
 `;
