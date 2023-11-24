@@ -3,7 +3,7 @@ import { auth, db } from '../firebase';
 
 // import styled from 'styled-components';
 
-function Comment() {
+export default function Comment() {
   const [user, setUser] = useState(null);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
@@ -41,8 +41,8 @@ function Comment() {
     }
   }, [user]);
 
-  const handleInputChange = (e) => {
-    setNewComment(e.target.value);
+  const handleInputChange = (event) => {
+    setNewComment(event.target.value);
   };
 
   const addComment = async () => {
@@ -86,11 +86,8 @@ function Comment() {
           </div>
         </div>
       ) : (
-        <p>로그인 되지 않음</p>
+        alert('로그인되지 않음')
       )}
-      ;
     </div>
   );
 }
-
-export default Comment;
