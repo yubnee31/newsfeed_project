@@ -20,7 +20,7 @@ const Router = () => {
         <Route path="detail" element={<Detail />} />
         <Route path="mypage" element={<Mypage items = {items} setItems = {setItems}/>} />
         <Route path="register" element={<Register items = {items} setItems = {setItems}/>} />
-
+        
       </Routes>
     </BrowserRouter>
   );
