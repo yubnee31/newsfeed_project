@@ -1,10 +1,10 @@
 import Layout from 'components/layouts/Layout';
-import React from 'react';
 import Main from 'components/layouts/Main';
+import React from 'react';
 function Home() {
   return (
     <Layout>
-      <Main />
+      <Main/>
     </Layout>
   );
 }

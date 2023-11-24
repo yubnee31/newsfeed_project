@@ -22,7 +22,6 @@ export default function MypagePost({ items, setItems }) {
     fetchData();
   }, []);
 
-  console.log(db);
 
   let userItem = [];
   user.uid === null ? (userItem = []) : (userItem = items.filter((item) => item.userId === user.uid));
@@ -44,14 +43,14 @@ export default function MypagePost({ items, setItems }) {
               .filter((item) => !item.sold)
               .map((item) => {
                 return (
-                  <Item key={item.id}>
-                    <div>
-                      <img src={null ?? defaultItem} alt="아바타이미지" />
+                  <Item key={item.id} onClick={()=>navigate(`/edit/${item.id}`)}>
+                    <div >
 
+                      <img src={null ?? defaultItem} alt="아바타이미지" />
                       <h1>{item.itemTitle}</h1>
                       <p>{item.itemInfo}</p>
                       <p>{item.itemPrice}</p>
-                      <button onClick={() => navigate(`/test/${item.id}`)}>클릭</button>
+                      {/* <button onClick={()=>navigate(`/edit/${item.id}`)}>클릭</button> */}
                     </div>
                   </Item>
                 );
@@ -67,7 +66,7 @@ export default function MypagePost({ items, setItems }) {
               .filter((item) => item.sold)
               .map((item) => {
                 return (
-                  <Item key={item.id}>
+                  <Item key={item.id} onClick={()=>navigate(`/edit/${item.id}`)}>
                     <div>
                       <img src={null ?? defaultItem} alt="아바타이미지" />
                       <h1>{item.itemTitle}</h1>

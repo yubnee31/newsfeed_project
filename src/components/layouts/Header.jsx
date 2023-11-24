@@ -7,9 +7,11 @@ import Category from 'components/Category';
 const SearchDiv = styled.div`
   display: flex;
   align-items: center;
-  width: 1000px;
+  justify-content: flex-start; // 카테고리 버튼을 왼쪽 끝으로 몰기 위해 flex-start 추가
+  /* background-color: red; */
+  width: 1200px; // 상품리스트 width와 맞춤 동일하게 설정
   height: 50px;
-  margin: 20px auto;
+  margin: 35px auto 20px auto; // 20px auto 에서 수정
 `;
 
 const HomeBtn = styled.button`
@@ -37,14 +39,14 @@ const SearchInput = styled.input`
   border: 3px solid #ab7323;
   border-radius: 20px;
   font-size: 20px;
-  position: relative;
-  margin-top: 15px;
+  /* position: relative; */
+  /* margin-top: 15px; */ // 대신 SearchDiv의 margin-top을 20->35로 조정
 `;
 
 const SearchBtn = styled.button`
   display: flex;
   margin-left: 20px;
-  margin-top: 15px;
+  /* margin-top: 15px; */ //대신 SearchDiv의 margin-top을 20->35로 조정
   position: relative;
   width: 60px;
   height: 60px;
@@ -55,8 +57,10 @@ const SearchBtn = styled.button`
   justify-content: center;
   font-size: 15px;
   color: #ab7323;
+  &:hover {
+    cursor: pointer;  //hover시 커서 변경
+  }
 `;
-
 
 const Title = styled.h1`
   font-size: 50px;
