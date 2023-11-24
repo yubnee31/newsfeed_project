@@ -33,7 +33,8 @@ export default function AddForm({ items, setItems }) {
 
   const addItem = async (event) => {
     event.preventDefault();
-    const newItem = { itemInfo, itemPrice, itemTitle, sold: false, userId: user.uid, isFavorite, timeStamp: DateAndTime() };
+    //itemImg는 왜 DB로 안가지
+    const newItem = { itemInfo, itemPrice, itemTitle, sold: false, userId: user.uid, isFavorite, itemImg, timeStamp: DateAndTime() };
     setItems((prev) => {
       return [...items, newItem];
     });
