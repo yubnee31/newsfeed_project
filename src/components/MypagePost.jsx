@@ -38,7 +38,7 @@ export default function MypagePost({ items, setItems }) {
           물건 판매하기
         </RegistItemBtn>
         <OnSale>
-          <p>판매중인 상품</p>
+          <ItemP>판매중인 상품</ItemP>
           <ItemWrapper>
             {userItem
               .filter((item) => !item.sold)
@@ -60,7 +60,7 @@ export default function MypagePost({ items, setItems }) {
         </OnSale>
 
         <SoldOut>
-          <p>판매완료된 상품</p>
+          <ItemP>판매완료된 상품</ItemP>
 
           <ItemWrapper>
             {userItem
@@ -137,4 +137,11 @@ const Item = styled.div`
     width: 270px;
     height: 270px;
   }
+`;
+
+const ItemP = styled.p`
+  color: #ab7323;
+  font-style: italic;
+  font-weight: bold;
+  font-size: 25px;
 `;
