@@ -1,5 +1,5 @@
 import { auth } from '../firebase';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
@@ -67,12 +67,20 @@ function SignUp({ setSignUpModal }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  // 닉네임 설정
+  const [name, setName ] = useState("");
+
   const signUp = async (event) => {
     event.preventDefault();
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       console.log('user', userCredential.user);
       alert('회원가입이 완료되었습니다.');
+
+      // 닉네임 설정
+      await updateProfile(auth.currentUser, {displayName:name})
+      //
+      
       setSignUpModal(false);
     } catch (error) {
       const errorCode = error.code;
@@ -111,7 +119,8 @@ function SignUp({ setSignUpModal }) {
               ></SignUpInput>
             </PasswordDiv>
           </EmailPwDiv>
-
+          {/* 닉네임 설정하는 부분 */}
+                <input value = {name} onChange={(e)=>setName(e.target.value)}/>
           <SignUpBtn onClick={signUp}>회원가입하기</SignUpBtn>
         </SignUpDiv>
       </SignUpForm>
