@@ -57,15 +57,21 @@ const ModalBody = styled.div`
 function SignUpLogIn() {
   const [logInModal, setLogInModal] = useState(false);
   const [signUpmodal, setSignUpModal] = useState(false);
-  const [doneLogin, setDoneLogin] = useState(false);
+  const [userId, setUserId] = useState(null);
+  const [doneLogin, setDoneLogin] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       console.log('user', user);
-      user===null? 
-      localStorage.setItem('login user', JSON.stringify({ email: '',displayName: '', uid:''}))
-      :localStorage.setItem('login user', JSON.stringify({ email: user.email,displayName: user.displayName, uid:user.uid}))
+      setDoneLogin(user);
+      doneLogin ? setUserId(user.uid) : setUserId(null);
+      user === null
+        ? localStorage.setItem('login user', JSON.stringify({ email: '', displayName: '', uid: '' }))
+        : localStorage.setItem(
+            'login user',
+            JSON.stringify({ email: user.email, displayName: user.displayName, uid: user.uid })
+          );
     });
   }, []);
 
@@ -73,7 +79,6 @@ function SignUpLogIn() {
     event.preventDefault();
     await signOut(auth);
     alert('로그아웃 되었습니다.');
-    setDoneLogin(false);
     setLogInModal(false);
   };
 
