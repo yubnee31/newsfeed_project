@@ -3,6 +3,7 @@ import { db } from "../firebase";
 import { deleteDoc, doc,updateDoc } from "firebase/firestore";
 import React, { useState } from 'react'
 import { useNavigate, useParams } from "react-router-dom"
+import styled from "styled-components";
 
 export default function Edit({items, setItems}) {
     const params = useParams();
@@ -64,8 +65,9 @@ export default function Edit({items, setItems}) {
 
   return (
     <Layout>
+      <Main>
         {!editMode?
-        <div>
+        <SelectedItemSection>
             
                     <div>
                         <p>{selectedItem.itemTitle}</p>
@@ -76,7 +78,8 @@ export default function Edit({items, setItems}) {
           
             <button onClick={()=>setEditMode(true)}>수정하기</button>
             <button onClick={deleteItem}>삭제하기</button>
-      </div>
+            <button onClick={()=>navigate('/mypage')}>돌아가기</button>
+      </SelectedItemSection>
       :
 
       <form onSubmit={updateItem}>
@@ -99,7 +102,24 @@ export default function Edit({items, setItems}) {
 
       </form>
     }
+    </Main>
     </Layout>
 
   )
 }
+const Main = styled.main`
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+
+`
+const SelectedItemSection = styled.section`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid black;
+  height:400px;
+  width:100%;
+  
+`
