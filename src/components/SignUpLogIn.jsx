@@ -64,6 +64,7 @@ function SignUpLogIn() {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       console.log('user', user);
+      console.log(userId);
       setDoneLogin(user);
       doneLogin ? setUserId(user.uid) : setUserId(null);
       user === null
