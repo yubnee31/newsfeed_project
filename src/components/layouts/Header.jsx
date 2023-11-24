@@ -74,7 +74,23 @@ const Title = styled.h1`
 `;
 
 const PostBtn = styled.button`
-  padding: 15px;
+  display: flex;
+  margin-left: 20px;
+  /* margin-top: 15px; */ //대신 SearchDiv의 margin-top을 20->35로 조정
+  width: 100px;
+  height: 60px;
+  align-items: center;
+  border: none;
+  background-color: #ab722374;
+  border-radius: 15px;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 600;
+  color: white;
+  &:hover {
+    cursor: pointer; //hover시 커서 변경
+    background-color: #ae7a32c7;
+  }
 `;
 
 function Header() {
