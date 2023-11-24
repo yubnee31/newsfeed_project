@@ -4,30 +4,31 @@ import { addDoc, collection } from 'firebase/firestore';
 import { db, storage } from '../firebase';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { useNavigate } from 'react-router-dom';
-import defaultItem from 'assets/defaultItem.png';
+
 
 export default function AddForm({ items, setItems }) {
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem('login user'));
+const user = JSON.parse(localStorage.getItem('login user'));
   const [itemInfo, setItemInfo] = useState('');
   const [itemPrice, setItemPrice] = useState('');
   const [itemTitle, setItemTitle] = useState('');
+  const [itemCategory, setItemCategory] = useState('');
   const [images, setImages] = useState({
     imageFiles: [],
     previewURLs: Array.from({ length: 4 }, (_, index) => `img/default_image${index + 1}.png`),
   });
   const inputRef = useRef(null);
 
-  useEffect((event) => {
-    event.preventDefault();
+
+  useEffect(() => {
     setImages({
       imageFiles: [],
       previewURLs: Array.from({ length: 4 }, (_, index) => `img/default_image${index + 1}.png`),
     });
   }, []);
 
-  const handleFileChange = async (e) => {
-    const selectedFiles = Array.from(e.target.files).slice(0, 4);
+  const handleFileChange = async (event) => {
+    const selectedFiles =Array.from(event.target.files(0)) ;
 
     try {
       const uploadPromises = selectedFiles.map(async (file) => {
@@ -71,28 +72,43 @@ export default function AddForm({ items, setItems }) {
   };
 
   const addItem = async () => {
-    const newItem = { itemInfo, itemPrice, itemTitle, sold: false, userId: user.uid };
-    setItems((prev) => [...items, newItem]);
-    const collectionRef = collection(db, 'items');
-    await addDoc(collectionRef, newItem);
+    if (images.imageFiles.length > 0 && itemInfo && itemPrice && itemTitle && itemCategory) {
+      const newItem = {
+        itemInfo,
+        itemPrice,
+        itemTitle,
+        itemCategory,
+        sold: false,
+        userId: user.uid,
+        images: images.imageFiles,
+      };
 
+      setItems((prev) => [...items, newItem]);
+
+      // Add the new item to Firestore
+      const collectionRef = collection(db, 'items');
+      await addDoc(collectionRef, newItem);
+
+  
     setItemInfo('');
     setItemPrice('');
     setItemTitle('');
-    navigate('/mypage');
-  };
+    setItemCategory({
+        itemCategory: '카테고리를 선택해주세요',
+    });
+    setImages({
+        imageFiles: [],
+        previewURLs: Array.from({ length: 4 }, (_, index) => `img/default_image${index + 1}.png`),
+    });
+    navigate('/addForm');
+  }else {
+    alert('모든 필드를 작성하고 이미지를 업로드하세요');
+  }
 
   return (
     <AddSection>
-         <div>
 
-<div>
-  {images.previewURLs.map((url, index) => (
-    <img key={index} src={url} alt={`Preview ${index + 1}`} />
-  ))}
-</div>
-</div>
-      <form onSubmit={addItem} key={user.uid}>
+      <form  key={user.uid}>
         <StyledContainer>
             <FileUploadSection>
           <UploaderWrapper>
@@ -125,7 +141,17 @@ export default function AddForm({ items, setItems }) {
               </CustomButton>
             </UploadButton>
           </UploaderWrapper>
-
+            <nav>
+                <ul>
+                <li>카테고리1</li>
+                <li>카테고리2</li>
+                <li>카테고리3</li>
+                <li>카테고리4</li>
+                <li>카테고리5</li>
+                <li>카테고리6</li>
+                <li>카테고리7</li>
+                </ul>
+            </nav>
           <InputField
             value={itemInfo}
             onChange={(event) => setItemInfo(event.target.value)}
@@ -145,12 +171,13 @@ export default function AddForm({ items, setItems }) {
           />
           <br />
           <br />
-          <SubmitButton type={"onSubmit"} onClick={addItem}>완료</SubmitButton>
+          <SubmitButton type="onSubmit" onClick={addItem}>완료</SubmitButton>
           </FileUploadSection>
         </StyledContainer>
       </form>
     </AddSection>
   );
+}
 }
 
 const StyledContainer = styled.div`
@@ -183,6 +210,11 @@ const InputField = styled.input`
   padding: 8px;
   margin-bottom: 16px;
 `;
+const AddSection = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
 
 const SubmitButton = styled.button`
   padding: 10px;
@@ -191,14 +223,8 @@ const SubmitButton = styled.button`
   border: none;
   border-radius: 5px;
   cursor: pointer;
-
   &:hover {
     background-color: #45a049;
   }
 `;
 
-const AddSection = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
