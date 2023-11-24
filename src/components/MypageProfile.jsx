@@ -53,6 +53,7 @@ export default function MypageProfile({ changeNickname, setChangeNickname, chang
           <form
             onSubmit={(e) => {
               e.preventDefault();
+              setEditMode(false);
             }}
           >
             <EditSection>
@@ -71,7 +72,7 @@ export default function MypageProfile({ changeNickname, setChangeNickname, chang
               </InputNewEmail>
             </EditSection>
             <EditBtn>
-              <button type="submit" onClick={() => setEditMode(false)}>
+              <button type="submit">
                 완료
               </button>
             </EditBtn>
