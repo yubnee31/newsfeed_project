@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { auth, db } from '../firebase';
-
+import { collection, doc, getDocs, addDoc, updateDoc, deleteDoc } from 'firebase/firestore';
+import TimeForComment from '../shared/TimeForComment';
+import { useNavigate } from 'react-router-dom';
 // import styled from 'styled-components';
 
 export default function Comment() {
+  const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
@@ -24,14 +27,16 @@ export default function Comment() {
     if (user) {
       const fetchComments = async () => {
         try {
-          const firestoreInstanec = db;
+          const collections = collection(db, 'comments');
 
-          const snapshot = await firestoreInstanec.collection('comments').where('userId', '==', user.uid).get();
-          const commentsDate = snapshot.docs.map((doc) => ({
-            id: doc.id,
+          const snapshot = await getDocs(collections);
+          const commentsList = snapshot.docs.map((doc) => ({
+            docId: doc.id,
+            createdAt: doc.createdAt,
             ...doc.data()
           }));
-          setComments(commentsDate);
+          console.log(commentsList);
+          setComments(commentsList);
         } catch (error) {
           console.error('Error fetching comments', error);
         }
@@ -41,27 +46,55 @@ export default function Comment() {
     }
   }, [user]);
 
-  const handleInputChange = (event) => {
+  const handleCommentChange = (event) => {
     setNewComment(event.target.value);
   };
 
-  const addComment = async () => {
+  const addComment = async (event) => {
+    // event.preventDefault();
     try {
-      await db.collection('comments').add({
+      const newItem = {
+        createdAt: TimeForComment(),
+        displayName: user.displayName,
+        email: user.email,
         text: newComment,
-        userId: user.uid,
-        createdAt: new Date()
-      });
+        uid: user.uid
+      };
+      await addDoc(collection(db, 'comments'), newItem);
       setNewComment('');
+
+      const collections = collection(db, 'comments');
+
+      const snapshot = await getDocs(collections);
+      const commentsList = snapshot.docs.map((doc) => ({
+        docId: doc.id,
+        createdAt: doc.createdAt,
+        ...doc.data()
+      }));
+      setComments(commentsList);
     } catch (error) {
       console.error('Error adding comment: ', error);
     }
   };
 
-  const deleteComment = async (commentId) => {
+  // const updateComment = async (event, commentId) => {
+  //   event.preventDefault();
+  //   try {
+  //     setNewComment('');
+  //     await updateDoc(doc(db, 'comments', commentId), {
+  //       text: newComment
+  //     });
+  //   } catch (error) {
+  //     console.error('Error update comment: ', error);
+  //   }
+  // };
+
+  const deleteComment = async (event, commentId) => {
+    // event.preventDefault();
     try {
-      await db.collection('comments').doc(commentId).delete();
-      setComments(comments.filter((comment) => comment.id !== commentId));
+      await deleteDoc(doc(db, 'comments', commentId));
+      const commentsList = comments.filter((comment) => comment.docId !== commentId);
+      setComments(commentsList);
     } catch (error) {
       console.error('Error deletinf comment: ', error);
     }
@@ -69,25 +102,48 @@ export default function Comment() {
 
   return (
     <div>
-      {user ? (
+      <div>
+        <h1>댓글</h1>
         <div>
-          <h1>댓글</h1>
-          <ul>
-            {comments.map((comment) => (
-              <li key={comment.id}>
-                {comment.text}
-                {comment.userId === user.uid && <button onClick={() => deleteComment(comment.id)}>삭제</button>}
-              </li>
-            ))}
-          </ul>
-          <div>
-            <input type="text" value={newComment} onChange={handleInputChange} placeholder="댓글을 입력하세요" />
-            <button onClick={addComment}>댓글추가</button>
-          </div>
+          <input
+            type="text"
+            value={newComment}
+            onChange={(event) => {
+              setNewComment(event.target.value);
+            }}
+            placeholder="댓글을 입력하세요"
+          />
+          <button type="button" onClick={() => addComment()}>
+            댓글추가
+          </button>
         </div>
-      ) : (
-        alert('로그인되지 않음')
-      )}
+        <div>
+          {/* <ul> */}
+          {comments.map((comment) => (
+            <div key={comment.docId}>
+              <p>{comment.text}</p>
+              <p>{comment.createdAt.toLocaleString()}</p>
+              <p>{comment.displayName}</p>
+              <p>{comment.email}</p>
+              <p>
+                {comment.uid === user.uid && (
+                  <button type="button" onClick={() => handleCommentChange()}>
+                    수정
+                  </button>
+                )}
+              </p>
+              <p>
+                {comment.uid === user.uid && (
+                  <button type="button" onClick={() => deleteComment(comment.docId)}>
+                    삭제
+                  </button>
+                )}
+              </p>
+            </div>
+          ))}
+          {/* </ul> */}
+        </div>
+      </div>
     </div>
   );
 }
