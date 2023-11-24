@@ -53,6 +53,7 @@ const SearchBtn = styled.button`
   border-radius: 15px;
   justify-content: center;
   font-size: 15px;
+  color: #ab7323;
 `;
 
 const CategoryBtn = styled.button`
@@ -67,6 +68,7 @@ const CategoryBtn = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
+  color: #ab7323;
 `;
 
 const Title = styled.h1`
@@ -76,6 +78,8 @@ const Title = styled.h1`
   justify-content: center;
   margin-top: 20px;
   color: #ab7323;
+  font-style: italic;
+  font-weight: bold;
 `;
 
 function Header() {

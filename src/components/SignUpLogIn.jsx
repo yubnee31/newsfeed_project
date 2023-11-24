@@ -17,13 +17,13 @@ const LoginSignUpBtn = styled.button`
   width: 120px;
   height: 40px;
   border-radius: 10px;
-
   margin-right: 7px;
   color: black;
   font-size: 16px;
   border: 2px solid #ab722374;
   cursor: pointer;
   background-color: transparent;
+  color: #ab7323;
 `;
 
 const CloseBtn = styled.span`

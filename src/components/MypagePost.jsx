@@ -106,9 +106,6 @@ const RegistItemBtn = styled.button`
   border: 3px solid #ab722374;
   border-radius: 10px;
   background-color: transparent;
-  :hover {
-    border: 4px solid #ab722374;
-  }
 `;
 const OnSale = styled.div`
   width: 900px;
