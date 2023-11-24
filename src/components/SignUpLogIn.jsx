@@ -81,6 +81,7 @@ function SignUpLogIn() {
     await signOut(auth);
     alert('로그아웃 되었습니다.');
     setLogInModal(false);
+    navigate('/');
   };
 
   return (
