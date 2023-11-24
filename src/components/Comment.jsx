@@ -122,7 +122,7 @@ export default function Comment() {
           {comments.map((comment) => (
             <div key={comment.docId}>
               <p>{comment.text}</p>
-              <p>{comment.createdAt.toLocaleString()}</p>
+              <p>{comment.createdAt}</p>
               <p>{comment.displayName}</p>
               <p>{comment.email}</p>
               <p>
