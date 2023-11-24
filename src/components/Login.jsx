@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { auth } from '../firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { memo } from 'react';
 
 const Title = styled.h2`
   font-size: 24px;
@@ -83,7 +82,6 @@ function Login({ setDoneLogin }) {
       console.log(userCredential.user.email);
       setEmail('');
       setPassword('');
-      setDoneLogin(true);
     } catch (error) {
       const errorCode = error.code;
       const errorMessage = error.message;
@@ -99,7 +97,6 @@ function Login({ setDoneLogin }) {
       const result = await signInWithPopup(auth, provider);
       console.log(result.user);
       console.log(result);
-      setDoneLogin(true);
       console.log(result.user.displayName);
     } catch (error) {
       const errorCode = error.code;
