@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 
 export default function Category() {
+
+  const [activateDropDown, setActivateDropDown] = useState(false);
+  const dropDownCategory = () => {
+
+  };
+
   return (
     <ConTainer>
-      <CategoryBtn>카테고리</CategoryBtn>
+      <CategoryBtn onClick={dropDownCategory}>카테고리</CategoryBtn>
       <DropDown>
       </DropDown>
     </ConTainer>
