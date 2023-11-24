@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { auth } from '../firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { memo } from 'react';
 
 const Title = styled.h2`
   font-size: 24px;

@@ -63,7 +63,10 @@ function SignUpLogIn() {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       console.log('user', user);
-      localStorage.setItem('login user', JSON.stringify({email: user.email, displayName: user.displayName, uid:user.uid}))
+      localStorage.setItem(
+        'login user',
+        JSON.stringify({ email: user.email, displayName: user.displayName, uid: user.uid })
+      );
     });
   }, []);
 
