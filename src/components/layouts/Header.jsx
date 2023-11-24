@@ -58,7 +58,7 @@ const SearchBtn = styled.button`
   font-size: 15px;
   color: #ab7323;
   &:hover {
-    cursor: pointer;  //hover시 커서 변경
+    cursor: pointer; //hover시 커서 변경
   }
 `;
 
@@ -71,6 +71,10 @@ const Title = styled.h1`
   color: #ab7323;
   font-style: italic;
   font-weight: bold;
+`;
+
+const PostBtn = styled.button`
+  padding: 15px;
 `;
 
 function Header() {
@@ -86,8 +90,9 @@ function Header() {
         </HomeBtn>
         <SearchInput placeholder=" 검색어를 입력하세요"></SearchInput>
         <SearchBtn>검색</SearchBtn>
+        {/* 게시물 작성 버튼 연결 */}
+        <PostBtn onClick={() => navigate('/AddPage')}>상품등록</PostBtn>
       </SearchDiv>
-      <div></div>
     </>
   );
 }

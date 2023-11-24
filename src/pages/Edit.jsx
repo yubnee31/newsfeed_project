@@ -13,7 +13,7 @@ export default function Edit({items, setItems}) {
     const [changedTitle, setChangedTitle] = useState("");
     const [changedInfo, setChangedInfo] = useState("");
     const [changedPrice, setChangedPrice] = useState("");
-    const [soldStatus, setSoldStatus] = useState('');
+    const [soldStatus, setSoldStatus] = useState('판매중');
 
       const updateItem = async (event) => {
         event.preventDefault();
@@ -69,38 +69,39 @@ export default function Edit({items, setItems}) {
         {!editMode?
         <SelectedItemSection>
             
-                    <div>
-                        <p>{selectedItem.itemTitle}</p>
-                        <p>{selectedItem.itemInfo}</p>
-                        <p>{selectedItem.itemPrice}</p>
-                    </div>
-                
+                    <ItemInfoSection>
+                        <ItemTitle>{selectedItem.itemTitle}</ItemTitle>
+                        <ItemInfo>{selectedItem.itemInfo}</ItemInfo>
+                        <ItemPrice>{selectedItem.itemPrice}</ItemPrice>
+                        </ItemInfoSection>
+
           
-            <button onClick={()=>setEditMode(true)}>수정하기</button>
-            <button onClick={deleteItem}>삭제하기</button>
-            <button onClick={()=>navigate('/mypage')}>돌아가기</button>
+            <EditBtn onClick={()=>setEditMode(true)}>수정하기</EditBtn>
+            <DeleteBtn onClick={deleteItem}>삭제하기</DeleteBtn>
+            <BackBtn onClick={()=>navigate('/mypage')}>돌아가기</BackBtn>
       </SelectedItemSection>
       :
 
-      <form onSubmit={updateItem}>
+      <SelectedItemForm onSubmit={updateItem}>
+        <ChangeSection>
         <label>상품제목</label>
-        <input value = {changedTitle} onChange={(e)=>setChangedTitle(e.target.value)}/>
+        <ChangeInput value = {changedTitle} onChange={(e)=>setChangedTitle(e.target.value)}/>
 
         <label>상품설명</label>
-        <input value={changedInfo} onChange={(e)=>setChangedInfo(e.target.value)}/>
+        <ChangeInput value={changedInfo} onChange={(e)=>setChangedInfo(e.target.value)}/>
 
         <label>상품가격</label>
-        <input value={changedPrice} onChange={(e)=>setChangedPrice(e.target.value)}/>
+        <ChangeInput value={changedPrice} onChange={(e)=>setChangedPrice(e.target.value)}/>
 
-        <select onChange={selectHendler}>
+        <ChangeSelect onChange={selectHendler}>
           <option value="판매완료">판매완료</option>
           <option value="판매중">판매중</option>
-        </select>
+        </ChangeSelect>
+        </ChangeSection>
+        <CompleteBtn type="submit">완료하기</CompleteBtn>
 
-        <button type="submit">완료하기</button>
 
-
-      </form>
+      </SelectedItemForm>
     }
     </Main>
     </Layout>
@@ -115,11 +116,117 @@ const Main = styled.main`
 `
 const SelectedItemSection = styled.section`
   display: flex;
+  border: 3px solid #ab7323;
+  border-radius: 20px;
+  margin: 20px;
+  width: 1000px;
+
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border: 1px solid black;
   height:400px;
-  width:100%;
-  
+  position: relative;
 `
+const SelectedItemForm = styled.form`
+  display: flex;
+  border: 3px solid #ab7323;
+  border-radius: 20px;
+  margin: 20px;
+  width: 1000px;
+
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height:400px;
+  position: relative;
+`
+
+const ItemInfoSection = styled.div`
+  top:90px;
+  left:320px;
+  width: 350px;
+  height:200px;
+  display: flex;
+  flex-direction: column;
+  gap:20px;
+  font-size:20px;
+`
+const ChangeSection = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 20px;
+`
+const ChangeInput = styled.input`
+  width : 200px;
+  font-size: 20px;
+  border:none;
+  border-bottom:3px solid #ab7323 ;
+  outline: none;
+
+`
+const ChangeSelect = styled.select`
+  width: 100px;
+  height: 30px;
+  font-size: 20px;
+  float:right;
+`
+const ItemTitle = styled.p`
+`
+const ItemInfo = styled.p`
+
+`
+const ItemPrice = styled.p`
+  font-size: 30px;
+  font-weight:500;
+  margin-top: 40px;
+`
+const EditBtn = styled.button`
+    position: absolute;
+    top:20px;
+    right:200px;
+    width: 120px;
+    height: 40px;
+    border: 3px solid #ab722374;
+    border-radius: 10px;
+    background-color: transparent;
+  cursor: pointer;
+`;
+
+const DeleteBtn = styled.button`
+  position: absolute;
+  top:20px;
+    right:70px;
+
+    width: 120px;
+    height: 40px;
+    border: 3px solid #ab722374;
+    border-radius: 10px;
+    background-color: transparent;
+    cursor: pointer;
+
+`;
+const BackBtn = styled.button`
+  position: absolute;
+  bottom:20px;
+  right:70px;
+  width: 120px;
+  height: 40px;
+  border: 3px solid #ab722374;
+  border-radius: 10px;
+  background-color: transparent;
+  cursor: pointer;
+
+`;
+const CompleteBtn = styled.button`
+  position: absolute;
+  bottom:20px;
+  right:70px;
+  width: 120px;
+  height: 40px;
+  border: 3px solid #ab722374;
+  border-radius: 10px;
+  background-color: transparent;
+  cursor: pointer;
+
+`;
