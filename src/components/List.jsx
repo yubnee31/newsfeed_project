@@ -30,8 +30,9 @@ export default function List({ title }) {
   // const visiblePopularItems = showLatestMore ? items : items.slice(0, 10);
 
   //최신 등록 순으로 정렬
-  const latestSortedDates = items.sort((a, b) =>b - a);
-  console.log(latestSortedDates)
+  const latestSortedDates = items.sort((a, b) =>b.timeStamp - a.timeStamp);
+  console.log(items);
+
   //관심 수 많은 순으로 정렬
   const mostPopular = () => {};
 
@@ -77,6 +78,7 @@ export default function List({ title }) {
         )} */}
       </TitleWrapper>
       <Items>
+        {/* 이부분 조건부 렌더링 하기 */}
         {latestSortedDates.map((item) => {
           return (
             <Item key={item.id} onClick={() => navigate(`/detail/${item.id}`)}>
