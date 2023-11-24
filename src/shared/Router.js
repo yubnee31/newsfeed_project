@@ -16,7 +16,7 @@ const Router = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="detail:id" element={<Detail />} />
+        <Route path="detail/:id" element={<Detail />} />
         <Route path="mypage" element={<Mypage items = {items} setItems = {setItems}/>} />
         <Route path="register" element={<Register items = {items} setItems = {setItems}/>} />
         <Route path="test/:id" element={<Test items = {items} setItems = {setItems}/>} />
