@@ -6,7 +6,7 @@ import { auth, storage } from '../firebase';
 import { useNavigate } from 'react-router-dom';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import defaultItem from 'assets/defaultItem.png';
-import DateAndTime from 'shared/DateAndTime';
+
 
 export default function AddForm({ items, setItems }) {
   const navigate = useNavigate();
@@ -34,7 +34,7 @@ export default function AddForm({ items, setItems }) {
   const addItem = async (event) => {
     event.preventDefault();
     //itemImg는 왜 DB로 안가지
-    const newItem = { itemInfo, itemPrice, itemTitle, sold: false, userId: user.uid, isFavorite, itemImg, timeStamp: DateAndTime() };
+    const newItem = { itemInfo, itemPrice, itemTitle, sold: false, userId: user.uid, isFavorite, itemImg, timeStamp: Date.now() };
     setItems((prev) => {
       return [...items, newItem];
     });

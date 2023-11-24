@@ -22,18 +22,19 @@ export default function List({ title }) {
   //하트가 클릭된 상품 관리
   const [countFavorites, setCountFavorites] = useState(0);
 
+  //최신 등록 순으로 정렬
+  const latestSortedDates = items.sort((a, b) => b.timeStamp - a.timeStamp);
+
+  //관심 수 많은 순으로 정렬
+  // const mostPopular
+
   //props로 받아오는 title 값에 따라 변경하기.
   // const visibleItems = title ? visibleLatestItems : visiblePopularItems;
 
   //더보기 상태에 따라 렌더링 개수 조절
-  // const visibleLatestItems = showLatestMore ? items : items.slice(0, 10);
-  // const visiblePopularItems = showLatestMore ? items : items.slice(0, 10);
+  // const visibleLatestItems = showLatestMore ? latestSortedDates : latestSortedDates.slice(0, 5);
 
-  //최신 등록 순으로 정렬
-  const latestSortedDates = items.sort((a, b) =>b - a);
-  console.log(latestSortedDates)
-  //관심 수 많은 순으로 정렬
-  const mostPopular = () => {};
+  const visiblePopularItems = showPopularMore ? items : items.slice(0, 5);
 
   // 전체 상품 데이터 불러오기
   useEffect(() => {
@@ -66,7 +67,7 @@ export default function List({ title }) {
     <ListWrapper>
       <TitleWrapper>
         <SectionTitle>{title ? '최신 등록 상품' : '인기 상품'}</SectionTitle>
-        {/* {title && (
+        {title && (
           <ShowMoreBtn
             onClick={() => {
               setShowLatestMore(!showLatestMore);
@@ -74,22 +75,38 @@ export default function List({ title }) {
           >
             {showLatestMore ? '접기' : '더보기'}
           </ShowMoreBtn>
-        )} */}
+        )}
       </TitleWrapper>
       <Items>
-        {latestSortedDates.map((item) => {
-          return (
-            <Item key={item.id} onClick={() => navigate(`/detail/${item.id}`)}>
-              <Favorite onClick={(event) => favoriteSwitch(event, item)}>{item.isFavorite ? '♥' : '♡'}</Favorite>
-              <Img src={Bear} />
-              <ItemInfo>
-                <p> {item.itemTitle}</p>
-                {/* 가격 천단위 콤마표시 -> toLocaleString() */}
-                <Price> {item.itemPrice.toLocaleString()} </Price>
-              </ItemInfo>
-            </Item>
-          );
-        })}
+        {/* 이부분 조건부 렌더링 하기 */}
+        {/* title true일때 최신, showLatestMore 상태 true일때 인기상품 렌더링 안되고 데이터 전체 최신순 정렬 */}
+        {showLatestMore
+          ? latestSortedDates.map((item) => {
+              return (
+                <Item key={item.id} onClick={() => navigate(`/detail/${item.id}`)}>
+                  <Favorite onClick={(event) => favoriteSwitch(event, item)}>{item.isFavorite ? '♥' : '♡'}</Favorite>
+                  <Img src={Bear} />
+                  <ItemInfo>
+                    <p> {item.itemTitle}</p>
+                    {/* 가격 천단위 콤마표시 -> toLocaleString() */}
+                    <Price> {item.itemPrice.toLocaleString()} </Price>
+                  </ItemInfo>
+                </Item>
+              );
+            })
+          : latestSortedDates.slice(0, 5).map((item) => {
+              return (
+                <Item key={item.id} onClick={() => navigate(`/detail/${item.id}`)}>
+                  <Favorite onClick={(event) => favoriteSwitch(event, item)}>{item.isFavorite ? '♥' : '♡'}</Favorite>
+                  <Img src={Bear} />
+                  <ItemInfo>
+                    <p> {item.itemTitle}</p>
+                    {/* 가격 천단위 콤마표시 -> toLocaleString() */}
+                    <Price> {item.itemPrice.toLocaleString()} </Price>
+                  </ItemInfo>
+                </Item>
+              );
+            })}
       </Items>
     </ListWrapper>
   );
@@ -102,7 +119,7 @@ const ListWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 10px auto;
+  margin: 30px auto;
   gap: 10px;
 `;
 
@@ -117,6 +134,7 @@ const SectionTitle = styled.h1`
   font-size: 35px;
   font-weight: 800;
   font-style: italic;
+  color: #ab7323;
   /* margin-right: auto; */
 `;
 

@@ -12,7 +12,8 @@ const SearchDiv = styled.div`
 `;
 
 const HomeBtn = styled.button`
-  margin-right: 100px;
+  margin-right: 50px;
+  margin-left: 20px;
   display: flex;
   align-items: center;
   width: 100px;
@@ -32,51 +33,70 @@ const SearchInput = styled.input`
   box-sizing: border-box;
   width: 500px;
   height: 60px;
-  border: 3px solid black;
+  border: 3px solid #ab7323;
   border-radius: 20px;
   font-size: 20px;
   position: relative;
+  margin-top: 15px;
 `;
 
 const SearchBtn = styled.button`
   display: flex;
   margin-left: 20px;
+  margin-top: 15px;
   position: relative;
   width: 60px;
   height: 60px;
   align-items: center;
-  background-color: black;
-  color: white;
+  border: 3px solid #ab722374;
+  background-color: transparent;
   border-radius: 15px;
   justify-content: center;
+  font-size: 15px;
+  color: #ab7323;
 `;
 
-// const CategoryBtn = styled.button`
-//   border-radius: 20px;
-//   font-size: 20px;
-//   width: 100px;
-//   height: 50px;
-//   background-color: transparent;
-//   margin-top: 20px;
-//   margin-left: 100px;
-//   display: flex;
-// `;
+const CategoryBtn = styled.button`
+  border: 3px solid #ab722374;
+  border-radius: 20px;
+  font-size: 18px;
+  width: 100px;
+  height: 60px;
+  background-color: transparent;
+  margin-top: 20px;
+  margin-left: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ab7323;
+`;
+
+const Title = styled.h1`
+  font-size: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  color: #ab7323;
+  font-style: italic;
+  font-weight: bold;
+`;
 
 function Header() {
   const navigate = useNavigate();
   return (
     <>
+      <Title>GAMZA</Title>
       <SignUpLogIn />
       <SearchDiv>
+        <CategoryBtn>카테고리</CategoryBtn>
         <HomeBtn type="button" onClick={() => navigate('/')}>
           <Img src="https://img.freepik.com/premium-vector/potato-root-vegetables-carbohydrate-agriculture-farm-product_22052-4629.jpg"></Img>
         </HomeBtn>
         <SearchInput placeholder=" 검색어를 입력하세요"></SearchInput>
         <SearchBtn>검색</SearchBtn>
       </SearchDiv>
-      {/* <div>
-        <CategoryBtn>카테고리</CategoryBtn>
-      </div> */}
+      <div></div>
     </>
   );
 }
