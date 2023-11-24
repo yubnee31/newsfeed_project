@@ -1,16 +1,15 @@
 import React from 'react';
-import Layout from 'components/layouts/Layout';
 import AddForm from 'components/AddForm';
+import Layout from 'components/layouts/Layout';
 
-
-
-
-function Addpage() {
-    return (
-        <Layout>
-            <AddForm/>
-        </Layout>
-    ) 
+function AddPage() {
+  return (
     
+<Layout>
+    <AddForm/>
+  </Layout>
+  )
+
 }
-export default Addpage;
+
+export default AddPage;

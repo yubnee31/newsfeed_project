@@ -1,5 +1,5 @@
 import { auth } from '../firebase';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 
@@ -9,12 +9,13 @@ const Title = styled.h2`
   line-height: 150%;
   margin-top: 30px;
   margin-right: 20px;
+  color: #ab7323;
 `;
 
 const SignUpForm = styled.form`
   margin-left: 25px;
   margin-top: 40px;
-  border: 2px solid black;
+  border: 2px solid #ab7323;
   border-radius: 20px;
   width: 350px;
   height: 320px;
@@ -30,6 +31,7 @@ const SignUpDiv = styled.div`
 `;
 const EmailPwDiv = styled.div`
   width: 200px;
+  color: #ab7323;
 `;
 
 const EmailDiv = styled.div`
@@ -47,7 +49,7 @@ const SignUpP = styled.p`
 const SignUpInput = styled.input`
   height: 30px;
   width: 200px;
-  border: 2px solid black;
+  border: 2px solid #ab722374;
 `;
 
 const PasswordDiv = styled.div`
@@ -58,8 +60,9 @@ const SignUpBtn = styled.button`
   margin-right: 10px;
   width: 150px;
   height: 40px;
-  background-color: black;
-  color: white;
+  border: 2px solid #ab7323;
+  background-color: #ab722341;
+  color: black;
   cursor: pointer;
 `;
 
@@ -67,12 +70,20 @@ function SignUp({ setSignUpModal }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  // 닉네임 설정
+  const [name, setName] = useState('');
+
   const signUp = async (event) => {
     event.preventDefault();
     try {
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       console.log('user', userCredential.user);
       alert('회원가입이 완료되었습니다.');
+
+      // 닉네임 설정
+      await updateProfile(auth.currentUser, { displayName: name });
+      //
+
       setSignUpModal(false);
     } catch (error) {
       const errorCode = error.code;
@@ -111,7 +122,8 @@ function SignUp({ setSignUpModal }) {
               ></SignUpInput>
             </PasswordDiv>
           </EmailPwDiv>
-
+          {/* 닉네임 설정하는 부분 */}
+          <input value={name} onChange={(e) => setName(e.target.value)} />
           <SignUpBtn onClick={signUp}>회원가입하기</SignUpBtn>
         </SignUpDiv>
       </SignUpForm>

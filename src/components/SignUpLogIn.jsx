@@ -17,11 +17,13 @@ const LoginSignUpBtn = styled.button`
   width: 120px;
   height: 40px;
   border-radius: 10px;
-  margin-top: 20px;
   margin-right: 7px;
-  background-color: black;
-  color: white;
+  color: black;
+  font-size: 16px;
+  border: 2px solid #ab722374;
   cursor: pointer;
+  background-color: transparent;
+  color: #ab7323;
 `;
 
 const CloseBtn = styled.span`
@@ -64,7 +66,6 @@ function SignUpLogIn() {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       console.log('user', user);
-      console.log(userId);
       setDoneLogin(user);
       doneLogin ? setUserId(user.uid) : setUserId(null);
       user === null
@@ -80,8 +81,8 @@ function SignUpLogIn() {
     event.preventDefault();
     await signOut(auth);
     alert('로그아웃 되었습니다.');
-    setDoneLogin(false);
     setLogInModal(false);
+    navigate('/');
   };
 
   return (

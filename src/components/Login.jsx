@@ -9,12 +9,13 @@ const Title = styled.h2`
   font-weight: bold;
   line-height: 150%;
   margin-top: 30px;
+  color: #ab7323;
 `;
 
 const LoginForm = styled.form`
   margin-left: 25px;
   margin-top: 40px;
-  border: 2px solid black;
+  border: 2px solid #ab7323;
   border-radius: 20px;
   width: 350px;
   height: 320px;
@@ -31,6 +32,7 @@ const LoginDiv = styled.div`
 const EmailPwDiv = styled.div`
   width: 200px;
   margin-left: 60px;
+  color: #ab7323;
 `;
 const EmailDiv = styled.div`
   margin-top: 40px;
@@ -47,7 +49,7 @@ const LoginP = styled.p`
 const LoginInput = styled.input`
   height: 30px;
   width: 200px;
-  border: 2px solid black;
+  border: 2px solid #ab722374;
 `;
 
 const PasswordDiv = styled.div`
@@ -65,8 +67,9 @@ const LoginBtn = styled.button`
   margin-right: 10px;
   width: 150px;
   height: 40px;
-  background-color: black;
-  color: white;
+  border: 2px solid #ab7323;
+  background-color: #ab722341;
+  color: black;
   cursor: pointer;
 `;
 
@@ -82,7 +85,6 @@ function Login({ setDoneLogin }) {
       console.log(userCredential.user.email);
       setEmail('');
       setPassword('');
-      setDoneLogin(true);
     } catch (error) {
       const errorCode = error.code;
       const errorMessage = error.message;
@@ -98,7 +100,6 @@ function Login({ setDoneLogin }) {
       const result = await signInWithPopup(auth, provider);
       console.log(result.user);
       console.log(result);
-      setDoneLogin(true);
       console.log(result.user.displayName);
     } catch (error) {
       const errorCode = error.code;
