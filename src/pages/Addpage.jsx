@@ -10,6 +10,7 @@ function Addpage() {
     return (
         <Layout>
             <Imageadd/>
+            <AddForm/>
         </Layout>
     ) 
     
