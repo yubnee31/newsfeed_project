@@ -2,28 +2,29 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import defaultItem from 'assets/defaultItem.png';
 import { db } from '../firebase';
-import { collection, getDocs, query } from 'firebase/firestore';
-import { auth } from '../firebase';
+import { collection, getDocs, query } from "firebase/firestore";
 import { useNavigate } from 'react-router-dom';
 
-export default function MypagePost({ items, setItems }) {
-  const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem('login user'));
-  useEffect(() => {
-    const fetchData = async () => {
-      const q = query(collection(db, 'items'));
-      const querySnapshot = await getDocs(q);
-      const initialItems = [];
+export default function MypagePost({items, setItems}) {
+    const navigate = useNavigate();
+    const user = JSON.parse(localStorage.getItem('login user'));
+    useEffect(() => {
+        const fetchData = async () => {
+          const q = query(collection(db, "items"));
+          const querySnapshot = await getDocs(q);
+          const initialItems = [];
+    
+          querySnapshot.forEach((doc) => {
+            initialItems.push({ id: doc.id, ...doc.data() });
+          });
+          setItems(initialItems);
+        };
+        fetchData();
+      },[]);
 
-      querySnapshot.forEach((doc) => {
-        initialItems.push({ id: doc.id, ...doc.data() });
-      });
+      console.log(db);
 
-      setItems(initialItems);
-    };
 
-    fetchData();
-  }, []);
 
   let userItem = [];
   user.uid === null ? (userItem = []) : (userItem = items.filter((item) => item.userId === user.uid));
@@ -52,10 +53,11 @@ export default function MypagePost({ items, setItems }) {
                       <h1>{item.itemTitle}</h1>
                       <p>{item.itemInfo}</p>
                       <p>{item.itemPrice}</p>
+                      <button onClick={()=>navigate(`/test/${item.id}`)}>클릭</button>
                     </div>
                   </Item>
-                );
-              })}
+                );})}
+              
           </ItemWrapper>
         </OnSale>
 
@@ -81,8 +83,8 @@ export default function MypagePost({ items, setItems }) {
         </SoldOut>
       </PostSection>
     </>
-  );
-}
+  );}
+
 
 const PostSection = styled.section`
   width: 1000px;
