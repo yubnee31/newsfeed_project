@@ -45,7 +45,7 @@ export default function MypageProfile({changeNickname, setChangeNickname,changeE
                 <img src = {profileImg} alt = "아바타이미지"/>
             </Avatar>
             <NicknameAndMail>
-                <p>닉네임 : jinwoo</p>
+                <p>닉네임 : {user.displayName}</p>
                 <p>이메일 : {user.email}</p>
             </NicknameAndMail>
         </UserInfo>
