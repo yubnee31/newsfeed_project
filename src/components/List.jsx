@@ -1,9 +1,8 @@
-import { db } from '../firebase';
-import { collection, getDocs, query } from 'firebase/firestore'; // 수정: getDocs 사용
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import Bear from '../assets/bear.jpeg';
-import DateAndTime from 'shared/DateAndTime';
+import { useItems } from 'shared/Items';
+
 // 관심 버튼 이미지로 변경하기
 // import FavoriteImg from '../assets/Favorite.png'
 import { useNavigate } from 'react-router-dom';
@@ -11,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 
 export default function List({ title }) {
   const navigate = useNavigate();
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useItems([]);
 
   //최신등록상품 더보기 상태
   const [showLatestMore, setShowLatestMore] = useState(false);
@@ -35,24 +34,6 @@ export default function List({ title }) {
   // const visibleLatestItems = showLatestMore ? latestSortedDates : latestSortedDates.slice(0, 5);
 
   const visiblePopularItems = showPopularMore ? items : items.slice(0, 5);
-
-  // 전체 상품 데이터 불러오기
-  useEffect(() => {
-    const fetchData = async () => {
-      // collection 이름이 todos인 collection의 모든 document를 가져옵니다.
-      const q = query(collection(db, 'items'));
-      const querySnapshot = await getDocs(q);
-
-      const initialItems = [];
-      querySnapshot.forEach((doc) => {
-        initialItems.push({ id: doc.id, ...doc.data() });
-      });
-
-      // firestore에서 가져온 데이터를 state에 전달
-      setItems(initialItems);
-    };
-    fetchData();
-  }, []);
 
   //관심 버튼 상태 변경
   const favoriteSwitch = (event, clickedItem) => {
