@@ -40,7 +40,6 @@ export default function List({ title }) {
     });
     setItems(updatedFavorites);
   };
-
   return (
     <>
       <TitleWrapper>

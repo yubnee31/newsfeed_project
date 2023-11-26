@@ -16,6 +16,8 @@ const AddForm = ({ items, setItems }) => {
   const [selectedFile, setSelectedFile] = useState([]);
   const [timeStamp, setTimeStamp] = useState('');
   const [isFavorite, setItemFavorite] = useState(false);
+  const [category, setCategory] = useState('');
+
 
   // 파일 선택 시 호출되는 함수
   const handleFileChange = async (e) => {
@@ -46,45 +48,16 @@ const AddForm = ({ items, setItems }) => {
     updatedPreviewUrls.splice(index, 1);
     setPreviewUrl(updatedPreviewUrls);
   };
-  // 등록 클릭 시 호출되는 함수 
-  const HandleUpload = async () => {
-    try {
-      const uploadPromises = selectedFile.map(async (file) => {
-        const storageRef = ref(storage, `images/${file.name}`);
-        await uploadBytes(storageRef, file);
-        return await getDownloadURL(storageRef);
-      });
-      const downloadURLs = await Promise.all(uploadPromises);
-      const newItem = {
-        itemInfo,
-        itemPrice,
-        itemTitle,
-        itemcategory,
-        images: downloadURLs,
-        sold: false,
-        timeStamp: new Date(),
-        isFavorite: false
-      };
-      // 아이템 목록 업데이트
-      setItems((prev) => [newItem, ...prev]);
-      const collectionRef = collection(db, 'items');
-      await addDoc(collectionRef, newItem);
-      // 입력값 초기화
-      setItemInfo('');
-      setItemPrice(0);
-      setItemTitle('');
-      setItemCategory('');
-      setSelectedFile([]);
-      setPreviewUrl([]);
-      isFavorite(false);
-      alert('상품이 등록됬습니다!');
-    } catch (error) {
-      console.error('Error adding document: ', error.message, error.code);
-      alert('등록 중 오류가 발생했습니다. 나중에 다시 시도해주세요.');
-    }
+
+
+  // 카테고리
+  const ChangehandleCategory = (event) => {
+    const eventHandler = event.target.value;
+   // if (eventHandler !== '' && !tags.some((tag) => tag.Categories === eventHandler)) {
+    setCategory(eventHandler);
+   // }
   };
 
-  // 카테고리 라인 
   const Categories = [
     {
       id: 1,
@@ -115,15 +88,57 @@ const AddForm = ({ items, setItems }) => {
       itemcategory: '기타'
     }
   ];
-  // 카테고리
-  const ChangehandleCategory = (event) => {
-    const eventHandler = event.target.value;
-    if (eventHandler !== '' && !tags.some((tag) => tag.Categories === eventHandler)) {
-      setFixedTags(eventHandler);
-      setTags([...tags, eventHandler]);
-    }
-  };
 
+
+  // 등록 클릭 시 호출되는 함수 
+  const HandleUpload = async () => {
+    if (!itemInfo || itemPrice === 0  || !itemTitle  || selectedFile.length === 0) {
+      alert('모든 필수 항목을 입력해주세요.');
+      return;
+    } else if (isNaN(itemPrice)) { 
+      alert('숫자만 입력 가능합니다.')
+    } else {
+      try {
+        const uploadPromises = selectedFile.map(async (file) => {
+          const storageRef = ref(storage, `images/${file.name}`);
+          await uploadBytes(storageRef, file);
+          return await getDownloadURL(storageRef);
+        });
+        const downloadURLs = await Promise.all(uploadPromises);
+        const newItem = {
+          itemInfo,
+          itemPrice,
+          itemTitle,
+          itemcategory:category,
+          images: downloadURLs,
+          sold: false,
+          timeStamp: new Date(),
+          isFavorite: false
+         
+        };
+        // 아이템 목록 업데이트
+        setItems((prev) => [newItem, ...prev]);
+        const collectionRef = collection(db, 'items');
+        if( setItemCategory !== '' ) {
+          await addDoc(collectionRef, newItem);
+          // 입력값 초기화
+          setItemInfo('');
+          setItemPrice(0);
+          setItemTitle('');
+          setItemCategory('카테고리 선택');
+          setSelectedFile([]);
+          setPreviewUrl([]);
+          isFavorite(false);
+          alert('등록완료');
+       } 
+        } catch (error) {
+        console.error('Error adding document: ', error.message, error.code);
+        alert('등록 중 오류가 발생했습니다. 나중에 다시 시도해주세요.');
+      }
+    }
+    
+  };
+  // 카테고리 라인 
   return (
     <AddSection>
       <FileUploadSection>
@@ -148,29 +163,20 @@ const AddForm = ({ items, setItems }) => {
       <FormContainer>
         <InputFieldTitle value={itemTitle} onChange={(event) => setItemTitle(event.target.value)} placeholder="제목" />
 
-        <CategoryDropdown value={itemcategory} onChange={ChangehandleCategory}>
-
-          <option value="" disabled>카테고리 선택</option>
+        <CategoryDropdown  onChange={ChangehandleCategory}>
+         <option  disabled>카테고리 선택</option>  
           {Array.isArray(Categories) && Categories.map((category) => (
           <option key={category.id} value={category.itemcategory}>
-                {category.itemcategory}
+                {[category.itemcategory]}
             </option>
           ))}
-          {/* <option value="의류">의류</option>
-          <option value="전자제품">전자제품</option>
-          <option value="악세사리">악세사리</option>
-          <option value="악세사리">반려용품</option>
-          <option value="악세사리">도서</option>
-          <option value="악세사리">생활용품</option>
-          <option value="악세사리">악세사리</option>
-          <option value="악세사리">기타</option> */}
         </CategoryDropdown>
         <InputFieldComment
           value={itemInfo}
           onChange={(event) => setItemInfo(event.target.value)}
           placeholder="상품 설명"
         />
-        <InputFieldPrice value={itemPrice} onChange={(event) => setItemPrice(event.target.value)} placeholder="가격" />
+        <InputFieldPrice  type="number" value={itemPrice} onChange={(event) => setItemPrice(event.target.value)} placeholder="가격" />
         <SubmitButton onClick={HandleUpload}>등록</SubmitButton>
       </FormContainer>
     </AddSection>
