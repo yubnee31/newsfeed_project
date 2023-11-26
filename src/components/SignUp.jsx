@@ -59,8 +59,6 @@ function SignUp({ setSignUpModal }) {
               ></SignUpInput>
             </PasswordDiv>
           </EmailPwDiv>
-          {/* 닉네임 설정하는 부분 */}
-          <input value={name} onChange={(e) => setName(e.target.value)} />
           <SignUpBtn onClick={signUp}>회원가입하기</SignUpBtn>
         </SignUpDiv>
       </SignUpForm>

@@ -11,16 +11,11 @@ export default function List() {
 
   //최신 등록 순으로 정렬
   const latestSorted = items.sort((a, b) => b.timeStamp - a.timeStamp);
-  // console.log('최신순 정렬', latestSorted);
 
   //더보기 버튼
   const handleShowMoreBtn = () => {
     setShowLatestMore(!showLatestMore);
   };
-  // useEffect(() => {
-  //   console.log('최신더보기 상태', showLatestMore);
-  //   console.log('인기더보기 상태', showPopularMore);
-  // }, [handleShowMoreBtn]);
 
   //관심 버튼 상태 변경
   const favoriteSwitch = (event, clickedItem) => {
@@ -46,7 +41,6 @@ export default function List() {
 }
 
 const Container = styled.div`
-  /* background-color: red; */
   width: 1200px;
   margin-top: 70px;
 `;
@@ -77,7 +71,6 @@ const ShowMoreBtn = styled.p`
 
 const Items = styled.div`
   position: relative;
-  /* background-color: #d6ed9d; */
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-gap: 10px;

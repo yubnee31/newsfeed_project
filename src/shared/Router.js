@@ -3,7 +3,6 @@ import Home from 'pages/Home';
 import Mypage from 'pages/Mypage';
 import React, { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Search from 'pages/Search';
 import Addpage from 'pages/Addpage';
 
 const Router = () => {
@@ -18,7 +17,6 @@ const Router = () => {
         <Route path="/" element={<Home />} />
         <Route path="addpage" element={<Addpage items={items} setItems={setItems} />} />
         <Route path="detail/:id" element={<Detail items={items} setItems={setItems} />} />
-        <Route path="/search" element={<Search />} />
         <Route path="mypage" element={<Mypage items={items} setItems={setItems} />} />
       </Routes>
     </BrowserRouter>
