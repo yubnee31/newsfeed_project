@@ -41,12 +41,6 @@ export default function List() {
         {showLatestMore
           ? latestSorted.map((item) => <Item key={item.id} favoriteSwitch={favoriteSwitch} item={item} />)
           : latestSorted.slice(0, 6).map((item) => <Item key={item.id} favoriteSwitch={favoriteSwitch} item={item} />)}
-        {/* 인기상품 아직 미구현 */}
-        {/* {showPopularMore
-          ? mostPopularSorted.map((item) => <Item key={item.id} favoriteSwitch={favoriteSwitch} item={item} />)
-          : mostPopularSorted
-              .slice(0, 5)
-              .map((item) => <Item key={item.id} favoriteSwitch={favoriteSwitch} item={item} />)} */}
       </Items>
     </Container>
   );
