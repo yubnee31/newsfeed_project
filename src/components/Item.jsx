@@ -4,10 +4,14 @@ import { useNavigate } from 'react-router-dom';
 
 const Item = ({ item, favoriteSwitch }) => {
   const navigate = useNavigate();
+  console.log(`${item.id}: ${item.images}`);
   return (
     <StItem key={item.id} onClick={() => navigate(`/detail/${item.id}`)}>
       <Favorite onClick={(event) => favoriteSwitch(event, item)}>{item.isFavorite ? '♥' : '♡'}</Favorite>
-      <Img src={Bear} />
+      <ImgContainer>
+        {item.sold && <SoldStatus>SOLD</SoldStatus>}
+        <Img src={Bear} sold={item.sold} alt="item image" />
+      </ImgContainer>
       <ItemInfo>
         <p> {item.itemTitle}</p>
         {/* 가격 천단위 콤마표시 -> toLocaleString() */}
@@ -16,17 +20,6 @@ const Item = ({ item, favoriteSwitch }) => {
     </StItem>
   );
 };
-
-const Favorite = styled.span`
-  font-size: 35px;
-  position: absolute;
-  width: 35px;
-  margin: 10px 170px 0 0;
-  color: white;
-  &:hover {
-    cursor: pointer;
-  }
-`;
 
 const StItem = styled.div`
   background-color: white;
@@ -42,10 +35,40 @@ const StItem = styled.div`
   }
 `;
 
-const Img = styled.img`
+const Favorite = styled.span`
+  font-size: 35px;
+  position: absolute;
+  width: 35px;
+  margin: 10px 170px 0 0;
+  color: white;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const ImgContainer = styled.div`
+  position: relative;
   width: 100%;
   height: 220px;
+`;
+
+const SoldStatus = styled.p`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  color: white;
+  font-size: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+`;
+
+const Img = styled.img`
+  width: 100%;
+  height: 100%;
   object-fit: cover;
+  filter: ${({ sold }) => (sold == true ? 'brightness(50%)' : 'none')};
 `;
 //왜 가운데야
 const ItemInfo = styled.div`
