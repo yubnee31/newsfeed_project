@@ -12,6 +12,8 @@ const AddForm = ({ items, setItems, tags, setTags }) => {
   const [fixedTags, setFixedTags] = useState('');
   const [previewUrl, setPreviewUrl] = useState([]);
   const [selectedFile, setSelectedFile] = useState([]);
+  const [timeStamp, setTimeStamp] = useState('');
+  const [isFavorite, setItemFavorite] = useState(false);
 
   // 파일 선택 시 호출되는 함수
   const handleFileChange = async (e) => {
@@ -58,7 +60,9 @@ const AddForm = ({ items, setItems, tags, setTags }) => {
         itemTitle,
         itemcategory,
         images: downloadURLs,
-        sold: false
+        sold: false,
+        timeStamp: new Date(),
+        isFavorite: false
       };
       // 아이템 목록 업데이트
       setItems((prev) => [newItem, ...prev]);
