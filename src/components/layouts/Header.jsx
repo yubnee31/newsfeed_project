@@ -51,11 +51,10 @@ export default function Header() {
 const SearchDiv = styled.div`
   display: flex;
   align-items: center;
-  justify-content: flex-start; // 카테고리 버튼을 왼쪽 끝으로 몰기 위해 flex-start 추가
-  /* background-color: red; */
-  width: 1200px; // 상품리스트 width와 맞춤 동일하게 설정
+  justify-content: flex-start;
+  width: 1200px;
   height: 50px;
-  margin: 35px auto 20px auto; // 20px auto 에서 수정
+  margin: 35px auto 20px auto;
 `;
 
 const HomeBtn = styled.button`
@@ -83,26 +82,24 @@ const SearchInput = styled.input`
   border: 3px solid #ab7323;
   border-radius: 20px;
   font-size: 20px;
-  /* margin-top: 15px; */ // 대신 SearchDiv의 margin-top을 20->35로 조정
 `;
 
 const SearchBtn = styled.button`
   display: flex;
   margin-left: 20px;
-  /* margin-top: 15px; */ //솔, SearchDiv의 margin-top을 20->35로 조정
   position: relative;
-  width: 100px; //솔, 너비 60 -> 100
+  width: 100px;
   height: 60px;
   align-items: center;
   border: 3px solid #ab722374;
   background-color: transparent;
   border-radius: 15px;
   justify-content: center;
-  font-size: 18px; // 15 -> 18
+  font-size: 18px;
   font-weight: 600;
   color: #ab7323;
   &:hover {
-    cursor: pointer; //솔, hover시 커서 변경
+    cursor: pointer;
   }
 `;
 
@@ -123,7 +120,6 @@ const Title = styled.h1`
 const PostBtn = styled.button`
   display: flex;
   margin: 13px 0 0 20px;
-  /* margin-top: 15px; */ //솔, SearchDiv의 margin-top을 20->35로 조정
   width: 200px;
   height: 60px;
   align-items: center;
@@ -135,18 +131,16 @@ const PostBtn = styled.button`
   font-weight: 600;
   color: white;
   &:hover {
-    cursor: pointer; //솔, hover시 커서 변경
+    cursor: pointer;
     background-color: #ae7a32c7;
   }
 `;
 
 const SearchForm = styled.form`
-  // 솔, SearchDiv -> SearchForm
   display: flex;
   align-items: center;
-  justify-content: flex-start; // 솔, 카테고리 버튼을 왼쪽 끝으로 몰기 위해 flex-start 추가
-  /* background-color: red; */
-  width: 1200px; // 솔, 상품리스트 width와 맞춤 동일하게 설정
+  justify-content: flex-start;
+  width: 1200px;
   height: 50px;
-  margin: 35px auto 20px auto; // 솔, 20px auto 에서 수정
+  margin: 35px auto 20px auto;
 `;

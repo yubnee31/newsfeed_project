@@ -2,14 +2,13 @@ import React, { useEffect, useState } from 'react';
 import List from 'components/List';
 import styled from 'styled-components';
 import { useLocation } from 'react-router-dom';
-import Search from 'pages/Search';
+import Search from 'components/Search';
 import { useItems } from 'shared/Items';
 
 export default function Main() {
-  const [items, setItems] = useItems();
+  const [items] = useItems();
   const [searchResults, setSearchResults] = useState([]);
   const { state: searchInput } = useLocation();
-  console.log('searchInput', searchInput);
 
   useEffect(() => {
     if (searchInput) {
@@ -17,7 +16,6 @@ export default function Main() {
         (item) => item.itemTitle.includes(searchInput) || item.itemInfo.includes(searchInput)
       );
       setSearchResults(filteredResults);
-      console.log('필터링된 검색결과', filteredResults);
     }
   }, [searchInput]);
 
@@ -41,13 +39,4 @@ const ListWrapper = styled.div`
   justify-content: center;
   margin: 30px auto;
   gap: 10px;
-`;
-
-const Container = styled.div`
-  /* background-color: powderblue; */
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
 `;
