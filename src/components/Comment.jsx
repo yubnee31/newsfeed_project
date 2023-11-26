@@ -28,7 +28,7 @@ const Setform = styled.form`
   margin: 20px;
   padding: 10px;
   & input {
-    width: 1000px;
+    width: 800px;
     height: 100px;
     border-radius: 12px;
     border: 3px solid #ab7323;
@@ -42,6 +42,9 @@ const CommentDiv = styled.div`
   justify-content: center;
   width: 1000px;
   height: 200px;
+
+  border-radius: 12px;
+  border: 3px solid #ab7323;
 `;
 
 const CommentInfo = styled.p`
@@ -51,6 +54,7 @@ const CommentInfo = styled.p`
   height: 100%;
 
   gap: 20px;
+  margin: 100px;
 
   & commentp {
     display: flex;
@@ -65,7 +69,6 @@ const CommentInfo = styled.p`
 
 const CommentBtn = styled.button`
   position: absolute;
-
   right: 400px;
   width: 120px;
   height: 40px;
@@ -77,7 +80,6 @@ const CommentBtn = styled.button`
 
 const Addbutton = styled.button`
   position: absolute;
-
   right: 400px;
   width: 120px;
   height: 40px;
@@ -89,7 +91,6 @@ const Addbutton = styled.button`
 
 const EditBtn = styled.button`
   position: absolute;
-
   right: 400px;
   width: 120px;
   height: 40px;
