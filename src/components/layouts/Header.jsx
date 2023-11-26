@@ -20,9 +20,6 @@ export default function Header() {
     });
     navigate(`/`, { state: searchInput });
   };
-  // useEffect(() => {
-  //   console.log('검색결과', searchResults);
-  // }, [searchResults]);
 
   return (
     <>
@@ -41,7 +38,6 @@ export default function Header() {
           ></SearchInput>
           <SearchBtn type="submit">검색</SearchBtn>
         </SearchForm>
-        {/* 게시물 작성 버튼 연결 */}
         <PostBtn onClick={() => navigate('/Addpage')}>상품등록</PostBtn>
       </SearchDiv>
     </>

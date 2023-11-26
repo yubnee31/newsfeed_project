@@ -9,7 +9,6 @@ export default function Main() {
   const [items] = useItems();
   const [searchResults, setSearchResults] = useState([]);
   const { state: searchInput } = useLocation();
-  // console.log(categoryName);
 
   useEffect(() => {
     if (searchInput) {
@@ -32,7 +31,6 @@ export default function Main() {
 }
 
 const ListWrapper = styled.div`
-  /* background-color: #edc29a; */
   width: 1200px;
   /* height: 450px; */
   display: flex;

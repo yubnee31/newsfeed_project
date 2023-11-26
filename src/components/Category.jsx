@@ -2,11 +2,10 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import MenuImg from '../assets/menu.png';
 import { useItems } from 'shared/Items';
-// import { useNavigate } from 'react-router-dom';
 
 export default function Category() {
   const [items, setItems] = useItems();
-  // const navigate = useNavigate();
+
   //카테고리별 분류된 아이템 관리
   const [filteredItems, setFilteredItems] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState('All');
@@ -32,7 +31,6 @@ export default function Category() {
         setFilteredItems(filteredList);
       }
       console.log('filteredItems', filteredItems);
-      // Navigate(`/`, { state: searchInput });
     },
     [selectedCategory],
     items
@@ -41,9 +39,6 @@ export default function Category() {
   const handleCategories = (category) => {
     setSelectedCategory(category);
   };
-  // useEffect(() => {
-  //   console.log('선택카테고리 상품', filteredItems);
-  // }, [filteredItems]);
 
   return (
     <ConTainer>
