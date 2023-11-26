@@ -7,7 +7,7 @@ const Item = ({ item, favoriteSwitch }) => {
   return (
     <StItem key={item.id} onClick={() => navigate(`/detail/${item.id}`)}>
       <Favorite onClick={(event) => favoriteSwitch(event, item)}>{item.isFavorite ? '♥' : '♡'}</Favorite>
-
+      <SoldStatus>SOLD</SoldStatus>
       <Img src={Bear} />
       <ItemInfo>
         <p> {item.itemTitle}</p>
@@ -17,17 +17,6 @@ const Item = ({ item, favoriteSwitch }) => {
     </StItem>
   );
 };
-
-const Favorite = styled.span`
-  font-size: 35px;
-  position: absolute;
-  width: 35px;
-  margin: 10px 170px 0 0;
-  color: white;
-  &:hover {
-    cursor: pointer;
-  }
-`;
 
 const StItem = styled.div`
   background-color: white;
@@ -42,6 +31,19 @@ const StItem = styled.div`
     cursor: pointer;
   }
 `;
+
+const Favorite = styled.span`
+  font-size: 35px;
+  position: absolute;
+  width: 35px;
+  margin: 10px 170px 0 0;
+  color: white;
+  &:hover {
+    cursor: pointer;
+  }
+`;
+
+const SoldStatus = styled.p``;
 
 const Img = styled.img`
   width: 100%;
