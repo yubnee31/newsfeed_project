@@ -1,20 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { addDoc, collection } from 'firebase/firestore';
 import { db, storage } from '../firebase';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { useNavigate } from 'react-router';
 
-const AddForm = ({ items, setItems, tags, setTags }) => {
+
+const AddForm = ({ items, setItems }) => {
   const [itemInfo, setItemInfo] = useState('');
   const [itemPrice, setItemPrice] = useState(0);
   const [itemTitle, setItemTitle] = useState('');
-  const [itemcategory, setItemCategory] = useState('');
+  const [itemcategory, setItemCategory] = useState(null);
   const [fixedTags, setFixedTags] = useState('');
+  const [tags, setTags] = useState([]);
   const [previewUrl, setPreviewUrl] = useState([]);
   const [selectedFile, setSelectedFile] = useState([]);
   const [timeStamp, setTimeStamp] = useState('');
   const [isFavorite, setItemFavorite] = useState(false);
+  const [category, setCategory] = useState('');
+
+
   const user = JSON.parse(localStorage.getItem('login user'));
   // 파일 선택 시 호출되는 함수
   const handleFileChange = async (e) => {
@@ -44,45 +49,6 @@ const AddForm = ({ items, setItems, tags, setTags }) => {
     const updatedPreviewUrls = [...previewUrl];
     updatedPreviewUrls.splice(index, 1);
     setPreviewUrl(updatedPreviewUrls);
-  };
-
-  // 등록 클릭 시 호출되는 함수
-  const HandleUpload = async () => {
-    try {
-      const uploadPromises = selectedFile.map(async (file) => {
-        const storageRef = ref(storage, `images/${file.name}`);
-        await uploadBytes(storageRef, file);
-        return await getDownloadURL(storageRef);
-      });
-      const downloadURLs = await Promise.all(uploadPromises);
-      const newItem = {
-        itemInfo,
-        itemPrice,
-        itemTitle,
-        itemcategory,
-        images: downloadURLs,
-        sold: false,
-        timeStamp: new Date(),
-        isFavorite: false,
-        userId: user.uid
-      };
-      // 아이템 목록 업데이트
-      setItems((prev) => [newItem, ...prev]);
-
-      const collectionRef = collection(db, 'items');
-      await addDoc(collectionRef, newItem);
-      // 입력값 초기화
-      setItemInfo('');
-      setItemPrice(0);
-      setItemTitle('');
-      setItemCategory('');
-      setSelectedFile([]);
-      setPreviewUrl([]);
-      alert('상품이 등록되었습니다!');
-    } catch (error) {
-      console.error('Error adding document: ', error.message, error.code);
-      alert('등록 중 오류가 발생했습니다. 나중에 다시 시도해주세요.');
-    }
   };
   const Categories = [
     {
@@ -114,19 +80,64 @@ const AddForm = ({ items, setItems, tags, setTags }) => {
       itemcategory: '기타'
     }
   ];
+
   // 카테고리
   const ChangehandleCategory = (event) => {
     const eventHandler = event.target.value;
-    const newCategory = tags.some((tag) => tag[0] === eventHandler);
-    if (!newCategory) {
-      setFixedTags(eventHandler);
-      if (eventHandler !== '') {
-        const tag = [eventHandler];
-        setTags([...tags, tag]);
-      }
-    }
+   // if (eventHandler !== '' && !tags.some((tag) => tag.Categories === eventHandler)) {
+    setCategory(eventHandler);
+   // }
   };
 
+  // 등록 클릭 시 호출되는 함수 
+  const HandleUpload = async () => {
+    if (!itemInfo || itemPrice === 0  || !itemTitle  || selectedFile.length === 0) {
+      alert('모든 필수 항목을 입력해주세요.');
+      return;
+    } else if (isNaN(itemPrice) || itemPrice === '') { 
+      alert('숫자만 입력 가능합니다.');
+    } else {
+      try {
+        const uploadPromises = selectedFile.map(async (file) => {
+          const storageRef = ref(storage, `images/${file.name}`);
+          await uploadBytes(storageRef, file);
+          return await getDownloadURL(storageRef);
+        });
+        const downloadURLs = await Promise.all(uploadPromises);
+        const newItem = {
+          itemInfo,
+          itemPrice,
+          itemTitle,
+          itemcategory:category,
+          images: downloadURLs,
+          sold: false,
+          timeStamp: new Date(),
+          isFavorite: false
+         
+        };
+        // 아이템 목록 업데이트
+        setItems((prev) => [newItem, ...prev]);
+        const collectionRef = collection(db, 'items');
+        if( itemcategory !== '' ) {
+          await addDoc(collectionRef, newItem);
+          // 입력값 초기화
+          setItemInfo('');
+          setItemPrice(0);
+          setItemTitle('');
+          setItemCategory('카테고리 선택');
+          setSelectedFile([]);
+          setPreviewUrl([]);
+          isFavorite(false);
+          alert('등록완료');
+       } 
+        } catch (error) {
+        console.error('Error adding document: ', error.message, error.code);
+        alert('등록 중 오류가 발생했습니다. 나중에 다시 시도해주세요.');
+      }
+    }
+    
+  };
+  // 카테고리 라인 
   return (
     <AddSection>
       <FileUploadSection>
@@ -145,36 +156,26 @@ const AddForm = ({ items, setItems, tags, setTags }) => {
         </UploaderWrapper>
         <CustomFileButton htmlFor="fileInput">파일선택</CustomFileButton>
       </FileUploadSection>
-
       <StyledFileInput type="file" multiple="multiple" onChange={handleFileChange} id="fileInput" />
 
       {/*  제목, 내용, 카테고리, 등록하기 */}
       <FormContainer>
         <InputFieldTitle value={itemTitle} onChange={(event) => setItemTitle(event.target.value)} placeholder="제목" />
-        <CategoryDropdown value={itemcategory} onChange={ChangehandleCategory}>
-          <option value="" disabled>
-            카테고리 선택
-          </option>
-          {Categories.map((category) => (
-            <option key={category.id} value={category.itemcategory}>
-              {category.itemcategory}
+
+        <CategoryDropdown  onChange={ChangehandleCategory}>
+         <option  disabled>카테고리 선택</option>  
+          {Array.isArray(Categories) && Categories.map((category) => (
+          <option  key={category.id} value={[category.itemcategory]}>
+                {[category.itemcategory]}
             </option>
           ))}
-          {/* <option value="의류">의류</option>
-          <option value="전자제품">전자제품</option>
-          <option value="악세사리">악세사리</option>
-          <option value="악세사리">반려용품</option>
-          <option value="악세사리">도서</option>
-          <option value="악세사리">생활용품</option>
-          <option value="악세사리">악세사리</option>
-          <option value="악세사리">기타</option> */}
         </CategoryDropdown>
         <InputFieldComment
           value={itemInfo}
           onChange={(event) => setItemInfo(event.target.value)}
           placeholder="상품 설명"
         />
-        <InputFieldPrice value={itemPrice} onChange={(event) => setItemPrice(event.target.value)} placeholder="가격" />
+        <InputFieldPrice  type="number" value={itemPrice} onChange={(event) => setItemPrice(event.target.value)} placeholder="가격" />
         <SubmitButton onClick={HandleUpload}>등록</SubmitButton>
       </FormContainer>
     </AddSection>
@@ -229,8 +230,8 @@ const ImageContainer = styled.div`
 `;
 
 const ArrayImage = styled.img`
-  width: 200px; /* 원하는 고정된 가로 크기로 설정 */
-  height: auto; /* 세로 크기를 가로 크기에 맞추도록 설정 */
+  width: 200px; 
+  height: auto; 
   padding: 20px;
   border: 1px solid #ddd;
   margin-bottom: 10px;

@@ -1,5 +1,6 @@
 import React from 'react';
 
 export default function FilteredCategory() {
-  return <CategoryContainer>{filteredList.length > 0 && filteredList}</CategoryContainer>;
+  return <CategoryContainer></CategoryContainer>;
 }
+const CategoryContainer = styled.div``;

@@ -2,7 +2,7 @@ import SignUpLogIn from 'components/SignUpLogIn';
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router';
-import CategoryMenu from 'components/CategoryMenu';
+import Category from 'components/Category';
 import { useItems } from 'shared/Items';
 
 export default function Header() {
@@ -29,7 +29,7 @@ export default function Header() {
       <Title>GAMZA</Title>
       <SignUpLogIn />
       <SearchDiv>
-        <CategoryMenu />
+        <Category />
         <HomeBtn type="button" onClick={() => navigate('/')}>
           <Img src="https://img.freepik.com/premium-vector/potato-root-vegetables-carbohydrate-agriculture-farm-product_22052-4629.jpg"></Img>
         </HomeBtn>

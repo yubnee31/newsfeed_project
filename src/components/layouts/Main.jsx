@@ -9,6 +9,7 @@ export default function Main() {
   const [items] = useItems();
   const [searchResults, setSearchResults] = useState([]);
   const { state: searchInput } = useLocation();
+  // console.log(categoryName);
 
   useEffect(() => {
     if (searchInput) {
@@ -25,7 +26,6 @@ export default function Main() {
 
   return (
     <ListWrapper>
-      {/* {searchInput && searchInput.length > 0 ? <FilteredCategory /> : <List />} */}
       {searchInput && searchInput.length > 0 ? <Search items={searchResults} searchInput={searchInput} /> : <List />}
     </ListWrapper>
   );
