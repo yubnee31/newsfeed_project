@@ -15,6 +15,7 @@ export default function Main() {
   // console.log('추출된 query(검색어)', query);
   const [searchResults, setSearchResults] = useState([]);
   const { state: searchInput } = useLocation();
+  console.log('searchInput', searchInput);
 
   useEffect(() => {
     if (searchInput) {
@@ -24,10 +25,16 @@ export default function Main() {
       setSearchResults(filteredResults);
       console.log('필터링된 검색결과', filteredResults);
     }
-  }, []);
+  }, [searchInput]);
+
+  useEffect(() => {
+    setSearchResults(items);
+  });
 
   return (
-    <ListWrapper>{searchInput === true ? <Search items={items} searchInput={searchInput} /> : <List />}</ListWrapper>
+    <ListWrapper>
+      {searchInput && searchInput.length > 0 ? <Search items={searchResults} searchInput={searchInput} /> : <List />}
+    </ListWrapper>
   );
 }
 

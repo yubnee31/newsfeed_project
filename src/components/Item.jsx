@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import Bear from '../assets/bear.jpeg';
 import { useNavigate } from 'react-router-dom';
 
 const Item = ({ item, favoriteSwitch }) => {
