@@ -46,7 +46,7 @@ export default function Header() {
           <SearchBtn type="submit">검색</SearchBtn>
         </SearchForm>
         {/* 게시물 작성 버튼 연결 */}
-        <PostBtn onClick={() => navigate('/AddPage')}>상품등록</PostBtn>
+        <PostBtn onClick={() => navigate('/Addpage')}>상품등록</PostBtn>
       </SearchDiv>
     </>
   );

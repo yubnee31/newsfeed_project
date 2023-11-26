@@ -48,16 +48,6 @@ const AddForm = ({ items, setItems }) => {
     updatedPreviewUrls.splice(index, 1);
     setPreviewUrl(updatedPreviewUrls);
   };
-
-
-  // 카테고리
-  const ChangehandleCategory = (event) => {
-    const eventHandler = event.target.value;
-   // if (eventHandler !== '' && !tags.some((tag) => tag.Categories === eventHandler)) {
-    setCategory(eventHandler);
-   // }
-  };
-
   const Categories = [
     {
       id: 1,
@@ -89,14 +79,21 @@ const AddForm = ({ items, setItems }) => {
     }
   ];
 
+  // 카테고리
+  const ChangehandleCategory = (event) => {
+    const eventHandler = event.target.value;
+   // if (eventHandler !== '' && !tags.some((tag) => tag.Categories === eventHandler)) {
+    setCategory(eventHandler);
+   // }
+  };
 
   // 등록 클릭 시 호출되는 함수 
   const HandleUpload = async () => {
     if (!itemInfo || itemPrice === 0  || !itemTitle  || selectedFile.length === 0) {
       alert('모든 필수 항목을 입력해주세요.');
       return;
-    } else if (isNaN(itemPrice)) { 
-      alert('숫자만 입력 가능합니다.')
+    } else if (isNaN(itemPrice) || itemPrice === '') { 
+      alert('숫자만 입력 가능합니다.');
     } else {
       try {
         const uploadPromises = selectedFile.map(async (file) => {
@@ -119,13 +116,13 @@ const AddForm = ({ items, setItems }) => {
         // 아이템 목록 업데이트
         setItems((prev) => [newItem, ...prev]);
         const collectionRef = collection(db, 'items');
-        if( setItemCategory !== '' ) {
+        if( category !== '' ) {
           await addDoc(collectionRef, newItem);
           // 입력값 초기화
           setItemInfo('');
           setItemPrice(0);
           setItemTitle('');
-          setItemCategory('카테고리 선택');
+          setCategory('');
           setSelectedFile([]);
           setPreviewUrl([]);
           isFavorite(false);
@@ -165,9 +162,9 @@ const AddForm = ({ items, setItems }) => {
 
         <CategoryDropdown  onChange={ChangehandleCategory}>
          <option  disabled>카테고리 선택</option>  
-          {Array.isArray(Categories) && Categories.map((category) => (
-          <option key={category.id} value={category.itemcategory}>
-                {[category.itemcategory]}
+          {Categories.map((category) => (
+          <option  key={category.id} value={category.category}>
+                {[category.category]}
             </option>
           ))}
         </CategoryDropdown>

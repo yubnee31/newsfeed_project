@@ -1,7 +1,7 @@
 import Detail from 'pages/Detail';
 import Home from 'pages/Home';
 import Mypage from 'pages/Mypage';
-import AddPage from 'pages/AddPage';
+import Addpage from 'pages/Addpage';
 import Register from 'pages/Register';
 import Edit from 'pages/Edit';
 import React, { useState } from 'react';
@@ -18,7 +18,7 @@ const Router = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="AddPage" element={<AddPage items={items} setItems={setItems} />} />
+        <Route path="Addpage" element={<Addpage items={items} setItems={setItems} />} />
         <Route path="detail/:id" element={<Detail />} />
         <Route path="/search" element={<Search />} />
         <Route path="mypage" element={<Mypage items={items} setItems={setItems} />} />
