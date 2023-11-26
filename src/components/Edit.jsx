@@ -1,14 +1,31 @@
 import Layout from 'components/layouts/Layout';
 import { db } from '../firebase';
 import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-
+import { collection, getDocs, query } from 'firebase/firestore';
 export default function Edit({ items, setItems }) {
   const params = useParams();
   const navigate = useNavigate();
-  const selectedItem = items.find((item) => item.id === params.id);
+  const [selectedItem, setSelectedItem] = useState({});
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const q = query(collection(db, 'items'));
+      const querySnapshot = await getDocs(q);
+      const initialItems = [];
+
+      querySnapshot.forEach((doc) => {
+        initialItems.push({ id: doc.id, ...doc.data() });
+      });
+      setItems(initialItems);
+      setSelectedItem(initialItems.find((item) => item.id === params.id))
+
+    };
+    fetchData();
+  }, []);
+
   const [editMode, setEditMode] = useState(false);
   const [changedTitle, setChangedTitle] = useState('');
   const [changedInfo, setChangedInfo] = useState('');
@@ -29,6 +46,7 @@ export default function Edit({ items, setItems }) {
           }
         });
       });
+      localStorage.setItem('selected Item', JSON.stringify({ email: '', displayName: '', uid: '' }))
     } else {
       await updateDoc(itemRef, {
         sold: false,
@@ -65,11 +83,11 @@ export default function Edit({ items, setItems }) {
   };
 
   return (
-    <Layout>
       <Main>
         {!editMode ? (
           <SelectedItemSection>
             <ItemInfoSection>
+              <ItemImg src={selectedItem.images[0]}></ItemImg>
               <ItemTitle>{selectedItem.itemTitle}</ItemTitle>
               <ItemInfo>{selectedItem.itemInfo}</ItemInfo>
               <ItemPrice>{selectedItem.itemPrice}</ItemPrice>
@@ -100,7 +118,6 @@ export default function Edit({ items, setItems }) {
           </SelectedItemForm>
         )}
       </Main>
-    </Layout>
   );
 }
 const Main = styled.main`
@@ -164,6 +181,9 @@ const ChangeSelect = styled.select`
   font-size: 20px;
   float: right;
 `;
+const ItemImg = styled.img`
+  
+`
 const ItemTitle = styled.p``;
 const ItemInfo = styled.p``;
 const ItemPrice = styled.p`
