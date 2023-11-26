@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import MenuImg from '../assets/menu.png';
+import { useItems } from 'shared/Items';
 
 export default function Category() {
-  //중복코드 삭제하는 법,,,?
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useItems();
 
   //카테고리별 분류된 아이템 관리
   const [filteredItems, setFilteredItems] = useState([]);
 
   //카테고리 메뉴 버튼 상태
   const [showDropDownBtn, setShowDropDownBtn] = useState(false);
-  const [activateDropDown, setActivateDropDown] = useState(false);
-  const [activeCategory, setActiveCategory] = useState('');
 
   //show DROP DOWN  MENU
   const dropDownCategory = () => {
@@ -25,15 +23,15 @@ export default function Category() {
     const filteredItems = items.filter((item) => item.itemCategory === categoryName);
     setFilteredItems(filteredItems);
   };
-  useEffect(() => {
-    console.log(filteredItems);
-  }, [filteredItems]);
+  // useEffect(() => {
+  //   console.log('선택카테고리 상품', filteredItems);
+  // }, [filteredItems]);
 
   return (
     <ConTainer>
       <CategoryBtn onClick={dropDownCategory} src={MenuImg} />
       {showDropDownBtn && (
-        <DropDown>
+        <DropDownMenu>
           <Content onClick={() => handleCategories('')}>All</Content>
           <Content onClick={() => handleCategories('의류')}>의류</Content>
           <Content onClick={() => handleCategories('악세사리')}>악세사리</Content>
@@ -42,7 +40,7 @@ export default function Category() {
           <Content onClick={() => handleCategories('생활용품')}>생활용품</Content>
           <Content onClick={() => handleCategories('반려용품')}>반려용품</Content>
           <Content onClick={() => handleCategories('기타')}>기타</Content>
-        </DropDown>
+        </DropDownMenu>
       )}
     </ConTainer>
   );
@@ -77,13 +75,14 @@ const CategoryBtn = styled.img`
 //   color: #ab7323;
 // `;
 
-const DropDown = styled.ul`
+const DropDownMenu = styled.ul`
   position: absolute;
-  background-color: #f1e0e0;
+  background-color: white;
   margin-left: 40px;
   width: 210px;
   padding: 20px 0;
   z-index: 999;
+  box-shadow: 1px 1px 3px 0 grey;
   /* animation: 0.3s ease-in-out; */
 `;
 
