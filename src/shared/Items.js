@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { db } from '../firebase';
 import { collection, getDocs, query } from 'firebase/firestore';
 
-// 이름을 컴포넌트 useItems로 설정 =>  useItems로 export하고 사용할 컴포넌트에서 import하여 구조분해할당하여 사용.
+//useItems 커스텀 훅 [items, setItems]를 반환하는 함수
+// 사용할 컴포넌트에서 import하여 구조분해할당하여 사용. useImport 후   const [items, setItems] = useItems(); 형태로 사용
 export const useItems = () => {
   const [items, setItems] = useState([]);
 
@@ -26,5 +27,5 @@ export const useItems = () => {
     fetchData();
   }, []);
 
-  return { items, setItems };
+  return [items, setItems];
 };

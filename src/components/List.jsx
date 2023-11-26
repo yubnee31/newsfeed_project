@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 
 export default function List({ title }) {
   const navigate = useNavigate();
-  const [items, setItems] = useItems([]);
+  const [items, setItems] = useItems();
 
   //최신등록상품 더보기 상태
   const [showLatestMore, setShowLatestMore] = useState(false);
