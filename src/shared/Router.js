@@ -1,12 +1,14 @@
 import Detail from 'pages/Detail';
 import Home from 'pages/Home';
 import Mypage from 'pages/Mypage';
+import AddPage from 'pages/AddPage';
+import Register from 'pages/Register';
 import Edit from 'pages/Edit';
 import React, { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import Search from 'pages/Search';
-import Addpage from 'pages/Addpage';
+import Addpage from 'pages/AddPage';
 
 const Router = () => {
   const [items, setItems] = useState([

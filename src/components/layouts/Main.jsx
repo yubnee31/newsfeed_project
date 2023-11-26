@@ -5,8 +5,8 @@ import { useLocation } from 'react-router-dom';
 import Search from 'pages/Search';
 import { useItems } from 'shared/Items';
 
-export default function Main() {
-  const [items, setItems] = useItems();
+export default function Main({items, setItems}) {
+  
   // const location = useLocation();
   // console.log('location: navigate에서 넘어오는 부분', location);
   // const queryParams = new URLSearchParams(location.search);
@@ -30,7 +30,7 @@ export default function Main() {
 
   return (
     <ListWrapper>
-      <List title={true} />
+      <List title={true} items={items} setItems={setItems}/>
       {/* <List title={false} /> */}
     </ListWrapper>
   );

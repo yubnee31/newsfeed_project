@@ -7,9 +7,11 @@ import styled from "styled-components";
 import Comment from "components/Comment";
 
 export default function Edit({items, setItems}) {
+  
     const params = useParams();
     const navigate = useNavigate();
     const selectedItem = items.find((item)=>item.id===params.id);
+
     const [editMode, setEditMode] = useState(false);
     const [changedTitle, setChangedTitle] = useState("");
     const [changedInfo, setChangedInfo] = useState("");

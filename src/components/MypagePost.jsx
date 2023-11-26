@@ -44,7 +44,7 @@ export default function MypagePost({ items, setItems }) {
                 return (
                   <Item key={item.id} onClick={() => navigate(`/edit/${item.id}`)}>
                     <div>
-                      <img src={null ?? defaultItem} alt="아바타이미지" />
+                      <img src={null? defaultItem:item.images} alt="아이템이미지" />
                       <h1>{item.itemTitle}</h1>
                       <p>{item.itemInfo}</p>
                       <p>{item.itemPrice}</p>
