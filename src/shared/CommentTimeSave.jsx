@@ -1,4 +1,4 @@
-function TimeForComment() {
+function CommentTimeSave() {
   const today = new Date();
   let year = today.getFullYear();
   let month =
@@ -11,4 +11,8 @@ function TimeForComment() {
   return `${String(year)}-${month}-${date} ${hour}:${minute}:${second}`;
 }
 
-export default TimeForComment;
+// function CommentTimeShow() {
+
+// }
+
+export default CommentTimeSave;
