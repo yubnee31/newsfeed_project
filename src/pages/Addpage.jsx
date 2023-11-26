@@ -2,11 +2,11 @@ import React from 'react';
 import AddForm from 'components/AddForm';
 import Layout from 'components/layouts/Layout';
 
-function AddPage() {
+function AddPage({items, setItems}) {
   return (
     
 <Layout>
-    <AddForm/>
+    <AddForm items={items} setItems = {setItems}/>
   </Layout>
   )
 

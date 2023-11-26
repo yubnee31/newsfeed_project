@@ -74,7 +74,18 @@ const Title = styled.h1`
 `;
 
 const PostBtn = styled.button`
-  padding: 15px;
+  display: flex;
+    margin-left: 2px;
+    position: relative;
+    width: 90px;
+    height: 60px;
+    align-items: center;
+    border: 3px solid #ab722374;
+    background-color: transparent;
+    border-radius: 15px;
+    justify-content: center;
+    font-size: 15px;
+    color: #ab7323;
 `;
 
 function Header() {
