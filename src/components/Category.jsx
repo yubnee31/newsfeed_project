@@ -11,7 +11,7 @@ export default function Category() {
 
   //카테고리 메뉴 버튼 상태
   const [showDropDownBtn, setShowDropDownBtn] = useState(false);
-
+  
   //show DROP DOWN  MENU
   const dropDownCategory = () => {
     setShowDropDownBtn(!showDropDownBtn);
@@ -21,7 +21,9 @@ export default function Category() {
 
   const handleCategories = (categoryName) => {
     const filteredItems = items.filter((item) => item.itemCategory === categoryName);
+    console.log(categoryName);
     setFilteredItems(filteredItems);
+    console.log(filteredItems);
   };
   // useEffect(() => {
   //   console.log('선택카테고리 상품', filteredItems);

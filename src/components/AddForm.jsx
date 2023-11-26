@@ -16,6 +16,7 @@ const AddForm = ({ items, setItems, tags, setTags }) => {
   const [timeStamp, setTimeStamp] = useState('');
   const [isFavorite, setItemFavorite] = useState(false);
   const user = JSON.parse(localStorage.getItem('login user'));
+
   // 파일 선택 시 호출되는 함수
   const handleFileChange = async (e) => {
     const files = Array.from(e.target.files).slice(0, 4);
@@ -79,6 +80,7 @@ const AddForm = ({ items, setItems, tags, setTags }) => {
       setSelectedFile([]);
       setPreviewUrl([]);
       alert('상품이 등록되었습니다!');
+      console.log(newItem);
     } catch (error) {
       console.error('Error adding document: ', error.message, error.code);
       alert('등록 중 오류가 발생했습니다. 나중에 다시 시도해주세요.');

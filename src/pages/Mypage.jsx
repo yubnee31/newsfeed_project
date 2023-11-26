@@ -29,7 +29,6 @@ const Main = styled.section`
 `;
 
 const Footer = styled.footer`
-  background-color: green;
   height:200px;
 `;
 
