@@ -7,6 +7,7 @@ const Item = ({ item, favoriteSwitch }) => {
   return (
     <StItem key={item.id} onClick={() => navigate(`/detail/${item.id}`)}>
       <Favorite onClick={(event) => favoriteSwitch(event, item)}>{item.isFavorite ? '♥' : '♡'}</Favorite>
+
       <Img src={Bear} />
       <ItemInfo>
         <p> {item.itemTitle}</p>
