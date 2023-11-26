@@ -6,15 +6,13 @@ import Layout from 'components/layouts/Layout';
 
 function Mypage({items, setItems}) {
 
-  const [changeNickname, setChangeNickname] = useState("");
-  const [changeEmail, setChangeEmail] = useState("");
+
 
   return (
   <>
   <Layout>
       <Main>
-        <MypageProfile changeNickname={changeNickname} setChangeNickname = {setChangeNickname} changeEmail = {changeEmail} 
-        setChangeEmail = {setChangeEmail} items={items} setItems={setItems}/>
+        <MypageProfile items={items} setItems={setItems}/>
         <MypagePost items={items} setItems={setItems}/>
       </Main>
     <Footer/>
