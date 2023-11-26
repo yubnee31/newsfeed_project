@@ -82,8 +82,8 @@ const AddForm = ({ items,setItems, user }) => {
         itemTitle,
         category,
         sold: false,
-        userId: user.uid,
-        images: images.imageFiles,
+        // userId: user.uid,
+        // images: images.imageFiles,
       };
 
       // 아이템 목록 업데이트
@@ -99,14 +99,14 @@ const AddForm = ({ items,setItems, user }) => {
       setCategory('');
 
       // 이미지 초기화
-      setImages(({ imageFiles, ...rest }) => ({
-        ...rest,
-        imageFiles: [],
-        previewURLs: Array(4).fill().map((_, index) => `img/default_image${index + 1}.png`),
-      }));
+      // setImages(({ imageFiles, ...rest }) => ({
+      //   ...rest,
+      //   imageFiles: [],
+      //   previewURLs: Array(4).fill().map((_, index) => `img/default_image${index + 1}.png`),
+      // }));
 
       // 페이지 이동
-      navigate('/addForm');
+      navigate('/');
     } catch (error) {
       console.error('Error adding document: ', error);
       alert('등록 중 오류가 발생했습니다. 나중에 다시 시도해주세요.');

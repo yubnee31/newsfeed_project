@@ -7,7 +7,6 @@ import Edit from 'pages/Edit';
 import React, { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-
 const Router = () => {
   const [items, setItems] = useState([
     { text: '아이템 1', sold: false, id: 1 },
@@ -17,7 +16,7 @@ const Router = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="Addpage" element={<AddPage />} />
+        <Route path="Addpage" element={<AddPage items={items} setItems={setItems} />} />
         <Route path="detail/:id" element={<Detail />} />
         <Route path="mypage" element={<Mypage items={items} setItems={setItems} />} />
         <Route path="register" element={<Register items={items} setItems={setItems} />} />
