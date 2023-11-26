@@ -7,6 +7,8 @@ import Edit from 'pages/Edit';
 import React, { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
+import Search from 'pages/Search';
+
 const Router = () => {
   const [items, setItems] = useState([
     { text: '아이템 1', sold: false, id: 1 },
@@ -18,6 +20,7 @@ const Router = () => {
         <Route path="/" element={<Home />} />
         <Route path="Addpage" element={<AddPage items={items} setItems={setItems} />} />
         <Route path="detail/:id" element={<Detail />} />
+        <Route path="/search" element={<Search />} />
         <Route path="mypage" element={<Mypage items={items} setItems={setItems} />} />
         <Route path="register" element={<Register items={items} setItems={setItems} />} />
         <Route path="edit/:id" element={<Edit items={items} setItems={setItems} />} />

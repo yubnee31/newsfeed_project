@@ -1,6 +1,4 @@
 import React from 'react';
-import AddForm from 'components/AddForm';
-import Layout from 'components/layouts/Layout';
 
 function AddPage({items, setItems}) {
   return (
@@ -9,6 +7,7 @@ function AddPage({items, setItems}) {
     <AddForm items={items} setItems={setItems}/>
   </Layout>
   )
+
 
 }
 

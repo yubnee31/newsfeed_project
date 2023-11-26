@@ -5,22 +5,27 @@ import { db, storage } from '../firebase';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 import { useNavigate } from 'react-router-dom';
 
-const AddForm = ({ items,setItems, user }) => {
+const AddForm = ({ items, setItems, user }) => {
   const navigate = useNavigate();
   const [itemInfo, setItemInfo] = useState('');
   const [itemPrice, setItemPrice] = useState('');
   const [itemTitle, setItemTitle] = useState('');
   const [category, setCategory] = useState('');
+  const [isFavorite, setIsFavorite] = useState(false);
   const [images, setImages] = useState({
     imageFiles: [],
-    previewURLs: Array(4).fill().map((_, index) => `img/default_image${index + 1}.png`),
+    previewURLs: Array(4)
+      .fill()
+      .map((_, index) => `img/default_image${index + 1}.png`)
   });
   const inputRef = useRef(null);
 
   useEffect(() => {
     setImages({
       imageFiles: [],
-      previewURLs: Array(4).fill().map((_, index) => `img/default_image${index + 1}.png`),
+      previewURLs: Array(4)
+        .fill()
+        .map((_, index) => `img/default_image${index + 1}.png`)
     });
   }, []);
 
@@ -41,7 +46,7 @@ const AddForm = ({ items,setItems, user }) => {
       setImages(({ imageFiles, ...rest }) => ({
         ...rest,
         imageFiles: selectedFiles,
-        previewURLs: downloadURLs,
+        previewURLs: downloadURLs
       }));
     } catch (error) {
       console.error('이미지 업로드 에러 ', error);
@@ -53,7 +58,9 @@ const AddForm = ({ items,setItems, user }) => {
     setImages(({ imageFiles, ...rest }) => ({
       ...rest,
       imageFiles: [],
-      previewURLs: Array(4).fill().map((_, index) => `img/default_image${index + 1}.png`),
+      previewURLs: Array(4)
+        .fill()
+        .map((_, index) => `img/default_image${index + 1}.png`)
     }));
   };
 
@@ -64,7 +71,9 @@ const AddForm = ({ items,setItems, user }) => {
       setImages(({ imageFiles, ...rest }) => ({
         ...rest,
         imageFiles: [],
-        previewURLs: Array(4).fill().map((_, index) => `img/default_image${index + 1}.png`),
+        previewURLs: Array(4)
+          .fill()
+          .map((_, index) => `img/default_image${index + 1}.png`)
       }));
     } else {
       alert('사진을 등록하세요!');
@@ -80,10 +89,13 @@ const AddForm = ({ items,setItems, user }) => {
         itemInfo,
         itemPrice,
         itemTitle,
+        isFavorite,
         category,
         sold: false,
-        // userId: user.uid,
-        // images: images.imageFiles,
+
+        timestamp: new Date(),
+        userId: user.uid,
+        images: images.imageFiles
       };
 
       // 아이템 목록 업데이트
@@ -99,11 +111,14 @@ const AddForm = ({ items,setItems, user }) => {
       setCategory('');
 
       // 이미지 초기화
-      // setImages(({ imageFiles, ...rest }) => ({
-      //   ...rest,
-      //   imageFiles: [],
-      //   previewURLs: Array(4).fill().map((_, index) => `img/default_image${index + 1}.png`),
-      // }));
+
+      setImages(({ imageFiles, ...rest }) => ({
+        ...rest,
+        imageFiles: [],
+        previewURLs: Array(4)
+          .fill()
+          .map((_, index) => `img/default_image${index + 1}.png`)
+      }));
 
       // 페이지 이동
       navigate('/');
@@ -126,21 +141,13 @@ const AddForm = ({ items,setItems, user }) => {
             multiple="multiple"
           />
           <UploadButton>
-            <CustomButton
-              type="button"
-              variant="contained"
-              onClick={() => inputRef.current.click()}
-            >
+            <CustomButton type="button" variant="contained" onClick={() => inputRef.current.click()}>
               미리보기
             </CustomButton>
-            <CustomButton  color="error" variant="contained" onClick={deleteImages}>
+            <CustomButton color="error" variant="contained" onClick={deleteImages}>
               삭제
             </CustomButton>
-            <CustomButton
-              color="success"
-              variant="contained"
-              onClick={sendImagesToServer}
-            >
+            <CustomButton color="success" variant="contained" onClick={sendImagesToServer}>
               업로드
             </CustomButton>
           </UploadButton>
@@ -149,31 +156,16 @@ const AddForm = ({ items,setItems, user }) => {
 
       {/* 오른쪽 부분 (제목, 내용, 카테고리, 등록하기) */}
       <form onSubmit={addItem}>
-        <InputField
-          value={itemInfo}
-          onChange={(event) => setItemInfo(event.target.value)}
-          placeholder="상품 설명"
-        />
+        <InputField value={itemInfo} onChange={(event) => setItemInfo(event.target.value)} placeholder="상품 설명" />
         <br />
-        <InputField
-          value={itemPrice}
-          onChange={(event) => setItemPrice(event.target.value)}
-          placeholder="가격"
-        />
+        <InputField value={itemPrice} onChange={(event) => setItemPrice(event.target.value)} placeholder="가격" />
         <br />
-        <InputField
-          value={itemTitle}
-          onChange={(event) => setItemTitle(event.target.value)}
-          placeholder="제목"
-        />
+        <InputField value={itemTitle} onChange={(event) => setItemTitle(event.target.value)} placeholder="제목" />
         <br />
-        <CategoryDropdown
-          value={category}
-          onChange={(event) => setCategory(event.target.value)}
-        >
+        <CategoryDropdown value={category} onChange={(event) => setCategory(event.target.value)}>
           <option value="" disabled>
             카테고리 선택
-          </option >
+          </option>
           <option value="의류">의류</option>
           <option value="전자제품">전자제품</option>
           <option value="악세사리">악세사리</option>
@@ -181,8 +173,6 @@ const AddForm = ({ items,setItems, user }) => {
           <option value="악세사리">도서</option>
           <option value="악세사리">생활용품</option>
           <option value="악세사리">악세사리</option>
-
-          
         </CategoryDropdown>
         <br />
         <SubmitButton type="submit">완료</SubmitButton>
@@ -195,7 +185,7 @@ const AddForm = ({ items,setItems, user }) => {
 const AddSection = styled.div`
   display: flex;
   align-items: center;
-  justify-content: space-around; 
+  justify-content: space-around;
   height: 100vh;
 `;
 
