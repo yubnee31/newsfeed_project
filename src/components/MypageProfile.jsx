@@ -78,9 +78,7 @@ export default function MypageProfile() {
 
             </EditSection>
             <EditBtn>
-              <button type="submit">
-                완료
-              </button>
+              <button type="submit">완료</button>
             </EditBtn>
           </form>
         </div>
