@@ -67,7 +67,7 @@ const DropDownMenu = styled.ul`
   width: 210px;
   padding: 20px 0;
   z-index: 999;
-  box-shadow: 1px 1px 3px 0 grey;
+  box-shadow: 1px 1px 3px 0 gray;
   /* animation: 0.3s ease-in-out; */
 `;
 
