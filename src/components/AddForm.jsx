@@ -84,10 +84,9 @@ const AddForm = ({ items, setItems }) => {
  
 
   // 카테고리
-  const ChangehandleCategory = () => {
-    const CategoryValue = [...Categories];
+  const ChangehandleCategory = (event) => {
+    const CategoryValue = event.target.value;
     itemcategory(CategoryValue);
-  
   };
 
   // 등록 클릭 시 호출되는 함수 
@@ -129,9 +128,10 @@ const AddForm = ({ items, setItems }) => {
           setSelectedFile([]);
           setPreviewUrl([]);
           isFavorite(false);
-          alert('등록완료');
-       } 
+       }  
+       alert('등록완료');
         }catch (error) {
+          console.log("error :",error.message);
         alert('등록 중 오류가 발생했습니다. 나중에 다시 시도해주세요.');
       }
     }
@@ -154,8 +154,9 @@ const AddForm = ({ items, setItems }) => {
             </div>
           ))}
         </UploaderWrapper>
-        <CustomFileButton htmlFor="fileInput">파일선택</CustomFileButton>
+       
       </FileUploadSection>
+      <CustomFileButton htmlFor="fileInput">파일선택</CustomFileButton>
       <StyledFileInput type="file" multiple="multiple" onChange={handleFileChange} id="fileInput" />
 
       {/*  제목, 내용, 카테고리, 등록하기 */}
@@ -163,7 +164,7 @@ const AddForm = ({ items, setItems }) => {
         <InputFieldTitle value={itemTitle} onChange={(event) => setItemTitle(event.target.value)} placeholder="제목" />
 
         <CategoryDropdown  onChange={ChangehandleCategory}>
-         <option  disabled>카테고리 선택</option>  
+         <option value='' disabled>카테고리 선택</option>  
           { Categories.map((category) => (
           <option  key={category.id} value={category.itemcategory}>
                 {category.itemcategory}
@@ -195,22 +196,21 @@ const AddSection = styled.div`
 const FileUploadSection = styled.div`
   display: flex;
   width: 600px; /* 고정된 너비 설정 */
-  height: 300px; /* 고정된 높이 설정 */
+  height: 434px; /* 고정된 높이 설정 */
   overflow: hidden; /* 컨테이너 크기를 초과하는 내용을 숨김 */
   position: relative;
-  border: 1px solid #ddd;
+  justify-content: center;
+  border: 5px solid #ddd;
   color: burlywood;
-  margin-left: 200px;
+  margin-left: 250px;
   padding: 25px;
 `;
 
 const FormContainer = styled.div`
   width: 50%;
-  display: flex;
   flex-direction: column;
-  align-items: center;
   justify-content: center;
-  border: 1px solid #ddd;
+  border: 5px solid #ddd;
   padding: 20px;
 `;
 
@@ -253,39 +253,53 @@ const StyledFileInput = styled.input`
 `;
 const CustomFileButton = styled.label`
   position: absolute;
+  left: 250px;
+  bottom: 50px;
   background-color: burlywood;
   border: 1px solid #ddd;
   color: white;
-  padding: 20px;
+  padding: 30px;
   border-radius: 5px;
   margin-bottom: 10px;
   cursor: pointer;
+  &:hover {
+    background-color: #de9887;
+  }
 `;
 
 const InputFieldTitle = styled.input`
-  width: 50%;
+   display: inline-block;
+   align-items: center;
+  width: 500px;
   padding: 8px;
   margin-bottom: 16px;
   color: burlywood;
+  cursor: pointer;
 `;
 const InputFieldComment = styled.input`
+ display: inline-block;
   width: 80%;
+  height: 300px;
   padding: 8px;
   margin-bottom: 16px;
   color: burlywood;
+  cursor: pointer;
 `;
 const InputFieldPrice = styled.input`
   width: 80%;
   padding: 8px;
   margin-bottom: 16px;
   color: burlywood;
+  cursor: pointer;
 `;
 
 const CategoryDropdown = styled.select`
-  width: 80%;
+ display: inline-block;
+  width: 38.5%;
   padding: 8px;
   margin-bottom: 16px;
   color: burlywood;
+  cursor: pointer;
 `;
 
 const SubmitButton = styled.button`
@@ -297,7 +311,7 @@ const SubmitButton = styled.button`
   cursor: pointer;
   margin-top: 10px;
   &:hover {
-    background-color: burlywood;
+    background-color: #de9a87;
   }
 `;
 export default AddForm;
