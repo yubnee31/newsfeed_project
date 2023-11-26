@@ -1,11 +1,11 @@
-import Layout from 'components/layouts/Layout';
 import { db } from '../firebase';
 import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { collection, getDocs, query } from 'firebase/firestore';
-export default function Edit({ items, setItems }) {
+
+export default function Edit({ setItems }) {
   const params = useParams();
   const navigate = useNavigate();
   const [selectedItem, setSelectedItem] = useState({});
@@ -62,10 +62,31 @@ export default function Edit({ items, setItems }) {
           }
         });
       });
+      setSelectedItem({
+        ...selectedItem,
+        sold: false,
+        itemTitle: changedTitle,
+        itemInfo: changedInfo,
+        itemPrice: changedPrice
+      });
     }
 
     setEditMode(false);
   };
+  useEffect(() => {
+    const fetchData = async () => {
+      const q = query(collection(db, 'items'));
+      const querySnapshot = await getDocs(q);
+      const initialItems = [];
+
+      querySnapshot.forEach((doc) => {
+        initialItems.push({ id: doc.id, ...doc.data() });
+      });
+      setItems(initialItems);
+      setSelectedItem(initialItems.find((item) => item.id === params.id));
+    };
+    fetchData();
+  }, []);
 
   const deleteItem = async (event) => {
     const itemRef = doc(db, 'items', params.id);
@@ -86,7 +107,7 @@ export default function Edit({ items, setItems }) {
       {!editMode ? (
         <SelectedItemSection>
           <ItemInfoSection>
-            {/* <ItemImg src={selectedItem.images[0]}></ItemImg> */}
+            <ItemImg src={selectedItem.images[0]}></ItemImg>
             <ItemTitle>{selectedItem.itemTitle}</ItemTitle>
             <ItemInfo>{selectedItem.itemInfo}</ItemInfo>
             <ItemPrice>{selectedItem.itemPrice}</ItemPrice>
@@ -124,6 +145,7 @@ const Main = styled.main`
   flex-direction: column;
   align-items: center;
 `;
+
 const SelectedItemSection = styled.section`
   display: flex;
   border: 3px solid #ab7323;
@@ -137,6 +159,7 @@ const SelectedItemSection = styled.section`
   height: 400px;
   position: relative;
 `;
+
 const SelectedItemForm = styled.form`
   display: flex;
   border: 3px solid #ab7323;
@@ -156,6 +179,7 @@ const ItemInfoSection = styled.div`
   left: 320px;
   width: 350px;
   height: 200px;
+
   display: flex;
   flex-direction: column;
   gap: 20px;
