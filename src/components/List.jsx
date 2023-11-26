@@ -30,7 +30,6 @@ export default function List() {
     });
     setItems(updatedFavorites);
   };
-
   return (
     <Container>
       <TitleWrapper>
