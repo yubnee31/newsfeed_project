@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import MenuImg from '../assets/menu.png';
+import { useItems } from 'shared/Items';
 
 export default function Category() {
-  //중복코드 삭제하는 법,,,?
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useItems();
 
   //카테고리별 분류된 아이템 관리
   const [filteredItems, setFilteredItems] = useState([]);
 
   //카테고리 메뉴 버튼 상태
   const [showDropDownBtn, setShowDropDownBtn] = useState(false);
-  const [activateDropDown, setActivateDropDown] = useState(false);
-  const [activeCategory, setActiveCategory] = useState('');
 
   //show DROP DOWN  MENU
   const dropDownCategory = () => {
