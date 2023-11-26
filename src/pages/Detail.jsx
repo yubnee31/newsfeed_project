@@ -1,13 +1,15 @@
+import Comment from 'components/Comment';
+import Edit from 'components/Edit';
 import Layout from 'components/layouts/Layout';
 import React from 'react';
-import Comment from 'components/Comment';
 
-function Detail() {
+function Detail({ items, setItems }) {
   return (
     <Layout>
-      <main>
+      <div>
+        <Edit items={items} setItems={setItems} />
         <Comment />
-      </main>
+      </div>
     </Layout>
   );
 }

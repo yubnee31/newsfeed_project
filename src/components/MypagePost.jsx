@@ -42,7 +42,7 @@ export default function MypagePost({ items, setItems }) {
               .filter((item) => !item.sold)
               .map((item) => {
                 return (
-                  <Item key={item.id} onClick={() => navigate(`/edit/${item.id}`)}>
+                  <Item key={item.id} onClick={() => navigate(`/detail/${item.id}`)}>
                     <div>
                       <img src={null ?? defaultItem} alt="아바타이미지" />
                       <h1>{item.itemTitle}</h1>
