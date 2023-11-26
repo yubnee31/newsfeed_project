@@ -92,6 +92,7 @@ const AddForm = ({ items, setItems, user }) => {
         isFavorite,
         category,
         sold: false,
+
         timestamp: new Date(),
         userId: user.uid,
         images: images.imageFiles
@@ -110,6 +111,7 @@ const AddForm = ({ items, setItems, user }) => {
       setCategory('');
 
       // 이미지 초기화
+
       setImages(({ imageFiles, ...rest }) => ({
         ...rest,
         imageFiles: [],
@@ -119,7 +121,7 @@ const AddForm = ({ items, setItems, user }) => {
       }));
 
       // 페이지 이동
-      navigate('/addForm');
+      navigate('/');
     } catch (error) {
       console.error('Error adding document: ', error);
       alert('등록 중 오류가 발생했습니다. 나중에 다시 시도해주세요.');
