@@ -72,7 +72,7 @@ function SignUpLogIn() {
         ? localStorage.setItem('login user', JSON.stringify({ email: '', displayName: '', uid: '' }))
         : localStorage.setItem(
             'login user',
-            JSON.stringify({ email: user.email, displayName: user.displayName, uid: user.uid })
+            JSON.stringify({ email: user.email, displayName: user.displayName, uid: user.uid, photoURL:user.photoURL})
           );
     });
   }, []);
