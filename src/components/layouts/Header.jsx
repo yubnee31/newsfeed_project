@@ -115,7 +115,7 @@ const Title = styled.h1`
 
 const PostBtn = styled.button`
   display: flex;
-  margin: 13px 0 0 20px;
+  margin: 13px 65px 0 5px;
   width: 200px;
   height: 60px;
   align-items: center;
