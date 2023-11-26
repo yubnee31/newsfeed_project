@@ -43,7 +43,6 @@ export default function Edit({items, setItems}) {
 
         }
 
-        
         setEditMode(false);
         
       };
