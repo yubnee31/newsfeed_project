@@ -24,14 +24,14 @@ export default function Category() {
     setFilteredItems(filteredItems);
   };
   // useEffect(() => {
-  //   console.log(filteredItems);
+  //   console.log('선택카테고리 상품', filteredItems);
   // }, [filteredItems]);
 
   return (
     <ConTainer>
       <CategoryBtn onClick={dropDownCategory} src={MenuImg} />
       {showDropDownBtn && (
-        <DropDown>
+        <DropDownMenu>
           <Content onClick={() => handleCategories('')}>All</Content>
           <Content onClick={() => handleCategories('의류')}>의류</Content>
           <Content onClick={() => handleCategories('악세사리')}>악세사리</Content>
@@ -40,7 +40,7 @@ export default function Category() {
           <Content onClick={() => handleCategories('생활용품')}>생활용품</Content>
           <Content onClick={() => handleCategories('반려용품')}>반려용품</Content>
           <Content onClick={() => handleCategories('기타')}>기타</Content>
-        </DropDown>
+        </DropDownMenu>
       )}
     </ConTainer>
   );
@@ -75,13 +75,14 @@ const CategoryBtn = styled.img`
 //   color: #ab7323;
 // `;
 
-const DropDown = styled.ul`
+const DropDownMenu = styled.ul`
   position: absolute;
-  background-color: #f1e0e0;
+  background-color: white;
   margin-left: 40px;
   width: 210px;
   padding: 20px 0;
   z-index: 999;
+  box-shadow: 1px 1px 3px 0 grey;
   /* animation: 0.3s ease-in-out; */
 `;
 

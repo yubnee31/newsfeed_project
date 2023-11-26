@@ -16,14 +16,16 @@ export default function Header() {
   const search = (e) => {
     e.preventDefault();
     const filtered = items.filter((item) => {
+      //Title 또는 Info에 검색 내용과 같은 경우를 검색결과로 반환
       return item.itemTitle.includes(searchInput) || item.itemInfo.includes(searchInput);
     });
-    setSearchResults(filtered);
+
+    //검색결과를 Main에서 렌더링. Main 에서 관리 -> 검색결과를 query 파라미터로 전달하여 새로운 경로로 이동.
+    // Search 컴포넌트에서 이미 해당 결과를 사용할 것이기 때문에 Main에서 중복으로 setSearchResults(filtered) 상태 업데이트를 할 필요가 없다고 함.
+    navigate(`/search?query=${searchInput}`);
   };
   // useEffect(() => {
-  //   console.log('===========================');
   //   console.log('검색결과', searchResults);
-  //   console.log('===========================');
   // }, [searchResults]);
 
   return (

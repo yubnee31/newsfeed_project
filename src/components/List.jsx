@@ -16,18 +16,21 @@ export default function List({ title }) {
   const [countFavorites, setCountFavorites] = useState(0);
 
   //최신 등록 순으로 정렬
-  const latestSortedDates = items.sort((a, b) => b.timeStamp - a.timeStamp);
+  const latestSorted = items.sort((a, b) => b.timeStamp - a.timeStamp);
+  // console.log('최신순 정렬', latestSorted);
 
   //관심 수 많은 순으로 정렬
-  // const mostPopular
+  const mostPopularSorted = [];
+  // console.log('인기순 정렬', mostPopularSorted);
 
-  //props로 받아오는 title 값에 따라 변경하기.
-  // const visibleItems = title ? visibleLatestItems : visiblePopularItems;
-
-  //더보기 상태에 따라 렌더링 개수 조절
-  // const visibleLatestItems = showLatestMore ? latestSortedDates : latestSortedDates.slice(0, 5);
-
-  const visiblePopularItems = showPopularMore ? items : items.slice(0, 5);
+  //더보기 버튼
+  const handleShowMoreBtn = () => {
+    title ? setShowLatestMore(!showLatestMore) : setShowPopularMore(!showPopularMore);
+  };
+  // useEffect(() => {
+  //   console.log('최신더보기 상태', showLatestMore);
+  //   console.log('인기더보기 상태', showPopularMore);
+  // }, [handleShowMoreBtn]);
 
   //관심 버튼 상태 변경
   const favoriteSwitch = (event, clickedItem) => {
@@ -39,40 +42,27 @@ export default function List({ title }) {
   };
 
   return (
-    <ListWrapper>
+    <>
       <TitleWrapper>
         <SectionTitle>{title ? '최신 등록 상품' : '인기 상품'}</SectionTitle>
-        {title && (
-          <ShowMoreBtn
-            onClick={() => {
-              setShowLatestMore(!showLatestMore);
-            }}
-          >
-            {showLatestMore ? '접기' : '더보기'}
-          </ShowMoreBtn>
-        )}
+        <ShowMoreBtn onClick={handleShowMoreBtn}>
+          {title ? (showLatestMore ? '최신접기' : '최신더보기') : showPopularMore ? '인기접기' : '인기더보기'}
+        </ShowMoreBtn>
       </TitleWrapper>
       <Items>
-        {/* 이부분 조건부 렌더링 하기 */}
-        {/* title true일때 최신, showLatestMore 상태 true일때 인기상품 렌더링 안되고 데이터 전체 최신순 정렬 */}
         {showLatestMore
-          ? latestSortedDates.map((item) => <Item favoriteSwitch={favoriteSwitch} item={item} />)
-          : latestSortedDates.slice(0, 5).map((item) => <Item favoriteSwitch={favoriteSwitch} item={item} />)}
+          ? latestSorted.map((item) => <Item key={item.id} favoriteSwitch={favoriteSwitch} item={item} />)
+          : latestSorted.slice(0, 5).map((item) => <Item key={item.id} favoriteSwitch={favoriteSwitch} item={item} />)}
+        {/* 인기상품 아직 미구현 */}
+        {showPopularMore
+          ? mostPopularSorted.map((item) => <Item key={item.id} favoriteSwitch={favoriteSwitch} item={item} />)
+          : mostPopularSorted
+              .slice(0, 5)
+              .map((item) => <Item key={item.id} favoriteSwitch={favoriteSwitch} item={item} />)}
       </Items>
-    </ListWrapper>
+    </>
   );
 }
-
-const ListWrapper = styled.div`
-  /* background-color: #edc29a; */
-  width: 1200px;
-  /* height: 450px; */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin: 30px auto;
-  gap: 10px;
-`;
 
 const TitleWrapper = styled.div`
   display: flex;
