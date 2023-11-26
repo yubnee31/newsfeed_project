@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { addDoc, collection } from 'firebase/firestore';
 import { db, storage } from '../firebase';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { useNavigate } from 'react-router';
 
 const AddForm = ({ items, setItems, tags, setTags }) => {
   const [itemInfo, setItemInfo] = useState('');
@@ -14,6 +15,7 @@ const AddForm = ({ items, setItems, tags, setTags }) => {
   const [selectedFile, setSelectedFile] = useState([]);
   const [timeStamp, setTimeStamp] = useState('');
   const [isFavorite, setItemFavorite] = useState(false);
+  const navigate = useNavigate();
 
   // 파일 선택 시 호출되는 함수
   const handleFileChange = async (e) => {
@@ -66,6 +68,7 @@ const AddForm = ({ items, setItems, tags, setTags }) => {
       };
       // 아이템 목록 업데이트
       setItems((prev) => [newItem, ...prev]);
+
       const collectionRef = collection(db, 'items');
       await addDoc(collectionRef, newItem);
       // 입력값 초기화
@@ -75,7 +78,7 @@ const AddForm = ({ items, setItems, tags, setTags }) => {
       setItemCategory('');
       setSelectedFile([]);
       setPreviewUrl([]);
-      alert('상품이 등록됬습니다!');
+      alert('상품이 등록되었습니다!');
     } catch (error) {
       console.error('Error adding document: ', error.message, error.code);
       alert('등록 중 오류가 발생했습니다. 나중에 다시 시도해주세요.');
