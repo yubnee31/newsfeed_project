@@ -1,11 +1,10 @@
 import MypagePost from 'components/MypagePost';
 import MypageProfile from 'components/MypageProfile';
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import Layout from 'components/layouts/Layout';
 
 function Mypage({items, setItems}) {
-
 
 
   return (

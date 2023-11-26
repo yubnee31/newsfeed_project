@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 export default function MypagePost({ items, setItems }) {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem('login user'));
+  
   useEffect(() => {
     const fetchData = async () => {
       const q = query(collection(db, 'items'));
