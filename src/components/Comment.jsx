@@ -42,7 +42,7 @@ const CommentDiv = styled.div`
   justify-content: center;
   width: 1000px;
   height: 200px;
-
+  margin: 10px;
   border-radius: 12px;
   border: 3px solid #ab7323;
 `;
@@ -52,7 +52,7 @@ const CommentInfo = styled.p`
   flex-direction: column;
   width: 100%;
   height: 100%;
-
+  justify-content: center;
   gap: 20px;
   margin: 100px;
 
@@ -80,7 +80,7 @@ const CommentBtn = styled.button`
 
 const Addbutton = styled.button`
   position: absolute;
-  right: 400px;
+  right: 350px;
   width: 120px;
   height: 40px;
   border: 3px solid #ab722374;

@@ -12,7 +12,6 @@ const Item = ({ item, favoriteSwitch }) => {
       </ImgContainer>
       <ItemInfo>
         <p> {item.itemTitle}</p>
-        {/* 가격 천단위 콤마표시 -> toLocaleString() */}
         <Price>₩{Number(item.itemPrice).toLocaleString()}</Price>
       </ItemInfo>
     </StItem>

@@ -238,7 +238,8 @@ const EditBtn = styled.button`
 
 const DeleteBtn = styled.button`
   position: absolute;
-  right: 400px;
+  top: 20px;
+  right: 70px;
   width: 120px;
   height: 40px;
   border: 3px solid #ab722374;
