@@ -1,7 +1,6 @@
 import Detail from 'pages/Detail';
 import Home from 'pages/Home';
 import Mypage from 'pages/Mypage';
-import Edit from 'components/Edit';
 import React, { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 

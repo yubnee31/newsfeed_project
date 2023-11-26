@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 const Item = ({ item, favoriteSwitch }) => {
   const navigate = useNavigate();
   return (
-    <StItem key={item.id} onClick={() => navigate(`/edit/${item.id}`)}>
+    <StItem key={item.id} onClick={() => navigate(`/detail/${item.id}`)}>
       <Favorite onClick={(event) => favoriteSwitch(event, item)}>{item.isFavorite ? '♥' : '♡'}</Favorite>
       <ImgContainer>
         {item.sold && <SoldStatus>SOLD</SoldStatus>}
