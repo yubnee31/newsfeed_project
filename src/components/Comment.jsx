@@ -30,7 +30,7 @@ const Setform = styled.form`
   & input {
     width: 900px;
     height: 100px;
-    background-color: #000000;
+    background-color: #fffbfb;
     border-radius: 12px;
     text-align: center;
   }
