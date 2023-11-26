@@ -4,6 +4,7 @@ import { deleteDoc, doc,updateDoc } from "firebase/firestore";
 import React, { useState } from 'react'
 import { useNavigate, useParams } from "react-router-dom"
 import styled from "styled-components";
+import Comment from "components/Comment";
 
 export default function Edit({items, setItems}) {
     const params = useParams();
@@ -77,7 +78,7 @@ export default function Edit({items, setItems}) {
           
             <EditBtn onClick={()=>setEditMode(true)}>수정하기</EditBtn>
             <DeleteBtn onClick={deleteItem}>삭제하기</DeleteBtn>
-            <BackBtn onClick={()=>navigate('/mypage')}>돌아가기</BackBtn>
+            <BackBtn onClick={()=>navigate('/')}>돌아가기</BackBtn>
       </SelectedItemSection>
       :
 
@@ -103,6 +104,7 @@ export default function Edit({items, setItems}) {
       </SelectedItemForm>
     }
     </Main>
+    <Comment/>
     </Layout>
 
   )
