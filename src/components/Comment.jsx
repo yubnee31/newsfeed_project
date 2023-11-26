@@ -10,53 +10,55 @@ const CommentList = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  background-color: aqua;
-  padding: 50px;
-  margin: 100px;
-  gap: 12px;
-  height: 100%;
+`;
+
+const Listh1 = styled.h1`
+  font-size: 30px;
+  text-decoration-color: #ab7323;
+  color: #ab7323;
+  margin: 20px;
+  padding: 10px;
 `;
 
 const Setform = styled.form`
   display: flex;
-  justify-content: center;
-  background-color: #758181;
   width: 1000px;
   height: 100px;
   align-items: center;
   margin: 20px;
   padding: 10px;
   & input {
-    width: 900px;
+    width: 800px;
     height: 100px;
-    background-color: #000000;
     border-radius: 12px;
+    border: 3px solid #ab7323;
     text-align: center;
   }
 `;
 
 const CommentDiv = styled.div`
   display: flex;
-  justify-content: flex-end;
-  background-color: #758181;
+  align-items: center;
+  justify-content: center;
   width: 1000px;
-  height: 100%;
-  margin: 20px;
-  padding: 10px;
+  height: 200px;
+
+  border-radius: 12px;
+  border: 3px solid #ab7323;
 `;
 
 const CommentInfo = styled.p`
   display: flex;
-  background-color: #758181;
+  flex-direction: column;
   width: 100%;
   height: 100%;
-  margin: 20px;
-  padding: 10px;
+
+  gap: 20px;
+  margin: 100px;
 
   & commentp {
     display: flex;
-    padding: 10px 0;
+    padding: 0px 0;
   }
 
   & textp {
@@ -66,15 +68,36 @@ const CommentInfo = styled.p`
 `;
 
 const CommentBtn = styled.button`
-  display: flex;
-  text-align: center;
-  & button {
-    background-color: #ab722374;
-    color: #ab722374;
-    font-size: 16px;
-    padding: 6px 12px;
-    cursor: pointer;
-  }
+  position: absolute;
+  right: 400px;
+  width: 120px;
+  height: 40px;
+  border: 3px solid #ab722374;
+  border-radius: 10px;
+  background-color: transparent;
+  cursor: pointer;
+`;
+
+const Addbutton = styled.button`
+  position: absolute;
+  right: 400px;
+  width: 120px;
+  height: 40px;
+  border: 3px solid #ab722374;
+  border-radius: 10px;
+  background-color: transparent;
+  cursor: pointer;
+`;
+
+const EditBtn = styled.button`
+  position: absolute;
+  right: 400px;
+  width: 120px;
+  height: 40px;
+  border: 3px solid #ab722374;
+  border-radius: 10px;
+  background-color: transparent;
+  cursor: pointer;
 `;
 
 export default function Comment() {
@@ -188,7 +211,7 @@ export default function Comment() {
   return (
     <CommentList>
       <div>
-        <h1>댓글</h1>
+        <Listh1>댓글</Listh1>
         <Setform
           onSubmit={(event) => {
             event.preventDefault();
@@ -205,26 +228,26 @@ export default function Comment() {
             }}
             placeholder="댓글을 입력하세요"
           />
-          <button type="button" onClick={() => addComment()}>
+          <Addbutton type="button" onClick={() => addComment()}>
             댓글추가
-          </button>
+          </Addbutton>
         </Setform>
         <div>
           {comments.map((comment) =>
             comment.uid !== user.uid ? (
               <CommentDiv key={comment.docId}>
                 <CommentInfo>
-                  <textp>{comment.text}</textp>
                   <commentp>{comment.displayName}</commentp>
                   <commentp>{CommentTimeShow(comment.createdAt)}</commentp>
+                  <textp>{comment.text}</textp>
                 </CommentInfo>
               </CommentDiv>
             ) : !comment.editForm ? (
               <CommentDiv key={comment.docId}>
                 <CommentInfo>
-                  <textp>{comment.text}</textp>
                   <commentp>{comment.displayName}</commentp>
                   <commentp>{CommentTimeShow(comment.createdAt)}</commentp>
+                  <textp>{comment.text}</textp>
                 </CommentInfo>
                 <CommentBtn>
                   <button type="button" onClick={(event) => handleCommentEdit(event, true, comment.docId)}>
@@ -257,7 +280,7 @@ export default function Comment() {
                   <p>{comment.displayName}</p>
                   <p>{CommentTimeShow(comment.createdAt)}</p>
                 </CommentInfo>
-                <CommentBtn>
+                <EditBtn>
                   <button type="button" onClick={() => updateComment(comment.docId)}>
                     수정 완료
                   </button>
@@ -267,7 +290,7 @@ export default function Comment() {
                   <button type="button" onClick={() => deleteComment(comment.docId)}>
                     삭제
                   </button>
-                </CommentBtn>
+                </EditBtn>
               </CommentDiv>
             )
           )}

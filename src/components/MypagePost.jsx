@@ -6,11 +6,9 @@ import { collection, getDocs, query } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 
 export default function MypagePost({ items, setItems }) {
-
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem('login user'));
-  console.log('mypagepost', user);
-  const [selectedItem, setSelectedItem] = useState({});
+
   useEffect(() => {
     const fetchData = async () => {
       const q = query(collection(db, 'items'));
@@ -41,7 +39,7 @@ export default function MypagePost({ items, setItems }) {
           <ItemP>판매중인 상품</ItemP>
           <ItemWrapper>
             {userItem
-              .filter((item) => item.sold===false)
+              .filter((item) => item.sold === false)
               .map((item) => {
                 return (
                   <Item key={item.id} onClick={() => navigate(`/detail/${item.id}`)}>
@@ -62,7 +60,7 @@ export default function MypagePost({ items, setItems }) {
 
           <ItemWrapper>
             {userItem
-              .filter((item) => item.sold===true)
+              .filter((item) => item.sold === true)
               .map((item) => {
                 return (
                   <Item key={item.id} onClick={() => navigate(`/detail/${item.id}`)}>

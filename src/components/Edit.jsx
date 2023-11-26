@@ -9,6 +9,22 @@ export default function Edit({ setItems }) {
   const params = useParams();
   const navigate = useNavigate();
   const [selectedItem, setSelectedItem] = useState({});
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const q = query(collection(db, 'items'));
+      const querySnapshot = await getDocs(q);
+      const initialItems = [];
+
+      querySnapshot.forEach((doc) => {
+        initialItems.push({ id: doc.id, ...doc.data() });
+      });
+      setItems(initialItems);
+      setSelectedItem(initialItems.find((item) => item.id === params.id));
+    };
+    fetchData();
+  }, []);
+
   const [editMode, setEditMode] = useState(false);
   const [changedTitle, setChangedTitle] = useState('');
   const [changedInfo, setChangedInfo] = useState('');
@@ -222,9 +238,7 @@ const EditBtn = styled.button`
 
 const DeleteBtn = styled.button`
   position: absolute;
-  top: 20px;
-  right: 70px;
-
+  right: 400px;
   width: 120px;
   height: 40px;
   border: 3px solid #ab722374;
@@ -232,6 +246,7 @@ const DeleteBtn = styled.button`
   background-color: transparent;
   cursor: pointer;
 `;
+
 const BackBtn = styled.button`
   position: absolute;
   bottom: 20px;
