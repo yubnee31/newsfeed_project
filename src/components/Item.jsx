@@ -15,7 +15,7 @@ const Item = ({ item, favoriteSwitch }) => {
       <ItemInfo>
         <p> {item.itemTitle}</p>
         {/* 가격 천단위 콤마표시 -> toLocaleString() */}
-        <Price> {item.itemPrice.toLocaleString()} </Price>
+        <Price> {item.itemPrice} </Price>
       </ItemInfo>
     </StItem>
   );

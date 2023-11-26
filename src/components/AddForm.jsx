@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { addDoc, collection } from 'firebase/firestore';
 import { db, storage } from '../firebase';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
-const AddForm = ({ items, setItems, tags, setTags }) => {
+
+const AddForm = ({ items, setItems }) => {
   const [itemInfo, setItemInfo] = useState('');
   const [itemPrice, setItemPrice] = useState(0);
   const [itemTitle, setItemTitle] = useState('');
-  const [itemcategory, setItemCategory] = useState('');
+  const [itemcategory, setItemCategory] = useState(null);
   const [fixedTags, setFixedTags] = useState('');
+  const [tags, setTags] = useState([]);
   const [previewUrl, setPreviewUrl] = useState([]);
   const [selectedFile, setSelectedFile] = useState([]);
   const [timeStamp, setTimeStamp] = useState('');
@@ -44,8 +46,7 @@ const AddForm = ({ items, setItems, tags, setTags }) => {
     updatedPreviewUrls.splice(index, 1);
     setPreviewUrl(updatedPreviewUrls);
   };
-
-  // 등록 클릭 시 호출되는 함수
+  // 등록 클릭 시 호출되는 함수 
   const HandleUpload = async () => {
     try {
       const uploadPromises = selectedFile.map(async (file) => {
@@ -75,12 +76,15 @@ const AddForm = ({ items, setItems, tags, setTags }) => {
       setItemCategory('');
       setSelectedFile([]);
       setPreviewUrl([]);
+      isFavorite(false);
       alert('상품이 등록됬습니다!');
     } catch (error) {
       console.error('Error adding document: ', error.message, error.code);
       alert('등록 중 오류가 발생했습니다. 나중에 다시 시도해주세요.');
     }
   };
+
+  // 카테고리 라인 
   const Categories = [
     {
       id: 1,
@@ -114,13 +118,9 @@ const AddForm = ({ items, setItems, tags, setTags }) => {
   // 카테고리
   const ChangehandleCategory = (event) => {
     const eventHandler = event.target.value;
-    const newCategory = tags.some((tag) => tag[0] === eventHandler);
-    if (!newCategory) {
+    if (eventHandler !== '' && !tags.some((tag) => tag.Categories === eventHandler)) {
       setFixedTags(eventHandler);
-      if (eventHandler !== '') {
-        const tag = [eventHandler];
-        setTags([...tags, tag]);
-      }
+      setTags([...tags, eventHandler]);
     }
   };
 
@@ -142,19 +142,18 @@ const AddForm = ({ items, setItems, tags, setTags }) => {
         </UploaderWrapper>
         <CustomFileButton htmlFor="fileInput">파일선택</CustomFileButton>
       </FileUploadSection>
-
       <StyledFileInput type="file" multiple="multiple" onChange={handleFileChange} id="fileInput" />
 
       {/*  제목, 내용, 카테고리, 등록하기 */}
       <FormContainer>
         <InputFieldTitle value={itemTitle} onChange={(event) => setItemTitle(event.target.value)} placeholder="제목" />
+
         <CategoryDropdown value={itemcategory} onChange={ChangehandleCategory}>
-          <option value="" disabled>
-            카테고리 선택
-          </option>
-          {Categories.map((category) => (
-            <option key={category.id} value={category.itemcategory}>
-              {category.itemcategory}
+
+          <option value="" disabled>카테고리 선택</option>
+          {Array.isArray(Categories) && Categories.map((category) => (
+          <option key={category.id} value={category.itemcategory}>
+                {category.itemcategory}
             </option>
           ))}
           {/* <option value="의류">의류</option>
