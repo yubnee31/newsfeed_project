@@ -5,6 +5,51 @@ import { useNavigate } from 'react-router';
 import Category from 'components/Category';
 import { useItems } from 'shared/Items';
 
+export default function Header() {
+  const navigate = useNavigate();
+  const [items, setItems] = useItems();
+
+  const [searchInput, setSearchInput] = useState('');
+  const [searchResults, setSearchResults] = useState([]);
+
+  const searchInputHandler = (e) => setSearchInput(e.target.value);
+  const search = (e) => {
+    e.preventDefault();
+    const filtered = items.filter((item) => {
+      return item.itemTitle.includes(searchInput) || item.itemInfo.includes(searchInput);
+    });
+    setSearchResults(filtered);
+  };
+  useEffect(() => {
+    console.log('===========================');
+    console.log('검색결과', searchResults);
+    console.log('===========================');
+  }, [searchResults]);
+
+  return (
+    <>
+      <Title>GAMZA</Title>
+      <SignUpLogIn />
+      <SearchDiv>
+        <Category />
+        <HomeBtn type="button" onClick={() => navigate('/')}>
+          <Img src="https://img.freepik.com/premium-vector/potato-root-vegetables-carbohydrate-agriculture-farm-product_22052-4629.jpg"></Img>
+        </HomeBtn>
+        <SearchForm onSubmit={search}>
+          <SearchInput
+            value={searchInput}
+            onChange={(e) => searchInputHandler(e)}
+            placeholder=" 검색어를 입력하세요."
+          ></SearchInput>
+          <SearchBtn type="submit">검색</SearchBtn>
+        </SearchForm>
+        {/* 게시물 작성 버튼 연결 */}
+        <PostBtn onClick={() => navigate('/AddPage')}>상품등록</PostBtn>
+      </SearchDiv>
+    </>
+  );
+}
+
 const SearchDiv = styled.div`
   display: flex;
   align-items: center;
@@ -104,50 +149,3 @@ const SearchForm = styled.form`
   height: 50px;
   margin: 35px auto 20px auto; // 솔, 20px auto 에서 수정
 `;
-
-function Header() {
-  const navigate = useNavigate();
-  const [items, setItems] = useItems();
-
-  const [searchInput, setSearchInput] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
-
-  const searchInputHandler = (e) => setSearchInput(e.target.value);
-  const search = (e) => {
-    e.preventDefault();
-    const filtered = items.filter((item) => {
-      return item.itemTitle.includes(searchInput) || item.itemInfo.includes(searchInput);
-    });
-    setSearchResults(filtered);
-  };
-  useEffect(() => {
-    console.log('===========================');
-    console.log('검색결과', searchResults);
-    console.log('===========================');
-  }, [searchResults]);
-
-  return (
-    <>
-      <Title>GAMZA</Title>
-      <SignUpLogIn />
-      <SearchDiv>
-        <Category />
-        <HomeBtn type="button" onClick={() => navigate('/')}>
-          <Img src="https://img.freepik.com/premium-vector/potato-root-vegetables-carbohydrate-agriculture-farm-product_22052-4629.jpg"></Img>
-        </HomeBtn>
-        <SearchForm onSubmit={search}>
-          <SearchInput
-            value={searchInput}
-            onChange={(e) => searchInputHandler(e)}
-            placeholder=" 검색어를 입력하세요."
-          ></SearchInput>
-          <SearchBtn type="submit">검색</SearchBtn>
-        </SearchForm>
-        {/* 게시물 작성 버튼 연결 */}
-        <PostBtn onClick={() => navigate('/AddPage')}>상품등록</PostBtn>
-      </SearchDiv>
-    </>
-  );
-}
-
-export default Header;
