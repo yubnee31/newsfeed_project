@@ -1,7 +1,13 @@
 import React from 'react';
+import Layout from 'components/layouts/Layout';
+import AddForm from 'components/AddForm';
 
-function AddPage() {
-  return <div>Addpage</div>;
+function Addpage({ items, setItems }) {
+  return (
+    <Layout>
+      <AddForm items={items} setItems={setItems} />
+    </Layout>
+  );
 }
 
-export default AddPage;
+export default Addpage;

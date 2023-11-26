@@ -4,76 +4,7 @@ import { auth } from '../firebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 
-const Title = styled.h2`
-  font-size: 24px;
-  font-weight: bold;
-  line-height: 150%;
-  margin-top: 30px;
-  color: #ab7323;
-`;
-
-const LoginForm = styled.form`
-  margin-left: 25px;
-  margin-top: 40px;
-  border: 2px solid #ab7323;
-  border-radius: 20px;
-  width: 350px;
-  height: 320px;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  text-align: center;
-`;
-
-const LoginDiv = styled.div`
-  position: absolute;
-`;
-
-const EmailPwDiv = styled.div`
-  width: 200px;
-  margin-left: 60px;
-  color: #ab7323;
-`;
-const EmailDiv = styled.div`
-  margin-top: 40px;
-  margin-bottom: 15px;
-`;
-
-const LoginP = styled.p`
-  margin-bottom: 10px;
-  font-weight: bold;
-  font-size: 20px;
-  text-align: left;
-`;
-
-const LoginInput = styled.input`
-  height: 30px;
-  width: 200px;
-  border: 2px solid #ab722374;
-`;
-
-const PasswordDiv = styled.div`
-  margin-bottom: 30px;
-`;
-
-const LoginBtnDiv = styled.div`
-  position: relative;
-  display: flex;
-  justify-content: center;
-`;
-
-const LoginBtn = styled.button`
-  margin-top: 10px;
-  margin-right: 10px;
-  width: 150px;
-  height: 40px;
-  border: 2px solid #ab7323;
-  background-color: #ab722341;
-  color: black;
-  cursor: pointer;
-`;
-
-function Login({ setDoneLogin }) {
+function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -147,5 +78,74 @@ function Login({ setDoneLogin }) {
     </div>
   );
 }
+
+const Title = styled.h2`
+  font-size: 24px;
+  font-weight: bold;
+  line-height: 150%;
+  margin-top: 30px;
+  color: #ab7323;
+`;
+
+const LoginForm = styled.form`
+  margin-left: 25px;
+  margin-top: 40px;
+  border: 2px solid #ab7323;
+  border-radius: 20px;
+  width: 350px;
+  height: 320px;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+`;
+
+const LoginDiv = styled.div`
+  position: absolute;
+`;
+
+const EmailPwDiv = styled.div`
+  width: 200px;
+  margin-left: 60px;
+  color: #ab7323;
+`;
+const EmailDiv = styled.div`
+  margin-top: 40px;
+  margin-bottom: 15px;
+`;
+
+const LoginP = styled.p`
+  margin-bottom: 10px;
+  font-weight: bold;
+  font-size: 20px;
+  text-align: left;
+`;
+
+const LoginInput = styled.input`
+  height: 30px;
+  width: 200px;
+  border: 2px solid #ab722374;
+`;
+
+const PasswordDiv = styled.div`
+  margin-bottom: 30px;
+`;
+
+const LoginBtnDiv = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: center;
+`;
+
+const LoginBtn = styled.button`
+  margin-top: 10px;
+  margin-right: 10px;
+  width: 150px;
+  height: 40px;
+  border: 2px solid #ab7323;
+  background-color: #ab722341;
+  color: black;
+  cursor: pointer;
+`;
 
 export default Login;

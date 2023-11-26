@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import Bear from '../assets/bear.jpeg';
 import { useNavigate } from 'react-router-dom';
 
 const Item = ({ item, favoriteSwitch }) => {
@@ -7,34 +6,26 @@ const Item = ({ item, favoriteSwitch }) => {
   return (
     <StItem key={item.id} onClick={() => navigate(`/detail/${item.id}`)}>
       <Favorite onClick={(event) => favoriteSwitch(event, item)}>{item.isFavorite ? '♥' : '♡'}</Favorite>
-      <Img src={Bear} />
+      <ImgContainer>
+        {item.sold && <SoldStatus>SOLD</SoldStatus>}
+        <Img src={item.images} $sold={item.sold} alt="item image" />
+      </ImgContainer>
       <ItemInfo>
         <p> {item.itemTitle}</p>
         {/* 가격 천단위 콤마표시 -> toLocaleString() */}
-        <Price> {item.itemPrice.toLocaleString()} </Price>
+        <Price>₩{Number(item.itemPrice).toLocaleString()}</Price>
       </ItemInfo>
     </StItem>
   );
 };
-
-const Favorite = styled.span`
-  font-size: 35px;
-  position: absolute;
-  width: 35px;
-  margin: 10px 170px 0 0;
-  color: white;
-  &:hover {
-    cursor: pointer;
-  }
-`;
 
 const StItem = styled.div`
   background-color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 230px;
-  height: 300px;
+  width: 380px;
+  height: 500px;
   border-radius: 3px;
   overflow: hidden;
   &:hover {
@@ -42,19 +33,55 @@ const StItem = styled.div`
   }
 `;
 
-const Img = styled.img`
-  width: 100%;
-  height: 220px;
-  object-fit: cover;
+const Favorite = styled.span`
+  font-weight: 300;
+  font-size: 60px;
+  position: absolute;
+  width: 60px;
+  margin: 20px 290px 0 0;
+  color: white;
+  &:hover {
+    cursor: pointer;
+  }
+  z-index: 45;
 `;
-//왜 가운데야
+
+const ImgContainer = styled.div`
+  position: relative;
+  width: 100%;
+  height: 400px;
+`;
+
+const SoldStatus = styled.p`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  color: white;
+  font-size: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+`;
+
+const Img = styled.img`
+  width: 98%;
+  height: 98%;
+  object-fit: cover;
+  filter: ${({ $sold }) => ($sold == true ? 'brightness(40%)' : 'none')};
+  &:hover {
+    border: 1px solid #111;
+  }
+`;
+
 const ItemInfo = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-right: auto; //flex-start로 적용 안 됨. 부모태그가 align-items: center여서 그런거겠지..?
+  margin-right: auto;
   padding: 10px 10px 5px 0;
   gap: 15px;
+  font-size: 18px;
 `;
 
 const Price = styled.p`

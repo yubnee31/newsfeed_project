@@ -1,22 +1,31 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Item from 'components/Item';
-import { useItems } from 'shared/Items';
-import Layout from 'components/layouts/Layout';
+import styled from 'styled-components';
 
-export default function Search({ query }) {
-  const [items, setItems] = useItems();
-
+export default function Search({ items, searchInput }) {
+  const filteredList = items
+    .filter((item) => item.itemTitle.includes(searchInput) || item.itemInfo.includes(searchInput))
+    .map((item) => <Item key={item.id} item={item} />);
   return (
-    <Layout>
-      {query
-        ? items
-            .filter((item) => item.itemTitle.includes(query) || item.itemInfo.includes(query))
-            .map((item) => <Item key={item.id} item={item} />)
-        : '검색 결과가 없습니다.'}
-    </Layout>
+    <SearchContainer>
+      {filteredList.length > 0 ? filteredList : <NoResult>검색 결과가 없습니다.</NoResult>}
+    </SearchContainer>
   );
 }
 
-{
-  /* <List title={`"${query}"에 대한 검색 결과`} query={query} items={searchResults} />; */
-}
+const SearchContainer = styled.div`
+  width: 1200px;
+  margin-top: 70px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  justify-content: center;
+  width: 100%;
+`;
+
+const NoResult = styled.p`
+  width: 1200px;
+  font-size: 30px;
+  text-align: center;
+  color: grey;
+`;

@@ -60,21 +60,6 @@ const CategoryBtn = styled.img`
   }
 `;
 
-// const CategoryBtn = styled.button`
-//   border: 3px solid #ab722374;
-//   border-radius: 20px;
-//   font-size: 18px;
-//   width: 100px;
-//   height: 60px;
-//   background-color: transparent;
-//   margin-top: 20px;
-//   /* margin-left: 10px; */
-//   display: flex;
-//   align-items: center;
-//   justify-content: center;
-//   color: #ab7323;
-// `;
-
 const DropDownMenu = styled.ul`
   position: absolute;
   background-color: white;

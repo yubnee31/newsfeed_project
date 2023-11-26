@@ -1,5 +1,5 @@
 import SignUpLogIn from 'components/SignUpLogIn';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router';
 import Category from 'components/Category';
@@ -10,19 +10,15 @@ export default function Header() {
   const [items, setItems] = useItems();
 
   const [searchInput, setSearchInput] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
 
   const searchInputHandler = (e) => setSearchInput(e.target.value);
+
   const search = (e) => {
     e.preventDefault();
     const filtered = items.filter((item) => {
-      //Title 또는 Info에 검색 내용과 같은 경우를 검색결과로 반환
       return item.itemTitle.includes(searchInput) || item.itemInfo.includes(searchInput);
     });
-
-    //검색결과를 Main에서 렌더링. Main 에서 관리 -> 검색결과를 query 파라미터로 전달하여 새로운 경로로 이동.
-    // Search 컴포넌트에서 이미 해당 결과를 사용할 것이기 때문에 Main에서 중복으로 setSearchResults(filtered) 상태 업데이트를 할 필요가 없다고 함.
-    navigate(`/search?query=${searchInput}`);
+    navigate(`/`, { state: searchInput });
   };
   // useEffect(() => {
   //   console.log('검색결과', searchResults);
@@ -46,7 +42,7 @@ export default function Header() {
           <SearchBtn type="submit">검색</SearchBtn>
         </SearchForm>
         {/* 게시물 작성 버튼 연결 */}
-        <PostBtn onClick={() => navigate('/AddPage')}>상품등록</PostBtn>
+        <PostBtn onClick={() => navigate('/Addpage')}>상품등록</PostBtn>
       </SearchDiv>
     </>
   );
@@ -119,6 +115,9 @@ const Title = styled.h1`
   color: #ab7323;
   font-style: italic;
   font-weight: bold;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const PostBtn = styled.button`
