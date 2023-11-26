@@ -186,7 +186,7 @@ width: 1500px;
  border: 2px solid black;
  bottom : 280px;
   display: inline-block;
-  left:300px;
+  left:360px;
   max-height: 130vh;
   margin: 400px 5px 1px 1px;;
   gap: 10px;
