@@ -10,14 +10,12 @@ export default function Header() {
   const [items, setItems] = useItems();
 
   const [searchInput, setSearchInput] = useState('');
-  const [searchResults, setSearchResults] = useState([]);
 
   const searchInputHandler = (e) => setSearchInput(e.target.value);
 
   const search = (e) => {
     e.preventDefault();
     const filtered = items.filter((item) => {
-      //Title 또는 Info에 검색 내용과 같은 경우를 검색결과로 반환
       return item.itemTitle.includes(searchInput) || item.itemInfo.includes(searchInput);
     });
     navigate(`/`, { state: searchInput });
@@ -44,7 +42,7 @@ export default function Header() {
           <SearchBtn type="submit">검색</SearchBtn>
         </SearchForm>
         {/* 게시물 작성 버튼 연결 */}
-        <PostBtn onClick={() => navigate('/AddPage')}>상품등록</PostBtn>
+        <PostBtn onClick={() => navigate('/Addpage')}>상품등록</PostBtn>
       </SearchDiv>
     </>
   );

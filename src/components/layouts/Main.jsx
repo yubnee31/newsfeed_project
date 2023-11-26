@@ -7,12 +7,6 @@ import { useItems } from 'shared/Items';
 
 export default function Main() {
   const [items, setItems] = useItems();
-  // const location = useLocation();
-  // console.log('location: navigate에서 넘어오는 부분', location);
-  // const queryParams = new URLSearchParams(location.search);
-  // console.log('queryParams', queryParams);
-  // const query = queryParams.get('query');
-  // console.log('추출된 query(검색어)', query);
   const [searchResults, setSearchResults] = useState([]);
   const { state: searchInput } = useLocation();
   console.log('searchInput', searchInput);

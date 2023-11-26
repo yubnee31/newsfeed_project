@@ -3,25 +3,15 @@ import styled from 'styled-components';
 import { useItems } from 'shared/Items';
 import Item from './Item';
 
-export default function List({ title }) {
+export default function List() {
   const [items, setItems] = useItems();
 
   //최신등록상품 더보기 상태
   const [showLatestMore, setShowLatestMore] = useState(false);
 
-  //인기 상품 더보기 상태
-  // const [showPopularMore, setShowPopularMore] = useState(false);
-
-  //하트가 클릭된 상품 관리
-  // const [countFavorites, setCountFavorites] = useState(0);
-
   //최신 등록 순으로 정렬
   const latestSorted = items.sort((a, b) => b.timeStamp - a.timeStamp);
   // console.log('최신순 정렬', latestSorted);
-
-  //관심 수 많은 순으로 정렬
-  // const mostPopularSorted = [];
-  // console.log('인기순 정렬', mostPopularSorted);
 
   //더보기 버튼
   const handleShowMoreBtn = () => {
