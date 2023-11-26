@@ -44,7 +44,6 @@ const AddForm = ({ items,setItems, tags, setTags }) => {
     setPreviewUrl(updatedPreviewUrls);
     
   };
-
   // 등록 클릭 시 호출되는 함수 
   const HandleUpload = async () => {
     try {
@@ -222,8 +221,8 @@ const ImageContainer = styled.div`
 `;
 
 const ArrayImage = styled.img`
-  width: 200px; /* 원하는 고정된 가로 크기로 설정 */
-  height: auto; /* 세로 크기를 가로 크기에 맞추도록 설정 */
+  width: 200px; 
+  height: auto; 
   padding: 20px;
   border: 1px solid #ddd;
   margin-bottom: 10px;
