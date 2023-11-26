@@ -7,8 +7,10 @@ const Item = ({ item, favoriteSwitch }) => {
   return (
     <StItem key={item.id} onClick={() => navigate(`/detail/${item.id}`)}>
       <Favorite onClick={(event) => favoriteSwitch(event, item)}>{item.isFavorite ? '♥' : '♡'}</Favorite>
-      <SoldStatus>SOLD</SoldStatus>
-      <Img src={Bear} />
+      <ImgContainer>
+        {item.sold && <SoldStatus>SOLD</SoldStatus>}
+        <Img src={Bear} sold={item.sold} />
+      </ImgContainer>
       <ItemInfo>
         <p> {item.itemTitle}</p>
         {/* 가격 천단위 콤마표시 -> toLocaleString() */}
@@ -43,12 +45,29 @@ const Favorite = styled.span`
   }
 `;
 
-const SoldStatus = styled.p``;
+const ImgContainer = styled.div`
+  position: relative;
+  width: 100%;
+  height: 220px;
+`;
+
+const SoldStatus = styled.p`
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  color: white;
+  font-size: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+`;
 
 const Img = styled.img`
   width: 100%;
-  height: 220px;
+  height: 100%;
   object-fit: cover;
+  filter: ${({ sold }) => (sold ? 'brightness(50%)' : 'none')};
 `;
 //왜 가운데야
 const ItemInfo = styled.div`
