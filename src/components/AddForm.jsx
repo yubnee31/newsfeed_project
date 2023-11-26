@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { addDoc, collection } from 'firebase/firestore';
 import { db, storage } from '../firebase';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
+import { useNavigate } from 'react-router';
 
 
 const AddForm = ({ items, setItems }) => {
@@ -19,6 +20,7 @@ const AddForm = ({ items, setItems }) => {
   const [category, setCategory] = useState('');
 
 
+  const user = JSON.parse(localStorage.getItem('login user'));
   // 파일 선택 시 호출되는 함수
   const handleFileChange = async (e) => {
     const files = Array.from(e.target.files).slice(0, 4);
@@ -163,7 +165,7 @@ const AddForm = ({ items, setItems }) => {
         <CategoryDropdown  onChange={ChangehandleCategory}>
          <option  disabled>카테고리 선택</option>  
           {Array.isArray(Categories) && Categories.map((category) => (
-          <option  key={category.id} value={[category.itemcategory}>
+          <option  key={category.id} value={[category.itemcategory]}>
                 {[category.itemcategory]}
             </option>
           ))}

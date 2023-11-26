@@ -1,34 +1,103 @@
 import React, { useEffect, useState } from 'react';
 import { auth, db } from '../firebase';
 import { collection, doc, getDocs, addDoc, updateDoc, deleteDoc } from 'firebase/firestore';
-import TimeForComment from '../shared/TimeForComment';
+import CommentTimeSave from '../shared/CommentTimeSave';
+import CommentTimeShow from '../shared/CommentTimeShow';
 import styled from 'styled-components';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 const CommentList = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   background-color: aqua;
-  padding: 20px;
+  padding: 50px;
+  margin: 100px;
   gap: 12px;
+  height: 100%;
 `;
 
-const SetComment = styled.div`
+const Setform = styled.form`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  background-color: #758181;
+  width: 1000px;
+  height: 100px;
   align-items: center;
+  margin: 20px;
+  padding: 10px;
   & input {
-    width: 100px;
+    width: 900px;
+    height: 100px;
+    background-color: #000000;
+    border-radius: 12px;
+    text-align: center;
+  }
+`;
+
+const CommentDiv = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  background-color: #758181;
+  width: 1000px;
+  height: 100%;
+  margin: 20px;
+  padding: 10px;
+`;
+
+const CommentInfo = styled.p`
+  display: flex;
+  background-color: #758181;
+  width: 100%;
+  height: 100%;
+  margin: 20px;
+  padding: 10px;
+
+  & commentp {
+    display: flex;
+    padding: 10px 0;
+  }
+
+  & textp {
+    display: flex;
+    padding: 10px 0;
+  }
+`;
+
+const CommentBtn = styled.button`
+  display: flex;
+  text-align: center;
+  & button {
+    background-color: #ab722374;
+    color: #ab722374;
+    font-size: 16px;
+    padding: 6px 12px;
+    cursor: pointer;
   }
 `;
 
 export default function Comment() {
-  // const navigate = useNavigate();
   const params = useParams();
   const [user, setUser] = useState(null);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
   const [editComment, setEditComment] = useState('');
+
+  const updateList = async () => {
+    try {
+      const snapshot = await getDocs(collection(db, 'comments'));
+      const commentsList = snapshot.docs.map((doc) => ({
+        docId: doc.id,
+        createdAt: doc.createdAt,
+        ...doc.data()
+      }));
+      const target = commentsList.filter((doc) => doc.productId === params.id);
+      setComments(target);
+    } catch (error) {
+      console.error('Error fetching comments', error);
+    }
+  };
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((currentUser) => {
@@ -44,34 +113,19 @@ export default function Comment() {
 
   useEffect(() => {
     if (user) {
-      const fetchComments = async () => {
-        try {
-          const snapshot = await getDocs(collection(db, 'comments'));
-          const commentsList = snapshot.docs.map((doc) => ({
-            docId: doc.id,
-            createdAt: doc.createdAt,
-            ...doc.data()
-          }));
-          const target = commentsList.filter((doc) => doc.productId === params.id);
-          setComments(target);
-        } catch (error) {
-          console.error('Error fetching comments', error);
-        }
-      };
-
-      fetchComments();
+      updateList();
     }
   }, [user]);
 
-  const handleCommentEdit = (event, docId) => {
+  const handleCommentEdit = (event, type, docId) => {
     event.preventDefault();
-    updateEditForm(docId);
+    updateEditForm(type, docId);
   };
 
   const addComment = async () => {
     try {
       const newItem = {
-        createdAt: TimeForComment(),
+        createdAt: CommentTimeSave(),
         displayName: user.displayName,
         editForm: false,
         email: user.email,
@@ -82,33 +136,19 @@ export default function Comment() {
       await addDoc(collection(db, 'comments'), newItem);
       setNewComment('');
 
-      const snapshot = await getDocs(collection(db, 'comments'));
-      const commentsList = snapshot.docs.map((doc) => ({
-        docId: doc.id,
-        createdAt: doc.createdAt,
-        ...doc.data()
-      }));
-      const target = commentsList.filter((doc) => doc.productId === params.id);
-      setComments(target);
+      updateList();
     } catch (error) {
       console.error('Error addComment: ', error);
     }
   };
 
-  const updateEditForm = async (docId) => {
+  const updateEditForm = async (type, docId) => {
     try {
       await updateDoc(doc(db, 'comments', docId), {
-        editForm: true
+        editForm: type
       });
 
-      const snapshot = await getDocs(collection(db, 'comments'));
-      const commentsList = snapshot.docs.map((doc) => ({
-        docId: doc.id,
-        createdAt: doc.createdAt,
-        ...doc.data()
-      }));
-      const target = commentsList.filter((doc) => doc.productId === params.id);
-      setComments(target);
+      updateList();
     } catch (error) {
       console.error('Error updateComment: ', error);
     }
@@ -123,14 +163,7 @@ export default function Comment() {
         });
         setEditComment('');
 
-        const snapshot = await getDocs(collection(db, 'comments'));
-        const commentsList = snapshot.docs.map((doc) => ({
-          docId: doc.id,
-          createdAt: doc.createdAt,
-          ...doc.data()
-        }));
-        const target = commentsList.filter((doc) => doc.productId === params.id);
-        setComments(target);
+        updateList();
       } else {
         window.alert('빈 문자열로 수정하는 것은 불가능합니다.');
       }
@@ -156,76 +189,86 @@ export default function Comment() {
     <CommentList>
       <div>
         <h1>댓글</h1>
-        <SetComment>
-          <form
-            onSubmit={(event) => {
+        <Setform
+          onSubmit={(event) => {
+            event.preventDefault();
+            setNewComment(event.target.value);
+            addComment();
+          }}
+        >
+          <input
+            type="text"
+            value={newComment}
+            onChange={(event) => {
               event.preventDefault();
               setNewComment(event.target.value);
-              addComment();
             }}
-          >
-            <input
-              type="text"
-              value={newComment}
-              onChange={(event) => {
-                event.preventDefault();
-                setNewComment(event.target.value);
-              }}
-              placeholder="댓글을 입력하세요"
-            />
-            <button type="button" onClick={() => addComment()}>
-              댓글추가
-            </button>
-          </form>
-        </SetComment>
+            placeholder="댓글을 입력하세요"
+          />
+          <button type="button" onClick={() => addComment()}>
+            댓글추가
+          </button>
+        </Setform>
         <div>
           {comments.map((comment) =>
             comment.uid !== user.uid ? (
-              <div key={comment.docId}>
-                <p>{comment.text}</p>
-                <p>{comment.createdAt}</p>
-                <p>{comment.displayName}</p>
-              </div>
+              <CommentDiv key={comment.docId}>
+                <CommentInfo>
+                  <textp>{comment.text}</textp>
+                  <commentp>{comment.displayName}</commentp>
+                  <commentp>{CommentTimeShow(comment.createdAt)}</commentp>
+                </CommentInfo>
+              </CommentDiv>
             ) : !comment.editForm ? (
-              <div key={comment.docId}>
-                <p>{comment.text}</p>
-                <p>{comment.createdAt}</p>
-                <p>{comment.displayName}</p>
-                <button type="button" onClick={(event) => handleCommentEdit(event, comment.docId)}>
-                  수정
-                </button>
-                <button type="button" onClick={() => deleteComment(comment.docId)}>
-                  삭제
-                </button>
-              </div>
+              <CommentDiv key={comment.docId}>
+                <CommentInfo>
+                  <textp>{comment.text}</textp>
+                  <commentp>{comment.displayName}</commentp>
+                  <commentp>{CommentTimeShow(comment.createdAt)}</commentp>
+                </CommentInfo>
+                <CommentBtn>
+                  <button type="button" onClick={(event) => handleCommentEdit(event, true, comment.docId)}>
+                    수정
+                  </button>
+                  <button type="button" onClick={() => deleteComment(comment.docId)}>
+                    삭제
+                  </button>
+                </CommentBtn>
+              </CommentDiv>
             ) : (
-              <div key={comment.docId}>
-                <form
-                  onSubmit={(event) => {
-                    event.preventDefault();
-                    setEditComment(event.target.value);
-                    updateComment(comment.docId);
-                  }}
-                >
-                  <input
-                    type="text"
-                    value={editComment}
-                    onChange={(event) => {
+              <CommentDiv key={comment.docId}>
+                <CommentInfo>
+                  <form
+                    onSubmit={(event) => {
                       event.preventDefault();
                       setEditComment(event.target.value);
+                      updateComment(comment.docId);
                     }}
-                    placeholder={comment.text}
-                  ></input>
-                </form>
-                <p>{comment.createdAt}</p>
-                <p>{comment.displayName}</p>
-                <button type="button" onClick={() => updateComment(comment.docId)}>
-                  수정 완료
-                </button>
-                <button type="button" onClick={() => deleteComment(comment.docId)}>
-                  삭제
-                </button>
-              </div>
+                  >
+                    <input
+                      type="text"
+                      defaultValue={comment.text}
+                      onChange={(event) => {
+                        event.preventDefault();
+                        setEditComment(event.target.value);
+                      }}
+                    ></input>
+                  </form>
+                  <p>{comment.displayName}</p>
+                  <p>{CommentTimeShow(comment.createdAt)}</p>
+                </CommentInfo>
+                <CommentBtn>
+                  <button type="button" onClick={() => updateComment(comment.docId)}>
+                    수정 완료
+                  </button>
+                  <button type="button" onClick={(event) => handleCommentEdit(event, false, comment.docId)}>
+                    수정 취소
+                  </button>
+                  <button type="button" onClick={() => deleteComment(comment.docId)}>
+                    삭제
+                  </button>
+                </CommentBtn>
+              </CommentDiv>
             )
           )}
         </div>
