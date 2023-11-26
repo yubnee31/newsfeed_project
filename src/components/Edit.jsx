@@ -1,14 +1,30 @@
 import Layout from 'components/layouts/Layout';
 import { db } from '../firebase';
 import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-
+import { collection, getDocs, query } from 'firebase/firestore';
 export default function Edit({ items, setItems }) {
   const params = useParams();
   const navigate = useNavigate();
-  const selectedItem = items.find((item) => item.id === params.id);
+  const [selectedItem, setSelectedItem] = useState({});
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const q = query(collection(db, 'items'));
+      const querySnapshot = await getDocs(q);
+      const initialItems = [];
+
+      querySnapshot.forEach((doc) => {
+        initialItems.push({ id: doc.id, ...doc.data() });
+      });
+      setItems(initialItems);
+      setSelectedItem(initialItems.find((item) => item.id === params.id));
+    };
+    fetchData();
+  }, []);
+
   const [editMode, setEditMode] = useState(false);
   const [changedTitle, setChangedTitle] = useState('');
   const [changedInfo, setChangedInfo] = useState('');
@@ -29,6 +45,7 @@ export default function Edit({ items, setItems }) {
           }
         });
       });
+      localStorage.setItem('selected Item', JSON.stringify({ email: '', displayName: '', uid: '' }));
     } else {
       await updateDoc(itemRef, {
         sold: false,
@@ -65,42 +82,41 @@ export default function Edit({ items, setItems }) {
   };
 
   return (
-    <Layout>
-      <Main>
-        {!editMode ? (
-          <SelectedItemSection>
-            <ItemInfoSection>
-              <ItemTitle>{selectedItem.itemTitle}</ItemTitle>
-              <ItemInfo>{selectedItem.itemInfo}</ItemInfo>
-              <ItemPrice>{selectedItem.itemPrice}</ItemPrice>
-            </ItemInfoSection>
+    <Main>
+      {!editMode ? (
+        <SelectedItemSection>
+          <ItemInfoSection>
+            {/* <ItemImg src={selectedItem.images[0]}></ItemImg> */}
+            <ItemTitle>{selectedItem.itemTitle}</ItemTitle>
+            <ItemInfo>{selectedItem.itemInfo}</ItemInfo>
+            <ItemPrice>{selectedItem.itemPrice}</ItemPrice>
+          </ItemInfoSection>
 
-            <EditBtn onClick={() => setEditMode(true)}>수정하기</EditBtn>
-            <DeleteBtn onClick={deleteItem}>삭제하기</DeleteBtn>
-            <BackBtn onClick={() => navigate('/mypage')}>돌아가기</BackBtn>
-          </SelectedItemSection>
-        ) : (
-          <SelectedItemForm onSubmit={updateItem}>
-            <ChangeSection>
-              <label>상품제목</label>
-              <ChangeInput value={changedTitle} onChange={(e) => setChangedTitle(e.target.value)} />
+          <EditBtn onClick={() => setEditMode(true)}>수정하기</EditBtn>
+          <DeleteBtn onClick={deleteItem}>삭제하기</DeleteBtn>
+          <BackBtn onClick={() => navigate('/mypage')}>돌아가기</BackBtn>
+        </SelectedItemSection>
+      ) : (
+        <SelectedItemForm onSubmit={updateItem}>
+          <ChangeSection>
+            <label>상품제목</label>
+            <ChangeInput value={changedTitle} onChange={(e) => setChangedTitle(e.target.value)} />
 
-              <label>상품설명</label>
-              <ChangeInput value={changedInfo} onChange={(e) => setChangedInfo(e.target.value)} />
+            <label>상품설명</label>
+            <ChangeInput value={changedInfo} onChange={(e) => setChangedInfo(e.target.value)} />
 
-              <label>상품가격</label>
-              <ChangeInput value={changedPrice} onChange={(e) => setChangedPrice(e.target.value)} />
+            <label>상품가격</label>
+            <ChangeInput value={changedPrice} onChange={(e) => setChangedPrice(e.target.value)} />
 
-              <ChangeSelect onChange={selectHendler}>
-                <option value="판매완료">판매완료</option>
-                <option value="판매중">판매중</option>
-              </ChangeSelect>
-            </ChangeSection>
-            <CompleteBtn type="submit">완료하기</CompleteBtn>
-          </SelectedItemForm>
-        )}
-      </Main>
-    </Layout>
+            <ChangeSelect onChange={selectHendler}>
+              <option value="판매완료">판매완료</option>
+              <option value="판매중">판매중</option>
+            </ChangeSelect>
+          </ChangeSection>
+          <CompleteBtn type="submit">완료하기</CompleteBtn>
+        </SelectedItemForm>
+      )}
+    </Main>
   );
 }
 const Main = styled.main`
@@ -164,6 +180,7 @@ const ChangeSelect = styled.select`
   font-size: 20px;
   float: right;
 `;
+const ItemImg = styled.img``;
 const ItemTitle = styled.p``;
 const ItemInfo = styled.p``;
 const ItemPrice = styled.p`
