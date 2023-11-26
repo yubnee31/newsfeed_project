@@ -20,11 +20,11 @@ export default function Header() {
     });
     setSearchResults(filtered);
   };
-  useEffect(() => {
-    console.log('===========================');
-    console.log('검색결과', searchResults);
-    console.log('===========================');
-  }, [searchResults]);
+  // useEffect(() => {
+  //   console.log('===========================');
+  //   console.log('검색결과', searchResults);
+  //   console.log('===========================');
+  // }, [searchResults]);
 
   return (
     <>

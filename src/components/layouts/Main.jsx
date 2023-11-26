@@ -1,7 +1,6 @@
 import React from 'react';
 import List from 'components/List';
 import styled from 'styled-components';
-import { useState } from 'react';
 
 export default function Main() {
   return (

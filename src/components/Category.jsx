@@ -23,9 +23,9 @@ export default function Category() {
     const filteredItems = items.filter((item) => item.itemCategory === categoryName);
     setFilteredItems(filteredItems);
   };
-  useEffect(() => {
-    console.log(filteredItems);
-  }, [filteredItems]);
+  // useEffect(() => {
+  //   console.log(filteredItems);
+  // }, [filteredItems]);
 
   return (
     <ConTainer>

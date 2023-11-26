@@ -1,15 +1,9 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import Bear from '../assets/bear.jpeg';
 import { useItems } from 'shared/Items';
-
-// 관심 버튼 이미지로 변경하기
-// import FavoriteImg from '../assets/Favorite.png'
-import { useNavigate } from 'react-router-dom';
-// import FavoriteImg from './Favorite.png';
+import Item from './Item';
 
 export default function List({ title }) {
-  const navigate = useNavigate();
   const [items, setItems] = useItems();
 
   //최신등록상품 더보기 상태
@@ -35,15 +29,6 @@ export default function List({ title }) {
 
   const visiblePopularItems = showPopularMore ? items : items.slice(0, 5);
 
-  //관심 버튼 상태 변경
-  const favoriteSwitch = (event, clickedItem) => {
-    event.stopPropagation();
-    const updatedFavorites = items.map((item) => {
-      return item.id === clickedItem.id ? { ...item, isFavorite: !item.isFavorite } : item;
-    });
-    setItems(updatedFavorites);
-  };
-
   return (
     <ListWrapper>
       <TitleWrapper>
@@ -62,32 +47,8 @@ export default function List({ title }) {
         {/* 이부분 조건부 렌더링 하기 */}
         {/* title true일때 최신, showLatestMore 상태 true일때 인기상품 렌더링 안되고 데이터 전체 최신순 정렬 */}
         {showLatestMore
-          ? latestSortedDates.map((item) => {
-              return (
-                <Item key={item.id} onClick={() => navigate(`/detail/${item.id}`)}>
-                  <Favorite onClick={(event) => favoriteSwitch(event, item)}>{item.isFavorite ? '♥' : '♡'}</Favorite>
-                  <Img src={Bear} />
-                  <ItemInfo>
-                    <p> {item.itemTitle}</p>
-                    {/* 가격 천단위 콤마표시 -> toLocaleString() */}
-                    <Price> {item.itemPrice.toLocaleString()} </Price>
-                  </ItemInfo>
-                </Item>
-              );
-            })
-          : latestSortedDates.slice(0, 5).map((item) => {
-              return (
-                <Item key={item.id} onClick={() => navigate(`/detail/${item.id}`)}>
-                  <Favorite onClick={(event) => favoriteSwitch(event, item)}>{item.isFavorite ? '♥' : '♡'}</Favorite>
-                  <Img src={Bear} />
-                  <ItemInfo>
-                    <p> {item.itemTitle}</p>
-                    {/* 가격 천단위 콤마표시 -> toLocaleString() */}
-                    <Price> {item.itemPrice.toLocaleString()} </Price>
-                  </ItemInfo>
-                </Item>
-              );
-            })}
+          ? latestSortedDates.map((item) => <Item key={item.id} item={item} />)
+          : latestSortedDates.slice(0, 5).map((item) => <Item key={item.id} item={item} />)}
       </Items>
     </ListWrapper>
   );
@@ -137,48 +98,4 @@ const Items = styled.div`
   grid-gap: 10px;
   justify-content: center;
   width: 100%;
-`;
-
-const Favorite = styled.span`
-  font-size: 35px;
-  position: absolute;
-  width: 35px;
-  margin: 10px 170px 0 0;
-  color: white;
-  &:hover {
-    cursor: pointer;
-  }
-`;
-
-const Item = styled.div`
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 230px;
-  height: 300px;
-  border-radius: 3px;
-  overflow: hidden;
-  &:hover {
-    cursor: pointer;
-  }
-`;
-
-const Img = styled.img`
-  width: 100%;
-  height: 220px;
-  object-fit: cover;
-`;
-//왜 가운데야
-const ItemInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin-right: auto; //flex-start로 적용 안 됨. 부모태그가 align-items: center여서 그런거겠지..?
-  padding: 10px 10px 5px 0;
-  gap: 15px;
-`;
-
-const Price = styled.p`
-  font-weight: 800;
 `;
