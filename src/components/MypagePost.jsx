@@ -63,9 +63,9 @@ export default function MypagePost({ items, setItems }) {
               .filter((item) => item.sold === true)
               .map((item) => {
                 return (
-                  <Item key={item.id} onClick={() => navigate(`/edit/${item.id}`)}>
+                  <Item key={item.id} onClick={() => navigate(`/detail/${item.id}`)}>
                     <div>
-                      <img src={null ?? defaultItem} alt="아바타이미지" />
+                      <img src={item.images ?? defaultItem} alt="아바타이미지" />
                       <h1>{item.itemTitle}</h1>
                       <p>{item.itemInfo}</p>
                       <p>{item.itemPrice}</p>
