@@ -29,6 +29,15 @@ export default function List({ title }) {
 
   const visiblePopularItems = showPopularMore ? items : items.slice(0, 5);
 
+  //관심 버튼 상태 변경
+  const favoriteSwitch = (event, clickedItem) => {
+    event.stopPropagation();
+    const updatedFavorites = items.map((item) => {
+      return item.id === clickedItem.id ? { ...item, isFavorite: !item.isFavorite } : item;
+    });
+    setItems(updatedFavorites);
+  };
+
   return (
     <ListWrapper>
       <TitleWrapper>
@@ -47,8 +56,8 @@ export default function List({ title }) {
         {/* 이부분 조건부 렌더링 하기 */}
         {/* title true일때 최신, showLatestMore 상태 true일때 인기상품 렌더링 안되고 데이터 전체 최신순 정렬 */}
         {showLatestMore
-          ? latestSortedDates.map((item) => <Item key={item.id} item={item} />)
-          : latestSortedDates.slice(0, 5).map((item) => <Item key={item.id} item={item} />)}
+          ? latestSortedDates.map((item) => <Item favoriteSwitch={favoriteSwitch} item={item} />)
+          : latestSortedDates.slice(0, 5).map((item) => <Item favoriteSwitch={favoriteSwitch} item={item} />)}
       </Items>
     </ListWrapper>
   );
