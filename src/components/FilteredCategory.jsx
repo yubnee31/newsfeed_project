@@ -1,5 +1,5 @@
 import React from 'react';
 
 export default function FilteredCategory() {
-  return <div>FilteredCategory</div>;
+  return <CategoryContainer>{filteredList.length > 0 && filteredList}</CategoryContainer>;
 }

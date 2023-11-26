@@ -23,9 +23,9 @@ export default function Category() {
     const filteredItems = items.filter((item) => item.itemCategory === categoryName);
     setFilteredItems(filteredItems);
   };
-  // useEffect(() => {
-  //   console.log('선택카테고리 상품', filteredItems);
-  // }, [filteredItems]);
+  useEffect(() => {
+    console.log('선택카테고리 상품', filteredItems);
+  }, [filteredItems]);
 
   return (
     <ConTainer>
