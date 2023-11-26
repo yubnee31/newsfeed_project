@@ -1,36 +1,19 @@
-import Layout from 'components/layouts/Layout';
 import { db } from '../firebase';
 import { deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { collection, getDocs, query } from 'firebase/firestore';
-export default function Edit({ items, setItems }) {
+
+export default function Edit({ setItems }) {
   const params = useParams();
   const navigate = useNavigate();
   const [selectedItem, setSelectedItem] = useState({});
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const q = query(collection(db, 'items'));
-      const querySnapshot = await getDocs(q);
-      const initialItems = [];
-
-      querySnapshot.forEach((doc) => {
-        initialItems.push({ id: doc.id, ...doc.data() });
-      });
-      setItems(initialItems);
-      setSelectedItem(initialItems.find((item) => item.id === params.id))
-
-    };
-    fetchData();
-  }, []);
-
   const [editMode, setEditMode] = useState(false);
   const [changedTitle, setChangedTitle] = useState('');
   const [changedInfo, setChangedInfo] = useState('');
   const [changedPrice, setChangedPrice] = useState('');
-  const [soldStatus, setSoldStatus] = useState('판매중');
+  const [soldStatus, setSoldStatus] = useState('판매완료');
 
   const updateItem = async (event) => {
     event.preventDefault();
@@ -46,7 +29,7 @@ export default function Edit({ items, setItems }) {
           }
         });
       });
-      localStorage.setItem('selected Item', JSON.stringify({ email: '', displayName: '', uid: '' }))
+      setSelectedItem({...selectedItem, sold: true, itemTitle: changedTitle, itemInfo: changedInfo, itemPrice: changedPrice });
     } else {
       await updateDoc(itemRef, {
         sold: false,
@@ -63,10 +46,26 @@ export default function Edit({ items, setItems }) {
           }
         });
       });
+      setSelectedItem({...selectedItem,sold: false, itemTitle: changedTitle, itemInfo: changedInfo, itemPrice: changedPrice });
     }
 
     setEditMode(false);
   };
+  useEffect(() => {
+    const fetchData = async () => {
+      const q = query(collection(db, 'items'));
+      const querySnapshot = await getDocs(q);
+      const initialItems = [];
+
+      querySnapshot.forEach((doc) => {
+        initialItems.push({ id: doc.id, ...doc.data() });
+      });
+      setItems(initialItems);
+      setSelectedItem(initialItems.find((item) => item.id === params.id));
+
+    };
+    fetchData();
+  }, []);
 
   const deleteItem = async (event) => {
     const itemRef = doc(db, 'items', params.id);
@@ -87,6 +86,7 @@ export default function Edit({ items, setItems }) {
         {!editMode ? (
           <SelectedItemSection>
             <ItemInfoSection>
+              <ItemImg src={selectedItem.images}></ItemImg>
               <ItemTitle>{selectedItem.itemTitle}</ItemTitle>
               <ItemInfo>{selectedItem.itemInfo}</ItemInfo>
               <ItemPrice>{selectedItem.itemPrice}</ItemPrice>
@@ -124,6 +124,7 @@ const Main = styled.main`
   flex-direction: column;
   align-items: center;
 `;
+
 const SelectedItemSection = styled.section`
   display: flex;
   border: 3px solid #ab7323;
@@ -137,6 +138,7 @@ const SelectedItemSection = styled.section`
   height: 400px;
   position: relative;
 `;
+
 const SelectedItemForm = styled.form`
   display: flex;
   border: 3px solid #ab7323;
@@ -156,6 +158,7 @@ const ItemInfoSection = styled.div`
   left: 320px;
   width: 350px;
   height: 200px;
+  
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -181,7 +184,11 @@ const ChangeSelect = styled.select`
   float: right;
 `;
 const ItemImg = styled.img`
-  
+  width : 250px;
+  height:250px;
+  position:absolute;
+  left:50px;
+  top:80px;
 `
 const ItemTitle = styled.p``;
 const ItemInfo = styled.p``;

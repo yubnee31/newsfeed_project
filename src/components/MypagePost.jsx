@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import defaultItem from 'assets/defaultItem.png';
 import { db } from '../firebase';
@@ -6,9 +6,11 @@ import { collection, getDocs, query } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 
 export default function MypagePost({ items, setItems }) {
+
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem('login user'));
-  
+  console.log('mypagepost', user);
+  const [selectedItem, setSelectedItem] = useState({});
   useEffect(() => {
     const fetchData = async () => {
       const q = query(collection(db, 'items'));
@@ -25,7 +27,6 @@ export default function MypagePost({ items, setItems }) {
 
   let userItem = [];
   user.uid === null ? (userItem = []) : (userItem = items.filter((item) => item.userId === user.uid));
-
   return (
     <>
       <PostSection>
@@ -40,16 +41,15 @@ export default function MypagePost({ items, setItems }) {
           <ItemP>판매중인 상품</ItemP>
           <ItemWrapper>
             {userItem
-              .filter((item) => !item.sold)
+              .filter((item) => item.sold===false)
               .map((item) => {
                 return (
                   <Item key={item.id} onClick={() => navigate(`/detail/${item.id}`)}>
                     <div>
-                      <img src={null ?? defaultItem} alt="아바타이미지" />
+                      <img src={item.images ?? defaultItem} alt="아바타이미지" />
                       <h1>{item.itemTitle}</h1>
                       <p>{item.itemInfo}</p>
                       <p>{item.itemPrice}</p>
-                      {/* <button onClick={()=>navigate(`/edit/${item.id}`)}>클릭</button> */}
                     </div>
                   </Item>
                 );
@@ -62,12 +62,12 @@ export default function MypagePost({ items, setItems }) {
 
           <ItemWrapper>
             {userItem
-              .filter((item) => item.sold)
+              .filter((item) => item.sold===true)
               .map((item) => {
                 return (
-                  <Item key={item.id} onClick={() => navigate(`/edit/${item.id}`)}>
+                  <Item key={item.id} onClick={() => navigate(`/detail/${item.id}`)}>
                     <div>
-                      <img src={null ?? defaultItem} alt="아바타이미지" />
+                      <img src={item.images ?? defaultItem} alt="아바타이미지" />
                       <h1>{item.itemTitle}</h1>
                       <p>{item.itemInfo}</p>
                       <p>{item.itemPrice}</p>

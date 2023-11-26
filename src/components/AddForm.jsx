@@ -19,6 +19,7 @@ const AddForm = ({ items, setItems }) => {
 
 
   const user = JSON.parse(localStorage.getItem('login user'));
+
   // 파일 선택 시 호출되는 함수
   const handleFileChange = async (e) => {
     const files = Array.from(e.target.files).slice(0, 4);
@@ -48,6 +49,7 @@ const AddForm = ({ items, setItems }) => {
     updatedPreviewUrls.splice(index, 1);
     setPreviewUrl(updatedPreviewUrls);
   };
+
   const Categories = [
     {
       id: 1,
