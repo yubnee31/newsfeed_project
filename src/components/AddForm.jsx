@@ -178,10 +178,12 @@ const AddForm = ({ items, setItems }) => {
 
 // 스타일
 const AddSection = styled.div`
+ position: relative;
+ bottom : 280px;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: bottom;
+  justify-content: center;
   max-height: 100vh;
   margin: 400px auto 30px auto;
 `;
