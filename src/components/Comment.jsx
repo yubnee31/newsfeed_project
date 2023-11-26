@@ -2,11 +2,29 @@ import React, { useEffect, useState } from 'react';
 import { auth, db } from '../firebase';
 import { collection, doc, getDocs, addDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 import TimeForComment from '../shared/TimeForComment';
-import { useNavigate } from 'react-router-dom';
-// import styled from 'styled-components';
+import styled from 'styled-components';
+
+// import { useNavigate } from 'react-router-dom';
+
+const CommentList = styled.div`
+  display: flex;
+  flex-direction: column;
+  background-color: aqua;
+  padding: 20px;
+  gap: 12px;
+`;
+
+const SetComment = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  & input {
+    width: 100px;
+  }
+`;
 
 export default function Comment() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
@@ -35,7 +53,6 @@ export default function Comment() {
             createdAt: doc.createdAt,
             ...doc.data()
           }));
-          console.log(commentsList);
           setComments(commentsList);
         } catch (error) {
           console.error('Error fetching comments', error);
@@ -73,7 +90,7 @@ export default function Comment() {
       }));
       setComments(commentsList);
     } catch (error) {
-      console.error('Error adding comment: ', error);
+      console.error('Error addComment: ', error);
     }
   };
 
@@ -85,26 +102,25 @@ export default function Comment() {
   //       text: newComment
   //     });
   //   } catch (error) {
-  //     console.error('Error update comment: ', error);
+  //     console.error('Error updateComment: ', error);
   //   }
   // };
 
-  const deleteComment = async (event, commentId) => {
-    // event.preventDefault();
+  const deleteComment = async (event, docId) => {
     try {
-      await deleteDoc(doc(db, 'comments', commentId));
-      const commentsList = comments.filter((comment) => comment.docId !== commentId);
+      await deleteDoc(doc(db, 'comments', docId));
+      const commentsList = comments.filter((comment) => comment.docId !== docId);
       setComments(commentsList);
     } catch (error) {
-      console.error('Error deletinf comment: ', error);
+      console.error('Error deleteComment: ', error);
     }
   };
 
   return (
-    <div>
+    <CommentList>
       <div>
         <h1>댓글</h1>
-        <div>
+        <SetComment>
           <input
             type="text"
             value={newComment}
@@ -116,11 +132,12 @@ export default function Comment() {
           <button type="button" onClick={() => addComment()}>
             댓글추가
           </button>
-        </div>
+        </SetComment>
         <div>
           {/* <ul> */}
           {comments.map((comment) => (
             <div key={comment.docId}>
+              <p>{comment.docId}</p>
               <p>{comment.text}</p>
               <p>{comment.createdAt}</p>
               <p>{comment.displayName}</p>
@@ -144,6 +161,6 @@ export default function Comment() {
           {/* </ul> */}
         </div>
       </div>
-    </div>
+    </CommentList>
   );
 }
