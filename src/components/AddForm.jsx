@@ -14,7 +14,7 @@ const AddForm = ({ items, setItems, tags, setTags }) => {
   const [selectedFile, setSelectedFile] = useState([]);
   const [timeStamp, setTimeStamp] = useState('');
   const [isFavorite, setItemFavorite] = useState(false);
-
+  const user = JSON.parse(localStorage.getItem('login user'));
   // 파일 선택 시 호출되는 함수
   const handleFileChange = async (e) => {
     const files = Array.from(e.target.files).slice(0, 4);
@@ -62,7 +62,8 @@ const AddForm = ({ items, setItems, tags, setTags }) => {
         images: downloadURLs,
         sold: false,
         timeStamp: new Date(),
-        isFavorite: false
+        isFavorite: false,
+        userId:user.uid
       };
       // 아이템 목록 업데이트
       setItems((prev) => [newItem, ...prev]);

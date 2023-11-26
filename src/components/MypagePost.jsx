@@ -30,7 +30,7 @@ export default function MypagePost({ items, setItems }) {
       <PostSection>
         <RegistItemBtn
           onClick={() => {
-            navigate('/register');
+            navigate('/addpage');
           }}
         >
           물건 판매하기
