@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/alt-text */
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { addDoc, collection } from 'firebase/firestore';
@@ -114,7 +115,7 @@ const AddForm = ({ items, setItems }) => {
           await addDoc(collectionRef, newItem);
           // 입력값 초기화
           setItemInfo('');
-          setItemPrice(0);
+          setItemPrice('');
           setItemTitle('');
           setItemCategory('');
           setSelectedFile([]);
@@ -132,10 +133,11 @@ const AddForm = ({ items, setItems }) => {
   };
   // 카테고리 라인 
   return (
-    <AddSection>
+    <AddSection> 
+     <ImageLogo src="https://img.freepik.com/premium-vector/potato-root-vegetables-carbohydrate-agriculture-farm-product_22052-4629.jpg"/>
+         <BorderInnerPageTitle type="text">중고 상품 등록</BorderInnerPageTitle>
       <FileUploadSection>
         <UploaderWrapper>
-          {' '}
           {previewUrl.map((url, index) => (
             <div key={index}>
               <ImageContainer>
@@ -169,42 +171,82 @@ const AddForm = ({ items, setItems }) => {
           onChange={(event) => setItemInfo(event.target.value)}
           placeholder="상품 설명"
         />
-        <InputFieldPrice  type="number" value={itemPrice} onChange={(event) => setItemPrice(event.target.value)} placeholder="가격" />
+        <InputFieldPrice   value={itemPrice} onChange={(event) => setItemPrice(event.target.value)} placeholder="가격" />
         <SubmitButton onClick={HandleUpload}>등록</SubmitButton>
       </FormContainer>
     </AddSection>
   );
 };
 
+
 // 스타일
 const AddSection = styled.div`
+width: 1500px;
  position: relative;
+ border: 2px solid black;
  bottom : 280px;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  max-height: 100vh;
-  margin: 400px auto 30px auto;
+  display: inline-block;
+  left:300px;
+  max-height: 130vh;
+  margin: 400px 5px 1px 1px;;
+  gap: 10px;
+ 
+  @media (max-width: 1400px) {
+    margin: 20px 10px 20px 10px;
+  }
 `;
+   const BorderInnerPageTitle = styled.h1`
+    font-weight: bold;
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    background-color: white;
+    margin-top: 50px;
+    padding: 30px;
+    padding-left: 90px;
+    color: burlywood; ;
+
+   `;
+
+const ImageLogo = styled.img`
+margin-top: 40px;
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    left: 550px;
+    object-fit: cover;
+
+`;
+
+
 
 const FileUploadSection = styled.div`
   display: flex;
   width: 600px; /* 고정된 너비 설정 */
-  height: 434px; /* 고정된 높이 설정 */
+  height: 540px; /* 고정된 높이 설정 */
   overflow: hidden; /* 컨테이너 크기를 초과하는 내용을 숨김 */
   position: relative;
+  top: 290px;
+  left: 180px;
   justify-content: center;
   border: 5px solid #ddd;
   color: burlywood;
-  margin-left: 150px;
+  background-color: white;
+  flex-direction: column;
   padding: 25px;
+  @media (max-width: 1200px) {
+    width: 85%;
+    margin-left: 0; /* Adjusted margin for smaller screens */
+  }
 `;
 
 const FormContainer = styled.div`
-  width: 50%;
+  width: 30%;
   flex-direction: column;
   justify-content: center;
+  position: relative;
+  left: 880px;
+  bottom: 300px;
   border: 5px solid #ddd;
   padding: 20px;
 `;
@@ -248,13 +290,13 @@ const StyledFileInput = styled.input`
 `;
 const CustomFileButton = styled.label`
   position: absolute;
-  left: 695px;
-  bottom: 330px;
+  left: 700px;
+  top: 920px;
   background-color: burlywood;
   border: 1px solid burlywood;
   color: white;
-  padding: 20px;
-  border-radius: 20px;
+  padding: 30px 27px;
+  border-radius: 1px;
   margin-bottom: 10px;
   cursor: pointer;
   &:hover {
@@ -265,7 +307,7 @@ const CustomFileButton = styled.label`
 const InputFieldTitle = styled.input`
    display: inline-block;
    align-items: center;
-  width: 500px;
+  width:40%;
   padding: 8px;
   margin-bottom: 16px;
   color: burlywood;
@@ -290,7 +332,7 @@ const InputFieldPrice = styled.input`
 
 const CategoryDropdown = styled.select`
  display: inline-block;
-  width: 38.5%;
+  width: 51%;
   padding: 8px;
   margin-bottom: 16px;
   color: burlywood;
@@ -298,11 +340,11 @@ const CategoryDropdown = styled.select`
 `;
 
 const SubmitButton = styled.button`
-  padding: 10px;
+  padding: 20px;
   background-color: burlywood;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 1px;
   cursor: pointer;
   margin: 1px auto 1px auto;
   &:hover {
