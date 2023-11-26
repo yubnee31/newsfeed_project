@@ -87,7 +87,6 @@ export default function Edit({ items, setItems }) {
         {!editMode ? (
           <SelectedItemSection>
             <ItemInfoSection>
-              <ItemImg src={selectedItem.images[0]}></ItemImg>
               <ItemTitle>{selectedItem.itemTitle}</ItemTitle>
               <ItemInfo>{selectedItem.itemInfo}</ItemInfo>
               <ItemPrice>{selectedItem.itemPrice}</ItemPrice>

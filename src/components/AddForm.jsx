@@ -10,14 +10,12 @@ const AddForm = ({ items, setItems }) => {
   const [itemInfo, setItemInfo] = useState('');
   const [itemPrice, setItemPrice] = useState(0);
   const [itemTitle, setItemTitle] = useState('');
-  const [itemcategory, setItemCategory] = useState(null);
-  const [fixedTags, setFixedTags] = useState('');
-  const [tags, setTags] = useState([]);
+  const [itemcategory, setItemCategory] = useState('');
   const [previewUrl, setPreviewUrl] = useState([]);
   const [selectedFile, setSelectedFile] = useState([]);
-  const [timeStamp, setTimeStamp] = useState('');
   const [isFavorite, setItemFavorite] = useState(false);
-  const [category, setCategory] = useState('');
+
+
 
 
   const user = JSON.parse(localStorage.getItem('login user'));
@@ -78,15 +76,16 @@ const AddForm = ({ items, setItems }) => {
     {
       id: 7,
       itemcategory: '기타'
-    }
+    },
   ];
 
+ 
+
   // 카테고리
-  const ChangehandleCategory = (event) => {
-    const eventHandler = event.target.value;
-   // if (eventHandler !== '' && !tags.some((tag) => tag.Categories === eventHandler)) {
-    setCategory(eventHandler);
-   // }
+  const ChangehandleCategory = () => {
+    const CategoryValue = [...Categories];
+    itemcategory(CategoryValue);
+  
   };
 
   // 등록 클릭 시 호출되는 함수 
@@ -108,7 +107,7 @@ const AddForm = ({ items, setItems }) => {
           itemInfo,
           itemPrice,
           itemTitle,
-          itemcategory:category,
+          itemcategory,
           images: downloadURLs,
           sold: false,
           timeStamp: new Date(),
@@ -124,14 +123,13 @@ const AddForm = ({ items, setItems }) => {
           setItemInfo('');
           setItemPrice(0);
           setItemTitle('');
-          setItemCategory('카테고리 선택');
+          setItemCategory('');
           setSelectedFile([]);
           setPreviewUrl([]);
           isFavorite(false);
           alert('등록완료');
        } 
-        } catch (error) {
-        console.error('Error adding document: ', error.message, error.code);
+        }catch (error) {
         alert('등록 중 오류가 발생했습니다. 나중에 다시 시도해주세요.');
       }
     }
@@ -164,9 +162,9 @@ const AddForm = ({ items, setItems }) => {
 
         <CategoryDropdown  onChange={ChangehandleCategory}>
          <option  disabled>카테고리 선택</option>  
-          {Array.isArray(Categories) && Categories.map((category) => (
-          <option  key={category.id} value={[category.itemcategory]}>
-                {[category.itemcategory]}
+          { Categories.map((category) => (
+          <option  key={category.id} value={category.itemcategory}>
+                {category.itemcategory}
             </option>
           ))}
         </CategoryDropdown>
@@ -263,7 +261,7 @@ const CustomFileButton = styled.label`
 `;
 
 const InputFieldTitle = styled.input`
-  width: 80%;
+  width: 50%;
   padding: 8px;
   margin-bottom: 16px;
   color: burlywood;
