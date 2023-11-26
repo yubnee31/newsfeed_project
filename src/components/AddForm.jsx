@@ -116,13 +116,13 @@ const AddForm = ({ items, setItems }) => {
         // 아이템 목록 업데이트
         setItems((prev) => [newItem, ...prev]);
         const collectionRef = collection(db, 'items');
-        if( category !== '' ) {
+        if( itemcategory !== '' ) {
           await addDoc(collectionRef, newItem);
           // 입력값 초기화
           setItemInfo('');
           setItemPrice(0);
           setItemTitle('');
-          setCategory('');
+          setItemCategory('카테고리 선택');
           setSelectedFile([]);
           setPreviewUrl([]);
           isFavorite(false);
@@ -162,9 +162,9 @@ const AddForm = ({ items, setItems }) => {
 
         <CategoryDropdown  onChange={ChangehandleCategory}>
          <option  disabled>카테고리 선택</option>  
-          {Categories.map((category) => (
-          <option  key={category.id} value={category.category}>
-                {[category.category]}
+          {Array.isArray(Categories) && Categories.map((category) => (
+          <option  key={category.id} value={[category.itemcategory}>
+                {[category.itemcategory]}
             </option>
           ))}
         </CategoryDropdown>
