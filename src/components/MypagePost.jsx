@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 export default function MypagePost({ items, setItems }) {
   const navigate = useNavigate();
   const user = JSON.parse(localStorage.getItem('login user'));
+  
   useEffect(() => {
     const fetchData = async () => {
       const q = query(collection(db, 'items'));
@@ -42,7 +43,11 @@ export default function MypagePost({ items, setItems }) {
               .filter((item) => !item.sold)
               .map((item) => {
                 return (
+<<<<<<< HEAD
+                  <Item key={item.id} onClick={() => navigate(`/edit/${item.id}`)}>
+=======
                   <Item key={item.id} onClick={() => navigate(`/detail/${item.id}`)}>
+>>>>>>> 1181e723914c5cba2a037e0b82d1cf09e134eaf0
                     <div>
                       <img src={null ?? defaultItem} alt="아바타이미지" />
                       <h1>{item.itemTitle}</h1>

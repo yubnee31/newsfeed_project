@@ -10,6 +10,7 @@ const Router = () => {
     { text: '아이템 1', sold: false, id: 1 },
     { text: '아이템 2', sold: false, id: 2 }
   ]);
+
   return (
     <BrowserRouter>
       <Routes>
