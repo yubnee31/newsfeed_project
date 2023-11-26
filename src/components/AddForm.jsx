@@ -3,8 +3,6 @@ import styled from 'styled-components';
 import { addDoc, collection } from 'firebase/firestore';
 import { db, storage } from '../firebase';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
-import { useNavigate } from 'react-router';
-
 
 const AddForm = ({ items, setItems }) => {
   const [itemInfo, setItemInfo] = useState('');
@@ -13,12 +11,6 @@ const AddForm = ({ items, setItems }) => {
   const [itemcategory, setItemCategory] = useState('');
   const [previewUrl, setPreviewUrl] = useState([]);
   const [selectedFile, setSelectedFile] = useState([]);
-  const [isFavorite, setItemFavorite] = useState(false);
-
-
-
-
-  const user = JSON.parse(localStorage.getItem('login user'));
 
   // 파일 선택 시 호출되는 함수
   const handleFileChange = async (e) => {
@@ -118,7 +110,7 @@ const AddForm = ({ items, setItems }) => {
         // 아이템 목록 업데이트
         setItems((prev) => [newItem, ...prev]);
         const collectionRef = collection(db, 'items');
-        if( itemcategory !== '' ) {
+         if( itemcategory === '' ) {
           await addDoc(collectionRef, newItem);
           // 입력값 초기화
           setItemInfo('');
@@ -127,12 +119,13 @@ const AddForm = ({ items, setItems }) => {
           setItemCategory('');
           setSelectedFile([]);
           setPreviewUrl([]);
-          isFavorite(false);
-       }  
-       alert('등록완료');
-        }catch (error) {
+        
+        }  
+        alert('등록완료');
+        }
+        catch (error) {
           console.log("error :",error.message);
-        alert('등록 중 오류가 발생했습니다. 나중에 다시 시도해주세요.');
+          alert(`등록 중 오류가 발생했습니다: ${error.message}. 나중에 다시 시도해주세요.`);
       }
     }
     
@@ -202,7 +195,7 @@ const FileUploadSection = styled.div`
   justify-content: center;
   border: 5px solid #ddd;
   color: burlywood;
-  margin-left: 250px;
+  margin-left: 150px;
   padding: 25px;
 `;
 
@@ -253,13 +246,13 @@ const StyledFileInput = styled.input`
 `;
 const CustomFileButton = styled.label`
   position: absolute;
-  left: 250px;
-  bottom: 50px;
+  left: 695px;
+  bottom: 330px;
   background-color: burlywood;
-  border: 1px solid #ddd;
+  border: 1px solid burlywood;
   color: white;
-  padding: 30px;
-  border-radius: 5px;
+  padding: 20px;
+  border-radius: 20px;
   margin-bottom: 10px;
   cursor: pointer;
   &:hover {
@@ -278,7 +271,7 @@ const InputFieldTitle = styled.input`
 `;
 const InputFieldComment = styled.input`
  display: inline-block;
-  width: 80%;
+  width: 91%;
   height: 300px;
   padding: 8px;
   margin-bottom: 16px;
@@ -286,7 +279,7 @@ const InputFieldComment = styled.input`
   cursor: pointer;
 `;
 const InputFieldPrice = styled.input`
-  width: 80%;
+  width: 91%;
   padding: 8px;
   margin-bottom: 16px;
   color: burlywood;
@@ -309,7 +302,7 @@ const SubmitButton = styled.button`
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  margin-top: 10px;
+  margin: 1px auto 1px auto;
   &:hover {
     background-color: #de9a87;
   }
