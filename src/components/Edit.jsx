@@ -26,10 +26,6 @@ export default function Edit({ items, setItems }) {
     fetchData();
   }, []);
 
-  // const selectedItem = items.find((item) => item.id === params.id);
-  console.log('selectedItem', selectedItem);
-  console.log('params', params);
-  console.log('items',items);
   const [editMode, setEditMode] = useState(false);
   const [changedTitle, setChangedTitle] = useState('');
   const [changedInfo, setChangedInfo] = useState('');
@@ -91,6 +87,7 @@ export default function Edit({ items, setItems }) {
         {!editMode ? (
           <SelectedItemSection>
             <ItemInfoSection>
+              <ItemImg src={selectedItem.images[0]}></ItemImg>
               <ItemTitle>{selectedItem.itemTitle}</ItemTitle>
               <ItemInfo>{selectedItem.itemInfo}</ItemInfo>
               <ItemPrice>{selectedItem.itemPrice}</ItemPrice>
@@ -184,6 +181,9 @@ const ChangeSelect = styled.select`
   font-size: 20px;
   float: right;
 `;
+const ItemImg = styled.img`
+  
+`
 const ItemTitle = styled.p``;
 const ItemInfo = styled.p``;
 const ItemPrice = styled.p`
