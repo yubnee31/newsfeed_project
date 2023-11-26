@@ -9,6 +9,7 @@ export default function Edit({ items, setItems }) {
   const params = useParams();
   const navigate = useNavigate();
   const selectedItem = items.find((item) => item.id === params.id);
+  console.log(selectedItem);
   const [editMode, setEditMode] = useState(false);
   const [changedTitle, setChangedTitle] = useState('');
   const [changedInfo, setChangedInfo] = useState('');
