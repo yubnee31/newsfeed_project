@@ -13,7 +13,7 @@ export default function Edit({ setItems }) {
   const [changedTitle, setChangedTitle] = useState('');
   const [changedInfo, setChangedInfo] = useState('');
   const [changedPrice, setChangedPrice] = useState('');
-  const [soldStatus, setSoldStatus] = useState('판매중');
+  const [soldStatus, setSoldStatus] = useState('판매완료');
 
   const updateItem = async (event) => {
     event.preventDefault();
