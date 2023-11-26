@@ -10,7 +10,7 @@ const Item = ({ item, favoriteSwitch }) => {
       <Favorite onClick={(event) => favoriteSwitch(event, item)}>{item.isFavorite ? '♥' : '♡'}</Favorite>
       <ImgContainer>
         {item.sold && <SoldStatus>SOLD</SoldStatus>}
-        <Img src={Bear} sold={item.sold} alt="item image" />
+        <Img src={item.images} sold={item.sold} alt="item image" />
       </ImgContainer>
       <ItemInfo>
         <p> {item.itemTitle}</p>
@@ -61,14 +61,17 @@ const SoldStatus = styled.p`
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 2;
+  z-index: 50;
 `;
 
 const Img = styled.img`
-  width: 100%;
-  height: 100%;
+  width: 98%;
+  height: 98%;
   object-fit: cover;
   filter: ${({ sold }) => (sold == true ? 'brightness(50%)' : 'none')};
+  &:hover {
+    border: 1px solid grey;
+  }
 `;
 //왜 가운데야
 const ItemInfo = styled.div`
