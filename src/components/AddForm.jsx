@@ -14,8 +14,6 @@ const AddForm = ({ items,setItems, tags, setTags }) => {
   const [previewUrl, setPreviewUrl] = useState([]);
   const [selectedFile, setSelectedFile] = useState([]);
   
- 
-
       // 파일 선택 시 호출되는 함수
   const handleFileChange = async (e) => {
     const files = Array.from(e.target.files).slice(0,4);
@@ -70,7 +68,7 @@ const AddForm = ({ items,setItems, tags, setTags }) => {
       await  addDoc(collectionRef, newItem);
      // 입력값 초기화
      setItemInfo('');
-     setItemPrice('');
+     setItemPrice(0);
      setItemTitle('');
      setItemCategory('');
      setSelectedFile([]);
