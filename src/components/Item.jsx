@@ -10,7 +10,7 @@ const Item = ({ item, favoriteSwitch }) => {
       <Favorite onClick={(event) => favoriteSwitch(event, item)}>{item.isFavorite ? '♥' : '♡'}</Favorite>
       <ImgContainer>
         {item.sold && <SoldStatus>SOLD</SoldStatus>}
-        <Img src={item.images} sold={item.sold} alt="item image" />
+        <Img src={Bear} sold={item.sold} alt="item image" />
       </ImgContainer>
       <ItemInfo>
         <p> {item.itemTitle}</p>
