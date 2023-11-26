@@ -4,12 +4,10 @@ import Layout from 'components/layouts/Layout';
 
 function AddPage() {
   return (
-    
-<Layout>
-    <AddForm/>
-  </Layout>
-  )
-
+    <Layout>
+      <AddForm />
+    </Layout>
+  );
 }
 
 export default AddPage;

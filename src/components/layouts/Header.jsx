@@ -71,6 +71,9 @@ const Title = styled.h1`
   color: #ab7323;
   font-style: italic;
   font-weight: bold;
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 const PostBtn = styled.button`
@@ -97,7 +100,7 @@ function Header() {
   const navigate = useNavigate();
   return (
     <>
-      <Title>GAMZA</Title>
+      <Title onClick={() => navigate('/')}>GAMZA</Title>
       <SignUpLogIn />
       <SearchDiv>
         <Category />
