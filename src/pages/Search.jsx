@@ -1,18 +1,15 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Item from 'components/Item';
-import { useItems } from 'shared/Items';
 import Layout from 'components/layouts/Layout';
 
-export default function Search({ searchInput }) {
-  const [items, setItems] = useItems();
-
+export default function Search({ items, searchInput }) {
   return (
     <Layout>
-      {/* {searchInput
+      {searchInput
         ? items
             .filter((item) => item.itemTitle.includes(searchInput) || item.itemInfo.includes(searchInput))
             .map((item) => <Item key={item.id} item={item} />)
-        : '검색 결과가 없습니다.'} */}
+        : '검색 결과가 없습니다.'}
     </Layout>
   );
 }

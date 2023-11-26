@@ -14,7 +14,7 @@ const Item = ({ item, favoriteSwitch }) => {
       <ItemInfo>
         <p> {item.itemTitle}</p>
         {/* 가격 천단위 콤마표시 -> toLocaleString() */}
-        <Price> {item.itemPrice} </Price>
+        <Price>₩{Number(item.itemPrice).toLocaleString()}</Price>
       </ItemInfo>
     </StItem>
   );
@@ -71,7 +71,7 @@ const Img = styled.img`
   object-fit: cover;
   filter: ${({ $sold }) => ($sold == true ? 'brightness(40%)' : 'none')};
   &:hover {
-    border: 2px solid #111;
+    border: 1px solid #111;
   }
 `;
 

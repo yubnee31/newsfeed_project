@@ -15,10 +15,8 @@ export default function Main() {
   // console.log('추출된 query(검색어)', query);
   const [searchResults, setSearchResults] = useState([]);
   const { state: searchInput } = useLocation();
-  console.log('searchInput', searchInput);
 
   useEffect(() => {
-    // 검색어가 있다면 해당 검색어에 대한 결과를 가져옴
     if (searchInput) {
       const filteredResults = items.filter(
         (item) => item.itemTitle.includes(searchInput) || item.itemInfo.includes(searchInput)
@@ -29,10 +27,7 @@ export default function Main() {
   }, []);
 
   return (
-    <ListWrapper>
-      <List title={true} />
-      {/* <List title={false} /> */}
-    </ListWrapper>
+    <ListWrapper>{searchInput === true ? <Search items={items} searchInput={searchInput} /> : <List />}</ListWrapper>
   );
 }
 
