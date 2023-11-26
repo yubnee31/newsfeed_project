@@ -4,12 +4,13 @@ import { useNavigate } from 'react-router-dom';
 
 const Item = ({ item, favoriteSwitch }) => {
   const navigate = useNavigate();
+  console.log(`${item.id}: ${item.images}`);
   return (
     <StItem key={item.id} onClick={() => navigate(`/detail/${item.id}`)}>
       <Favorite onClick={(event) => favoriteSwitch(event, item)}>{item.isFavorite ? '♥' : '♡'}</Favorite>
       <ImgContainer>
         {item.sold && <SoldStatus>SOLD</SoldStatus>}
-        <Img src={Bear} sold={item.sold} />
+        <Img src={item.images} sold={item.sold} alt="item image" />
       </ImgContainer>
       <ItemInfo>
         <p> {item.itemTitle}</p>
@@ -67,7 +68,7 @@ const Img = styled.img`
   width: 100%;
   height: 100%;
   object-fit: cover;
-  filter: ${({ sold }) => (sold ? 'brightness(50%)' : 'none')};
+  filter: ${({ sold }) => (sold == true ? 'brightness(50%)' : 'none')};
 `;
 //왜 가운데야
 const ItemInfo = styled.div`
