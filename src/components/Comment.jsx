@@ -22,6 +22,7 @@ const Listh1 = styled.h1`
 
 const Setform = styled.form`
   display: flex;
+  position:relative;
   width: 1000px;
   height: 100px;
   align-items: center;
@@ -40,6 +41,7 @@ const CommentDiv = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  position:relative;
   width: 1000px;
   height: 200px;
   margin: 10px;
@@ -69,7 +71,7 @@ const CommentInfo = styled.p`
 
 const CommentBtn = styled.button`
   position: absolute;
-  right: 400px;
+  right: 100px;
   width: 120px;
   height: 40px;
   border: 3px solid #ab722374;
@@ -80,7 +82,7 @@ const CommentBtn = styled.button`
 
 const Addbutton = styled.button`
   position: absolute;
-  right: 350px;
+  right: 50px;
   width: 120px;
   height: 40px;
   border: 3px solid #ab722374;
@@ -91,15 +93,27 @@ const Addbutton = styled.button`
 
 const EditBtn = styled.button`
   position: absolute;
-  right: 400px;
+  right: 50px;
   width: 120px;
-  height: 40px;
+  height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap:5px;
   border: 3px solid #ab722374;
   border-radius: 10px;
   background-color: transparent;
-  cursor: pointer;
 `;
-
+const CommentInput = styled.input`
+  outline: none;
+  font-size: 20px;
+`
+const Button = styled.button`
+  border: none;
+  background-color: white;
+  cursor: pointer;
+`
 export default function Comment() {
   const params = useParams();
   const [user, setUser] = useState(null);
@@ -219,7 +233,7 @@ export default function Comment() {
             addComment();
           }}
         >
-          <input
+          <CommentInput
             type="text"
             value={newComment}
             onChange={(event) => {
@@ -250,12 +264,12 @@ export default function Comment() {
                   <textp>{comment.text}</textp>
                 </CommentInfo>
                 <CommentBtn>
-                  <button type="button" onClick={(event) => handleCommentEdit(event, true, comment.docId)}>
+                  <Button type="button" onClick={(event) => handleCommentEdit(event, true, comment.docId)}>
                     수정
-                  </button>
-                  <button type="button" onClick={() => deleteComment(comment.docId)}>
+                  </Button>
+                  <Button type="button" onClick={() => deleteComment(comment.docId)}>
                     삭제
-                  </button>
+                  </Button>
                 </CommentBtn>
               </CommentDiv>
             ) : (
@@ -281,15 +295,15 @@ export default function Comment() {
                   <p>{CommentTimeShow(comment.createdAt)}</p>
                 </CommentInfo>
                 <EditBtn>
-                  <button type="button" onClick={() => updateComment(comment.docId)}>
+                  <Button type="button" onClick={() => updateComment(comment.docId)}>
                     수정 완료
-                  </button>
-                  <button type="button" onClick={(event) => handleCommentEdit(event, false, comment.docId)}>
+                  </Button>
+                  <Button type="button" onClick={(event) => handleCommentEdit(event, false, comment.docId)}>
                     수정 취소
-                  </button>
-                  <button type="button" onClick={() => deleteComment(comment.docId)}>
+                  </Button>
+                  <Button type="button" onClick={() => deleteComment(comment.docId)}>
                     삭제
-                  </button>
+                  </Button>
                 </EditBtn>
               </CommentDiv>
             )
