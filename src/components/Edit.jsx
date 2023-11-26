@@ -45,7 +45,13 @@ export default function Edit({ setItems }) {
           }
         });
       });
-      localStorage.setItem('selected Item', JSON.stringify({ email: '', displayName: '', uid: '' }));
+      setSelectedItem({
+        ...selectedItem,
+        sold: true,
+        itemTitle: changedTitle,
+        itemInfo: changedInfo,
+        itemPrice: changedPrice
+      });
     } else {
       await updateDoc(itemRef, {
         sold: false,
@@ -204,7 +210,13 @@ const ChangeSelect = styled.select`
   font-size: 20px;
   float: right;
 `;
-const ItemImg = styled.img``;
+const ItemImg = styled.img`
+  width: 250px;
+  height: 250px;
+  position: absolute;
+  left: 50px;
+  top: 80px;
+`;
 const ItemTitle = styled.p``;
 const ItemInfo = styled.p``;
 const ItemPrice = styled.p`

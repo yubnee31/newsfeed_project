@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import List from 'components/List';
 import styled from 'styled-components';
 import { useLocation } from 'react-router-dom';
-import Search from 'pages/Search';
+import Search from 'components/Search';
 import { useItems } from 'shared/Items';
 
 export default function Main() {
