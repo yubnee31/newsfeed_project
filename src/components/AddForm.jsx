@@ -5,6 +5,7 @@ import { addDoc, collection } from 'firebase/firestore';
 import { db, storage } from '../firebase';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
 
+
 const AddForm = ({ items, setItems }) => {
   const [itemInfo, setItemInfo] = useState('');
   const [itemPrice, setItemPrice] = useState(0);
@@ -44,44 +45,42 @@ const AddForm = ({ items, setItems }) => {
   };
 
   const Categories = [
+   
     {
-      id: 1,
+      id:0,
       itemcategory: '의류'
     },
     {
-      id: 2,
+     id:1,
       itemcategory: '전자제품'
     },
     {
-      id: 3,
+      id:2,
       itemcategory: '악세사리'
     },
     {
-      id: 4,
+      id:3,
       itemcategory: '반려용품'
     },
     {
-      id: 5,
+      id:4,
       itemcategory: '도서'
     },
     {
-      id: 6,
+     id:5,
       itemcategory: '생활용품'
     },
     {
-      id: 7,
+    id:6,
       itemcategory: '기타'
     },
   ];
 
- 
-
   // 카테고리
   const ChangehandleCategory = (event) => {
     const CategoryValue = event.target.value;
-    itemcategory(CategoryValue);
+    setItemCategory(CategoryValue);
   };
-
   // 등록 클릭 시 호출되는 함수 
   const HandleUpload = async () => {
     if (!itemInfo || itemPrice === 0  || !itemTitle  || selectedFile.length === 0) {
@@ -111,7 +110,7 @@ const AddForm = ({ items, setItems }) => {
         // 아이템 목록 업데이트
         setItems((prev) => [newItem, ...prev]);
         const collectionRef = collection(db, 'items');
-         if( itemcategory === '' ) {
+         if( itemcategory !== '' ) {
           await addDoc(collectionRef, newItem);
           // 입력값 초기화
           setItemInfo('');
@@ -120,16 +119,15 @@ const AddForm = ({ items, setItems }) => {
           setItemCategory('');
           setSelectedFile([]);
           setPreviewUrl([]);
-        
-        }  
-        alert('등록완료');
+          alert('등록완료');
+        }  else {
+          alert('카테고리를 선택해주세요')
         }
-        catch (error) {
+        }catch (error) {
           console.log("error :",error.message);
           alert(`등록 중 오류가 발생했습니다: ${error.message}. 나중에 다시 시도해주세요.`);
       }
     }
-    
   };
   // 카테고리 라인 
   return (
@@ -156,13 +154,17 @@ const AddForm = ({ items, setItems }) => {
 
       {/*  제목, 내용, 카테고리, 등록하기 */}
       <FormContainer>
-        <InputFieldTitle value={itemTitle} onChange={(event) => setItemTitle(event.target.value)} placeholder="제목" />
+        <InputFieldTitle  value={itemTitle} onChange={(event) => setItemTitle(event.target.value)} placeholder="제목" />
 
         <CategoryDropdown  onChange={ChangehandleCategory}>
-         <option value='' disabled>카테고리 선택</option>  
+        <option value={itemcategory} disabled>카테고리 선택</option>  
           { Categories.map((category) => (
-          <option  key={category.id} value={category.itemcategory}>
-                {category.itemcategory}
+           <option key={`${category.id}`} value={category.itemcategory}>
+              <ul>
+                <li>
+               {category.itemcategory}
+               </li>
+               </ul>
             </option>
           ))}
         </CategoryDropdown>
@@ -181,17 +183,17 @@ const AddForm = ({ items, setItems }) => {
 
 // 스타일
 const AddSection = styled.div`
-width: 1500px;
+width: 1200px;
  position: relative;
  border: 2px solid black;
  bottom : 280px;
   display: inline-block;
-  left:360px;
+  left:430px;
   max-height: 130vh;
   margin: 400px 5px 1px 1px;;
   gap: 10px;
  
-  @media (max-width: 1400px) {
+  @media (max-width: 1200px) {
     margin: 20px 10px 20px 10px;
   }
 `;
@@ -203,7 +205,7 @@ width: 1500px;
     background-color: white;
     margin-top: 50px;
     padding: 30px;
-    padding-left: 90px;
+    padding-left: 60px;
     color: burlywood; ;
 
    `;
@@ -213,7 +215,7 @@ margin-top: 40px;
     width: 100px;
     height: 100px;
     position: absolute;
-    left: 550px;
+    left: 400px;
     object-fit: cover;
 
 `;
@@ -223,11 +225,11 @@ margin-top: 40px;
 const FileUploadSection = styled.div`
   display: flex;
   width: 600px; /* 고정된 너비 설정 */
-  height: 540px; /* 고정된 높이 설정 */
+  height: 480px; /* 고정된 높이 설정 */
   overflow: hidden; /* 컨테이너 크기를 초과하는 내용을 숨김 */
   position: relative;
-  top: 290px;
-  left: 180px;
+  top: 200px;
+  left: 50px;
   justify-content: center;
   border: 5px solid #ddd;
   color: burlywood;
@@ -245,8 +247,8 @@ const FormContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   position: relative;
-  left: 880px;
-  bottom: 300px;
+  left: 770px;
+  bottom: 340px;
   border: 5px solid #ddd;
   padding: 20px;
 `;
@@ -290,8 +292,8 @@ const StyledFileInput = styled.input`
 `;
 const CustomFileButton = styled.label`
   position: absolute;
-  left: 700px;
-  top: 920px;
+  left: 570px;
+  top: 790px;
   background-color: burlywood;
   border: 1px solid burlywood;
   color: white;

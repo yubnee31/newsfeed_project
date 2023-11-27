@@ -30,7 +30,7 @@ export default function Category() {
         const filteredList = items.filter((item) => item.itemCategory === selectedCategory);
         setFilteredItems(filteredList);
       }
-      console.log('filteredItems', filteredItems);
+      // console.log('filteredItems', filteredItems);
     },
     [selectedCategory],
     items
