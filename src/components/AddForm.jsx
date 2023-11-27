@@ -1,10 +1,8 @@
-/* eslint-disable jsx-a11y/alt-text */
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { addDoc, collection } from 'firebase/firestore';
 import { db, storage } from '../firebase';
 import { getDownloadURL, ref, uploadBytes } from 'firebase/storage';
-
 
 const AddForm = ({ items, setItems }) => {
   const [itemInfo, setItemInfo] = useState('');
@@ -45,42 +43,44 @@ const AddForm = ({ items, setItems }) => {
   };
 
   const Categories = [
-   
     {
-      id:0,
+      id: 1,
       itemcategory: '의류'
     },
     {
-     id:1,
+      id: 2,
       itemcategory: '전자제품'
     },
     {
-      id:2,
+      id: 3,
       itemcategory: '악세사리'
     },
     {
-      id:3,
+      id: 4,
       itemcategory: '반려용품'
     },
     {
-      id:4,
+      id: 5,
       itemcategory: '도서'
     },
     {
-     id:5,
+      id: 6,
       itemcategory: '생활용품'
     },
     {
-    id:6,
+      id: 7,
       itemcategory: '기타'
     },
   ];
 
+ 
+
   // 카테고리
   const ChangehandleCategory = (event) => {
     const CategoryValue = event.target.value;
-    setItemCategory(CategoryValue);
+    itemcategory(CategoryValue);
   };
+
   // 등록 클릭 시 호출되는 함수 
   const HandleUpload = async () => {
     if (!itemInfo || itemPrice === 0  || !itemTitle  || selectedFile.length === 0) {
@@ -110,32 +110,32 @@ const AddForm = ({ items, setItems }) => {
         // 아이템 목록 업데이트
         setItems((prev) => [newItem, ...prev]);
         const collectionRef = collection(db, 'items');
-         if( itemcategory !== '' ) {
+         if( itemcategory === '' ) {
           await addDoc(collectionRef, newItem);
           // 입력값 초기화
           setItemInfo('');
-          setItemPrice('');
+          setItemPrice(0);
           setItemTitle('');
           setItemCategory('');
           setSelectedFile([]);
           setPreviewUrl([]);
-          alert('등록완료');
-        }  else {
-          alert('카테고리를 선택해주세요')
+        
+        }  
+        alert('등록완료');
         }
-        }catch (error) {
+        catch (error) {
           console.log("error :",error.message);
           alert(`등록 중 오류가 발생했습니다: ${error.message}. 나중에 다시 시도해주세요.`);
       }
     }
+    
   };
   // 카테고리 라인 
   return (
-    <AddSection> 
-     <ImageLogo src="https://img.freepik.com/premium-vector/potato-root-vegetables-carbohydrate-agriculture-farm-product_22052-4629.jpg"/>
-         <BorderInnerPageTitle type="text">중고 상품 등록</BorderInnerPageTitle>
+    <AddSection>
       <FileUploadSection>
         <UploaderWrapper>
+          {' '}
           {previewUrl.map((url, index) => (
             <div key={index}>
               <ImageContainer>
@@ -154,17 +154,13 @@ const AddForm = ({ items, setItems }) => {
 
       {/*  제목, 내용, 카테고리, 등록하기 */}
       <FormContainer>
-        <InputFieldTitle  value={itemTitle} onChange={(event) => setItemTitle(event.target.value)} placeholder="제목" />
+        <InputFieldTitle value={itemTitle} onChange={(event) => setItemTitle(event.target.value)} placeholder="제목" />
 
         <CategoryDropdown  onChange={ChangehandleCategory}>
-        <option value={itemcategory} disabled>카테고리 선택</option>  
+         <option value='' disabled>카테고리 선택</option>  
           { Categories.map((category) => (
-           <option key={`${category.id}`} value={category.itemcategory}>
-              <ul>
-                <li>
-               {category.itemcategory}
-               </li>
-               </ul>
+          <option  key={category.id} value={category.itemcategory}>
+                {category.itemcategory}
             </option>
           ))}
         </CategoryDropdown>
@@ -173,82 +169,42 @@ const AddForm = ({ items, setItems }) => {
           onChange={(event) => setItemInfo(event.target.value)}
           placeholder="상품 설명"
         />
-        <InputFieldPrice   value={itemPrice} onChange={(event) => setItemPrice(event.target.value)} placeholder="가격" />
+        <InputFieldPrice  type="number" value={itemPrice} onChange={(event) => setItemPrice(event.target.value)} placeholder="가격" />
         <SubmitButton onClick={HandleUpload}>등록</SubmitButton>
       </FormContainer>
     </AddSection>
   );
 };
 
-
 // 스타일
 const AddSection = styled.div`
-width: 1200px;
  position: relative;
- border: 2px solid black;
  bottom : 280px;
-  display: inline-block;
-  left:430px;
-  max-height: 130vh;
-  margin: 400px 5px 1px 1px;;
-  gap: 10px;
- 
-  @media (max-width: 1200px) {
-    margin: 20px 10px 20px 10px;
-  }
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  max-height: 100vh;
+  margin: 400px auto 30px auto;
 `;
-   const BorderInnerPageTitle = styled.h1`
-    font-weight: bold;
-    font-size: 30px;
-    display: flex;
-    justify-content: center;
-    background-color: white;
-    margin-top: 50px;
-    padding: 30px;
-    padding-left: 60px;
-    color: burlywood; ;
-
-   `;
-
-const ImageLogo = styled.img`
-margin-top: 40px;
-    width: 100px;
-    height: 100px;
-    position: absolute;
-    left: 400px;
-    object-fit: cover;
-
-`;
-
-
 
 const FileUploadSection = styled.div`
   display: flex;
   width: 600px; /* 고정된 너비 설정 */
-  height: 480px; /* 고정된 높이 설정 */
+  height: 434px; /* 고정된 높이 설정 */
   overflow: hidden; /* 컨테이너 크기를 초과하는 내용을 숨김 */
   position: relative;
-  top: 200px;
-  left: 50px;
   justify-content: center;
   border: 5px solid #ddd;
   color: burlywood;
-  background-color: white;
-  flex-direction: column;
+  margin-left: 150px;
   padding: 25px;
-  @media (max-width: 1200px) {
-    width: 85%;
-    margin-left: 0; /* Adjusted margin for smaller screens */
-  }
 `;
 
 const FormContainer = styled.div`
-  width: 30%;
+  width: 50%;
   flex-direction: column;
   justify-content: center;
-  position: relative;
-  left: 770px;
-  bottom: 340px;
   border: 5px solid #ddd;
   padding: 20px;
 `;
@@ -292,13 +248,13 @@ const StyledFileInput = styled.input`
 `;
 const CustomFileButton = styled.label`
   position: absolute;
-  left: 570px;
-  top: 790px;
+  left: 695px;
+  bottom: 330px;
   background-color: burlywood;
   border: 1px solid burlywood;
   color: white;
-  padding: 30px 27px;
-  border-radius: 1px;
+  padding: 20px;
+  border-radius: 20px;
   margin-bottom: 10px;
   cursor: pointer;
   &:hover {
@@ -309,7 +265,7 @@ const CustomFileButton = styled.label`
 const InputFieldTitle = styled.input`
    display: inline-block;
    align-items: center;
-  width:40%;
+  width: 500px;
   padding: 8px;
   margin-bottom: 16px;
   color: burlywood;
@@ -334,7 +290,7 @@ const InputFieldPrice = styled.input`
 
 const CategoryDropdown = styled.select`
  display: inline-block;
-  width: 51%;
+  width: 38.5%;
   padding: 8px;
   margin-bottom: 16px;
   color: burlywood;
@@ -342,11 +298,11 @@ const CategoryDropdown = styled.select`
 `;
 
 const SubmitButton = styled.button`
-  padding: 20px;
+  padding: 10px;
   background-color: burlywood;
   color: white;
   border: none;
-  border-radius: 1px;
+  border-radius: 5px;
   cursor: pointer;
   margin: 1px auto 1px auto;
   &:hover {
