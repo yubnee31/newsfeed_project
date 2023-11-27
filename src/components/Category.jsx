@@ -3,43 +3,29 @@ import styled from 'styled-components';
 import MenuImg from '../assets/menu.png';
 import { useItems } from 'shared/Items';
 
-export default function Category() {
+export default function Category(props) {
   const [items, setItems] = useItems();
 
   //카테고리별 분류된 아이템 관리
   const [filteredItems, setFilteredItems] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState('All');
 
   //카테고리 메뉴 버튼 상태
   const [showDropDownBtn, setShowDropDownBtn] = useState(false);
 
   //show DROP DOWN  MENU
   const dropDownCategory = (categoryName) => {
-    const filtered = items.filter((item) => item.itemCategory === categoryName);
+    const filtered = items.filter((item) => item.itemcategory === categoryName);
     setFilteredItems(filtered);
     setShowDropDownBtn(!showDropDownBtn);
   };
 
   //카테고리 클릭시 해당 상품들 필터링
-
-  useEffect(
-    () => {
-      if (selectedCategory === 'All') {
-        setFilteredItems(items);
-      } else {
-        const filteredList = items.filter((item) => item.itemCategory === selectedCategory);
-        setFilteredItems(filteredList);
-      }
-      // console.log('filteredItems', filteredItems);
-    },
-    [selectedCategory],
-    items
-  );
-
   const handleCategories = (category) => {
-    setSelectedCategory(category);
+    const filteredList = items.filter((item) => item.itemcategory === category);
+    setFilteredItems(filteredList);
+    props.setSelectedCategory(category);
   };
-
+  // console.log('filteredItems', filteredItems);
   return (
     <ConTainer>
       <CategoryBtn onClick={dropDownCategory} src={MenuImg} />
