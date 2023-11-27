@@ -4,8 +4,9 @@ import styled from 'styled-components';
 import { useLocation } from 'react-router-dom';
 import Search from 'components/Search';
 import { useItems } from 'shared/Items';
+import FilteredCategory from 'components/FilteredCategory';
 
-export default function Main() {
+export default function Main(props) {
   const [items] = useItems();
   const [searchResults, setSearchResults] = useState([]);
   const { state: searchInput } = useLocation();
@@ -23,8 +24,11 @@ export default function Main() {
     setSearchResults(items);
   });
 
+  const filtered = items.filter((item) => item.itemcategory === props.selectedCategory);
+
   return (
     <ListWrapper>
+      {filtered && <FilteredCategory filtered={filtered} />}
       {searchInput && searchInput.length > 0 ? <Search items={searchResults} searchInput={searchInput} /> : <List />}
     </ListWrapper>
   );
