@@ -155,16 +155,11 @@ const AddForm = ({ items, setItems }) => {
       {/*  제목, 내용, 카테고리, 등록하기 */}
       <FormContainer>
         <InputFieldTitle  value={itemTitle} onChange={(event) => setItemTitle(event.target.value)} placeholder="제목" />
-
         <CategoryDropdown  onChange={ChangehandleCategory}>
         <option value={itemcategory} disabled>카테고리 선택</option>  
           { Categories.map((category) => (
-           <option key={`${category.id}`} value={category.itemcategory}>
-              <ul>
-                <li>
+           <option key={category.id} value={category.itemcategory}>
                {category.itemcategory}
-               </li>
-               </ul>
             </option>
           ))}
         </CategoryDropdown>
