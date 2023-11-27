@@ -168,7 +168,7 @@ const AddForm = ({ items, setItems }) => {
           onChange={(event) => setItemInfo(event.target.value)}
           placeholder="상품 설명"
         />
-        <InputFieldPrice   value={itemPrice} onChange={(event) => setItemPrice(event.target.value)} placeholder="가격" />
+        <InputFieldPrice  value={itemPrice} onChange={(event) => setItemPrice(event.target.value)} placeholder="가격" />
         <SubmitButton onClick={HandleUpload}>등록</SubmitButton>
       </FormContainer>
     </AddSection>
